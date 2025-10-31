@@ -1,0 +1,31 @@
+{
+  "name": "nickpending-skills",
+  "owner": {
+    "name": "nickpending",
+    "email": "rudy@voidwire.info"
+  },
+  "metadata": {
+    "description": "Claude Code skills for workflow automation and network discovery",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "slash-builder",
+      "description": "Interactive slash command builder with validation and prompt engineering patterns",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/slash-builder"
+      ]
+    },
+    {
+      "name": "homenet-discovery",
+      "description": "Discover and map your home network via nmap, SSH, and DNS with automated topology generation",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/homenet-discovery"
+      ]
+    }
+  ]
+}
