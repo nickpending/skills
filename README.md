@@ -18,17 +18,10 @@ Two specialized skills: build slash commands interactively and map your home net
 
 ## Installation
 
-Add this plugin marketplace:
-
 ```bash
-/plugin marketplace add https://github.com/nickpending/skills
-```
-
-Install individual plugins:
-
-```bash
-/plugin install slash-builder@voidwire-skills          # Command builder
-/plugin install homenet-discovery@voidwire-skills      # Network discovery
+# In Claude Code
+/plugin marketplace add nickpending/skills
+/plugin install voidwire-skills@voidwire-skills
 ```
 
 ## What's Inside

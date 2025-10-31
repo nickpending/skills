@@ -1,0 +1,13 @@
+{
+  "name": "voidwire-skills",
+  "description": "Claude Code skills for workflow automation and network discovery",
+  "version": "1.0.0",
+  "author": {
+    "name": "nickpending",
+    "email": "rudy@voidwire.info"
+  },
+  "homepage": "https://github.com/nickpending/skills",
+  "repository": "https://github.com/nickpending/skills",
+  "license": "MIT",
+  "keywords": ["skills", "slash-commands", "network-discovery", "workflow", "automation"]
+}
