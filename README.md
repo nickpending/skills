@@ -1,6 +1,20 @@
 # Skills
 
-Collection of Claude Code skills that extend capabilities and simplify workflows.
+<div align="center">
+
+**Claude Code skills for workflow automation and network discovery**
+
+[GitHub](https://github.com/nickpending/skills) | [Issues](https://github.com/nickpending/skills/issues)
+
+[![Status](https://img.shields.io/badge/Status-Active-green?style=flat)](#)
+[![Built for](https://img.shields.io/badge/Built%20for-Claude%20Code-blueviolet?style=flat)](https://claude.ai/download)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
+</div>
+
+---
+
+Two specialized skills: build slash commands interactively and map your home network infrastructure.
 
 ## Installation
 
@@ -10,22 +24,41 @@ Add this plugin marketplace:
 /plugin marketplace add https://github.com/nickpending/skills
 ```
 
-Install the plugin:
+Install individual plugins:
 
 ```bash
-/plugin install skills
+/plugin install slash-builder@voidwire-skills          # Command builder
+/plugin install homenet-discovery@voidwire-skills      # Network discovery
 ```
 
-When prompted, select which skills to enable.
-
-## Included Skills
+## What's Inside
 
 ### slash-builder
-Build and update slash commands through interactive workflow. Validates syntax, generates tests, and follows prompt engineering patterns.
+
+Interactive builder for creating and updating Claude Code slash commands. Guides through discovery, planning, generation, and validation phases with built-in prompt engineering patterns.
+
+**Triggers:** When you mention creating or updating slash commands
+
+**Outputs:**
+- Validated command files following Claude Code conventions
+- Template-based generation (Momentum or generic patterns)
+- Syntax validation and best practices
 
 ### homenet-discovery
-Discover home network devices via nmap, SSH, and DNS. Creates machine-readable inventory with topology diagrams.
 
-## Contributing
+Automated home network discovery via nmap, SSH, and DNS. Creates machine-readable inventory with topology diagrams for infrastructure documentation.
 
-Skills follow XDG directory structure and produce model-friendly output. See individual skill directories for implementation details.
+**Triggers:** When you mention network mapping, homelab discovery, or "what's on my network"
+
+**Outputs:**
+- Device inventory with services and metadata
+- Network topology diagrams (Mermaid)
+- AI-friendly markdown documentation
+
+**Prerequisites:** nmap, python3, SSH keys (optional), DNS access (optional)
+
+## Usage
+
+Skills trigger automatically based on your requests. Both follow XDG directory structure and produce model-friendly output.
+
+See individual skill directories for detailed workflows and implementation.
