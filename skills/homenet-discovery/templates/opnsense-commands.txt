@@ -1,0 +1,58 @@
+# OPNsense Config Export for homenet
+
+Export your OPNsense configuration to discover DHCP static mappings and DNS overrides.
+
+## Via Web Interface (Recommended)
+
+1. Log into OPNsense web interface
+2. Navigate to: **System → Configuration → Backups**
+3. Click **Download configuration**
+4. Save the downloaded XML file as: `/tmp/homenet/opnsense-config.xml`
+
+## Via CLI (SSH)
+
+```bash
+# SSH into OPNsense
+ssh root@your-opnsense
+
+# Export config
+cat /conf/config.xml > /tmp/config.xml
+
+# Copy to your machine
+scp root@your-opnsense:/tmp/config.xml /tmp/homenet/opnsense-config.xml
+```
+
+## What Gets Discovered
+
+From the config XML, homenet will extract:
+
+### DHCP Static Mappings
+- MAC addresses
+- Assigned static IPs
+- Hostnames
+- Descriptions
+
+### DNS Host Overrides (Unbound)
+- Custom DNS entries
+- Local domain mappings
+- A records and AAAA records
+
+## Privacy Note
+
+The config file contains:
+- Network topology
+- DHCP/DNS settings
+- **Firewall rules**
+- **VPN configurations**
+- **Certificate data**
+
+The homenet skill only reads DHCP and DNS sections. However, be careful where you store the exported config - it contains sensitive data.
+
+Consider:
+```bash
+# Only keep it temporarily
+cp /path/to/downloaded-config.xml /tmp/homenet/opnsense-config.xml
+
+# After discovery, remove it
+rm /tmp/homenet/opnsense-config.xml
+```

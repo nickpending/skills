@@ -1,0 +1,159 @@
+{
+  "scan_date": "2025-10-22 00:30:00",
+  "scan_methods": ["nmap", "ssh", "dns", "manual"],
+  "total_hosts": 12,
+  "hosts": [
+    {
+      "ip": "192.168.1.1",
+      "mac": "00:11:22:33:44:55",
+      "hostname": "opnsense.home.lab",
+      "os": "OPNsense 24.1",
+      "services": ["firewall", "dns", "dhcp"],
+      "discovered_by": ["nmap", "dns", "manual-opnsense"],
+      "metadata": {
+        "type": "gateway",
+        "uptime": 2592000
+      }
+    },
+    {
+      "ip": "192.168.1.50",
+      "mac": "aa:bb:cc:dd:ee:01",
+      "hostname": "nas.home.lab",
+      "os": "TrueNAS SCALE 23.10",
+      "services": ["nfs", "smb", "docker:plex", "docker:sonarr"],
+      "discovered_by": ["nmap", "ssh", "dns"],
+      "metadata": {
+        "type": "storage",
+        "cpu_count": 8,
+        "mem_total": 34359738368
+      }
+    },
+    {
+      "ip": "192.168.1.100",
+      "mac": "aa:bb:cc:dd:ee:02",
+      "hostname": "pve.home.lab",
+      "os": "Proxmox VE 8.1",
+      "services": ["proxmox", "kvm"],
+      "discovered_by": ["nmap", "ssh", "dns", "manual-proxmox"],
+      "metadata": {
+        "type": "hypervisor",
+        "status": "online",
+        "uptime": 5184000,
+        "cpu_count": 16,
+        "mem_total": 137438953472
+      }
+    },
+    {
+      "ip": "192.168.1.101",
+      "mac": "aa:bb:cc:dd:ee:03",
+      "hostname": "docker-vm.home.lab",
+      "os": "Ubuntu 22.04 LTS",
+      "services": ["docker:nginx", "docker:postgres", "docker:redis"],
+      "discovered_by": ["nmap", "ssh", "dns", "manual-proxmox"],
+      "metadata": {
+        "type": "vm",
+        "vmid": "101",
+        "node": "pve",
+        "cpu_count": 4,
+        "mem_total": 8589934592
+      }
+    },
+    {
+      "ip": "192.168.1.102",
+      "mac": "aa:bb:cc:dd:ee:04",
+      "hostname": "k3s-master.home.lab",
+      "os": "Ubuntu 22.04 LTS",
+      "services": ["k3s", "docker:containerd"],
+      "discovered_by": ["nmap", "ssh", "dns"],
+      "metadata": {
+        "type": "container-orchestration"
+      }
+    },
+    {
+      "ip": "192.168.1.150",
+      "mac": "aa:bb:cc:dd:ee:05",
+      "hostname": "desktop.home.lab",
+      "os": "macOS 14.5",
+      "services": [],
+      "discovered_by": ["nmap", "dns"],
+      "metadata": {
+        "type": "workstation"
+      }
+    },
+    {
+      "ip": "192.168.1.10",
+      "mac": "aa:bb:cc:dd:ee:06",
+      "hostname": "ap-living-room",
+      "os": "UniFi 6.5.55",
+      "services": ["unifi", "uap"],
+      "discovered_by": ["nmap", "manual-unifi"],
+      "metadata": {
+        "type": "network-device",
+        "model": "U6-Pro",
+        "device_type": "uap",
+        "state": 1,
+        "uptime": 2592000
+      }
+    },
+    {
+      "ip": "192.168.1.11",
+      "mac": "aa:bb:cc:dd:ee:07",
+      "hostname": "switch-main",
+      "os": "UniFi 6.5.55",
+      "services": ["unifi", "usw"],
+      "discovered_by": ["nmap", "manual-unifi"],
+      "metadata": {
+        "type": "network-device",
+        "model": "USW-24-POE",
+        "device_type": "usw",
+        "state": 1,
+        "uptime": 5184000
+      }
+    },
+    {
+      "ip": "192.168.1.200",
+      "mac": "aa:bb:cc:dd:ee:08",
+      "hostname": "pihole.home.lab",
+      "os": "Debian 12",
+      "services": ["pihole", "dns", "dhcp"],
+      "discovered_by": ["nmap", "ssh", "dns"],
+      "metadata": {
+        "type": "dns-server"
+      }
+    },
+    {
+      "ip": "192.168.1.201",
+      "mac": "aa:bb:cc:dd:ee:09",
+      "hostname": "homeassistant.home.lab",
+      "os": "Home Assistant OS 11.2",
+      "services": ["homeassistant", "mqtt"],
+      "discovered_by": ["nmap", "dns"],
+      "metadata": {
+        "type": "automation"
+      }
+    },
+    {
+      "ip": "192.168.1.60",
+      "mac": "aa:bb:cc:dd:ee:10",
+      "hostname": "printer.home.lab",
+      "os": "",
+      "services": ["ipp", "http"],
+      "discovered_by": ["nmap", "manual-opnsense"],
+      "metadata": {
+        "type": "printer",
+        "description": "HP LaserJet"
+      }
+    },
+    {
+      "ip": "192.168.1.175",
+      "mac": "aa:bb:cc:dd:ee:11",
+      "hostname": "laptop",
+      "os": "",
+      "services": [],
+      "discovered_by": ["nmap"],
+      "metadata": {
+        "type": "workstation"
+      }
+    }
+  ]
+}

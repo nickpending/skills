@@ -1,0 +1,61 @@
+graph TB
+    Internet[Internet]
+
+    Gateway[opnsense.home.lab<br/>192.168.1.1<br/>OPNsense Firewall/Router]
+
+    Internet --> Gateway
+
+    %% Network Infrastructure
+    Switch[switch-main<br/>192.168.1.11<br/>UniFi 24-Port PoE]
+    AP[ap-living-room<br/>192.168.1.10<br/>UniFi U6-Pro]
+
+    Gateway --> Switch
+    Gateway --> AP
+
+    %% Core Infrastructure
+    PiHole[pihole.home.lab<br/>192.168.1.200<br/>DNS/DHCP]
+    NAS[nas.home.lab<br/>192.168.1.50<br/>TrueNAS SCALE<br/>Services: NFS, SMB, Plex, Sonarr]
+
+    Switch --> PiHole
+    Switch --> NAS
+
+    %% Virtualization
+    Proxmox[pve.home.lab<br/>192.168.1.100<br/>Proxmox VE Hypervisor]
+
+    Switch --> Proxmox
+
+    %% VMs on Proxmox
+    DockerVM[docker-vm.home.lab<br/>192.168.1.101<br/>Ubuntu 22.04<br/>Services: nginx, postgres, redis]
+    K3sMaster[k3s-master.home.lab<br/>192.168.1.102<br/>Kubernetes Master]
+
+    Proxmox --> DockerVM
+    Proxmox --> K3sMaster
+
+    %% IoT and Automation
+    HomeAssistant[homeassistant.home.lab<br/>192.168.1.201<br/>Home Assistant OS]
+
+    Switch --> HomeAssistant
+
+    %% Devices
+    Printer[printer.home.lab<br/>192.168.1.60<br/>HP LaserJet]
+    Desktop[desktop.home.lab<br/>192.168.1.150<br/>macOS]
+    Laptop[laptop<br/>192.168.1.175]
+
+    Switch --> Printer
+    Switch --> Desktop
+    AP -.wireless.-> Laptop
+
+    %% Styling
+    classDef gateway fill:#f96,stroke:#333,stroke-width:4px
+    classDef infrastructure fill:#69f,stroke:#333,stroke-width:2px
+    classDef compute fill:#6f9,stroke:#333,stroke-width:2px
+    classDef storage fill:#f9f,stroke:#333,stroke-width:2px
+    classDef iot fill:#ff9,stroke:#333,stroke-width:2px
+    classDef device fill:#ddd,stroke:#333,stroke-width:1px
+
+    class Gateway gateway
+    class Switch,AP,PiHole infrastructure
+    class Proxmox,DockerVM,K3sMaster compute
+    class NAS storage
+    class HomeAssistant iot
+    class Printer,Desktop,Laptop device

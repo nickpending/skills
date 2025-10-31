@@ -1,0 +1,40 @@
+# Proxmox Command Outputs for homenet
+
+Run these commands on your Proxmox host and save outputs to /tmp/homenet/
+
+## Method 1: Using pvesh (Proxmox VE Shell)
+
+```bash
+# Get all nodes
+pvesh get /nodes --output-format json > /tmp/homenet/proxmox-nodes.json
+
+# Get all cluster resources (VMs, containers, storage)
+pvesh get /cluster/resources --output-format json > /tmp/homenet/proxmox-resources.json
+```
+
+## Method 2: Using API directly
+
+```bash
+# Get auth ticket
+curl -k -d "username=root@pam&password=PASSWORD" \
+  https://your-proxmox:8006/api2/json/access/ticket
+
+# Use ticket to get data (replace $TICKET and $CSRF)
+curl -k -b "PVEAuthCookie=$TICKET" \
+  -H "CSRFPreventionToken: $CSRF" \
+  https://your-proxmox:8006/api2/json/nodes > /tmp/homenet/proxmox-nodes.json
+
+curl -k -b "PVEAuthCookie=$TICKET" \
+  -H "CSRFPreventionToken: $CSRF" \
+  https://your-proxmox:8006/api2/json/cluster/resources > /tmp/homenet/proxmox-resources.json
+```
+
+## What Gets Discovered
+
+From these outputs, homenet will extract:
+- Proxmox node hostnames and IPs
+- VM and container names
+- VM IDs (vmid)
+- Resource allocation (CPU, memory)
+- Running state (on/off)
+- Which node each VM is on

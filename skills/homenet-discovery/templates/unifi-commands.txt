@@ -1,0 +1,84 @@
+# UniFi Device Discovery for homenet
+
+Get device data from UniFi Controller for network infrastructure mapping.
+
+## Method 1: UniFi API (Recommended)
+
+```bash
+# Login and get cookie
+curl -k -c /tmp/unifi-cookie.txt -X POST \
+  https://unifi:8443/api/login \
+  -H "Content-Type: application/json" \
+  -d '{"username":"admin","password":"PASSWORD"}'
+
+# Get devices
+curl -k -b /tmp/unifi-cookie.txt \
+  https://unifi:8443/api/s/default/stat/device \
+  > /tmp/homenet/unifi-devices.json
+
+# Cleanup
+rm /tmp/unifi-cookie.txt
+```
+
+## Method 2: UniFi Network Application UI
+
+1. Log into UniFi Network Application
+2. Navigate to: **Settings → System → Advanced**
+3. Enable **Device Authentication** (if needed)
+4. Use browser developer tools:
+   - Open DevTools (F12)
+   - Navigate to: **Network** tab
+   - Click on a device in the UI
+   - Find the API call to `/api/s/default/stat/device`
+   - Copy response as JSON
+   - Save to: `/tmp/homenet/unifi-devices.json`
+
+## Method 3: Using unifi-tools (if installed)
+
+```bash
+# Install unifi-tools
+pip3 install unifi
+
+# Export devices
+unifi-cli --controller https://unifi:8443 \
+  --username admin --password PASSWORD \
+  devices list --json > /tmp/homenet/unifi-devices.json
+```
+
+## What Gets Discovered
+
+From UniFi device data, homenet will extract:
+- Access points (UAP)
+- Switches (USW)
+- Gateways (UXG, UDM)
+- Device IPs and MACs
+- Device models and firmware versions
+- Uptime and connection state
+- Device names/aliases
+
+## Expected JSON Structure
+
+The JSON should be an array of device objects:
+
+```json
+[
+  {
+    "ip": "192.168.1.10",
+    "mac": "aa:bb:cc:dd:ee:ff",
+    "name": "Living Room AP",
+    "type": "uap",
+    "model": "U6-Pro",
+    "version": "6.5.55.14277",
+    "state": 1,
+    "uptime": 2592000
+  }
+]
+```
+
+Or wrapped in a data field:
+
+```json
+{
+  "data": [ /* devices array */ ]
+}
+```
