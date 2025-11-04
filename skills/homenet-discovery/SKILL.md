@@ -14,7 +14,9 @@ Copy and track progress:
 Discovery Progress:
 - [ ] Step 0: Validate environment
 - [ ] Step 1: Check for existing config
-- [ ] Step 2-5: First-run setup (if needed)
+- [ ] Step 2: Ask what to discover (questions first)
+- [ ] Step 3: Show relevant setup instructions and wait
+- [ ] Step 4-5: Create directories and save config
 - [ ] Step 6: Run discovery methods
 - [ ] Step 7: Consolidate results
 - [ ] Step 8: Generate outputs
@@ -65,67 +67,23 @@ Read `~/.config/homenet/config.toml`
 **If exists:** Skip to Step 6
 **If missing:** Proceed to Step 2 (first run)
 
-### Step 2: Show Prerequisites Guide
+### Step 2: Ask Discovery Preferences
 
-Display to user:
-
+Display brief overview:
 ```
 # homenet - First-Time Setup
 
-Prerequisites are optional. Basic discovery works without any setup.
+Discovery supports multiple methods. All are optional:
 
-## SSH Key Access (Recommended)
-Deploy SSH keys for passwordless deep inspection:
-```bash
-ssh-copy-id user@host1.lab
-ssh-copy-id user@host2.lab
+- **Nmap:** Network-wide host scanning (basic discovery)
+- **SSH:** Deep inspection via authorized_keys (no passwords stored)
+- **DNS:** Zone transfers and queries for service discovery
+- **Manual files:** Command outputs you provide (RECOMMENDED - most detail)
+
+Manual files let you drop Proxmox/OPNsense/UniFi data for richer inventory.
 ```
 
-Without this: SSH discovery skipped (nmap still works)
-
-## DNS Zone Transfer (Optional)
-Enable AXFR on DNS server.
-
-**OPNsense/pfSense:** Services → Unbound DNS → Access Lists → Add your IP
-**Pi-hole:** Already allows local transfers
-
-Without this: DNS uses basic queries only
-
-## Network Scanning
-nmap required for host discovery.
-- Basic scanning works without sudo
-- OS detection requires sudo (will prompt if needed)
-
-## Manual Command Outputs (Optional)
-Drop command outputs in `/tmp/homenet/` for enhanced discovery.
-
-Create directory:
-```bash
-mkdir -p /tmp/homenet
-```
-
-**Proxmox:**
-```bash
-pvesh get /nodes --output-format json > /tmp/homenet/proxmox-nodes.json
-pvesh get /cluster/resources --output-format json > /tmp/homenet/proxmox-resources.json
-```
-
-**OPNsense:**
-Export config via WebUI: System → Configuration → Backups → Download
-Save as: `/tmp/homenet/opnsense-config.xml`
-
-**UniFi:**
-Login to controller, navigate to: `https://YOUR-CONTROLLER/api/s/default/stat/device`
-Save JSON as: `/tmp/homenet/unifi-devices.json`
-
----
-
-Ready to configure discovery methods?
-```
-
-### Step 3: Interactive Configuration
-
-Use AskUserQuestion tool:
+Then use AskUserQuestion tool:
 
 **Q1 - DNS Server:**
 "What's your local DNS server IP?"
@@ -161,6 +119,61 @@ Use AskUserQuestion tool:
 - home.lab
 - local
 - lan
+
+### Step 3: Show Setup Instructions
+
+Based on Q3 answers, display ONLY relevant setup instructions:
+
+**If "SSH probing" selected:**
+```
+## SSH Key Setup
+Deploy SSH keys for passwordless access (uses authorized_keys, no passwords stored):
+
+```bash
+ssh-copy-id {username-from-Q4}@host1.lab
+ssh-copy-id {username-from-Q4}@host2.lab
+```
+
+This adds your public key to each host's authorized_keys file.
+```
+
+**If "DNS enumeration" selected:**
+```
+## DNS Zone Transfer Setup
+Enable AXFR on your DNS server:
+
+**OPNsense/pfSense:** Services → Unbound DNS → Access Lists → Add your IP
+**Pi-hole:** Already allows local transfers
+```
+
+**If "Manual file parsing" selected:**
+```
+## Manual Command Outputs
+Drop command outputs in `/tmp/homenet/`:
+
+```bash
+mkdir -p /tmp/homenet
+```
+
+**Proxmox:**
+```bash
+pvesh get /nodes --output-format json > /tmp/homenet/proxmox-nodes.json
+pvesh get /cluster/resources --output-format json > /tmp/homenet/proxmox-resources.json
+```
+
+**OPNsense:**
+Export via WebUI: System → Configuration → Backups → Download
+Save as: `/tmp/homenet/opnsense-config.xml`
+
+**UniFi:**
+Navigate to: `https://YOUR-CONTROLLER/api/s/default/stat/device`
+Save JSON as: `/tmp/homenet/unifi-devices.json`
+```
+
+**Then STOP and ask:**
+"Setup instructions shown above. Ready to proceed with discovery?"
+
+Wait for user confirmation before continuing to Step 4.
 
 ### Step 4: Create Directory Structure
 
