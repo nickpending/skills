@@ -302,13 +302,19 @@ Outputs: DNS A records (hostname, IP).
 
 ### Step 7: Consolidate Results
 
-Merge all discovery results into unified inventory.
+Merge all discovery results into unified inventory:
 
-Deduplicate by MAC (preferred) or IP (fallback).
-Trust hierarchy: SSH > nmap > DNS > manual.
+```bash
+python3 scripts/consolidate.py \
+  /tmp/homenet/discovery-*.json \
+  > /tmp/homenet/inventory-consolidated.json
+```
 
-Store consolidated data with:
-- ip, mac, hostname, os, services, discovered_by, proxy_routes
+The script:
+- Deduplicates by MAC (preferred) or IP (fallback)
+- Uses trust hierarchy: SSH > nmap > DNS > manual
+- Merges services and metadata from multiple sources
+- Outputs unified inventory with: ip, mac, hostname, os, services, discovered_by, proxy_routes
 
 ### Step 8: Generate Outputs
 
