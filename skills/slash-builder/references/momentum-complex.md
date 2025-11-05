@@ -8,7 +8,15 @@ argument-hint: [optional-argument]
 
 Brief 2-3 sentence overview of command purpose, when to use it, and expected outcomes.
 
-**Variables**: CAPS are injected by hooks (see HTML comments above), `{vars}` are runtime values (find/calculate them), `[vars]` are template placeholders (substitute them).
+**Variables**: Variables in CAPS are injected by hooks (see HTML comments above), `{vars}` are runtime values (find/calculate them), `[vars]` are template placeholders (substitute them).
+
+**Key Paths**:
+- ARTIFACTS_DIR - Workflow artifacts (TASKS.md, ITERATION.md, etc.)
+- STATE_DIR - Saved state files
+- PROJECT_OBSIDIAN_DIR - Current project's obsidian directory
+- `{timestamp}` - Generated as YYYYMMDD-HHMM
+- `[task_id]` - From $ARGUMENTS
+[Only list variables actually used in this command - injected CAPS, environment $VARS, runtime `{vars}`, placeholders `[vars]`]
 
 ## ⚠️ CRITICAL: [KEY COMMAND PRINCIPLE]
 
@@ -21,24 +29,6 @@ Brief 2-3 sentence overview of command purpose, when to use it, and expected out
 - Action that should never happen
 - Pattern to avoid
 - Anti-pattern to watch for
-
-## Variables
-
-### From Arguments
-- TASK_NUMBER: $ARGUMENTS (task number to process)
-
-### Injected (from hooks - see HTML comments)
-- PROJECT_ROOT: Project root directory
-- ARTIFACTS_DIR: .workflow/artifacts/ (TASKS.md, ITERATION.md, etc.)
-- STATE_DIR: .workflow/state/ (saved state files)
-- WORKFLOW_PROJECTS: Obsidian projects directory
-- PROJECT_OBSIDIAN_DIR: Current project's obsidian directory
-- [Only list variables actually used in this command]
-
-### Runtime (calculated during execution)
-- timestamp: Generated as YYYYMMDD-HHMM (e.g., 20251029-1745)
-- current_task: Task object extracted from TASKS.md
-- [any other vars computed by command]
 
 ## Workflow
 

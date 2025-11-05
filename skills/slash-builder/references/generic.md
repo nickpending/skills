@@ -8,7 +8,14 @@ argument-hint: [optional-argument]
 
 Brief 2-3 sentence overview of command purpose, when to use it, and expected outcomes.
 
-**Variables**: CAPS are injected by hooks (see HTML comments above), `{vars}` are runtime values (find/calculate them), `[vars]` are template placeholders (substitute them).
+**Variables**: Variables in CAPS are injected by hooks (see HTML comments above), `{vars}` are runtime values (find/calculate them), `[vars]` are template placeholders (substitute them).
+
+**Key Paths**:
+- $HOME - User home directory
+- $PWD - Current working directory
+- `{config_path}` - Computed from args
+- `[selected_option]` - From user input
+[List ALL variables used - injected CAPS (if any), environment $VARS, runtime `{vars}`, placeholders `[vars]`]
 
 ## ⚠️ CRITICAL: [KEY COMMAND PRINCIPLE]
 
@@ -21,19 +28,6 @@ Brief 2-3 sentence overview of command purpose, when to use it, and expected out
 - Action that should never happen
 - Pattern to avoid
 - Anti-pattern to watch for
-
-## Variables
-
-### From Arguments
-- USER_INPUT: $ARGUMENTS (what user passed to command)
-
-### Injected (from hooks - see HTML comments)
-- INJECTED_VAR: (description of what this provides)
-- [Only list variables actually used in this command]
-
-### Runtime (calculated during execution)
-- timestamp: Generated as YYYYMMDD-HHMM (e.g., 20251029-1745)
-- [any other vars computed by command]
 
 ## Core Instructions
 

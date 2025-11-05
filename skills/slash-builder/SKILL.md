@@ -144,10 +144,17 @@ argument-hint: [if args needed]
 ```
 
 **Variables Section:**
-- List only variables ACTUALLY USED in the command
-- Include argument variable if command takes arguments
-- Include injected variables if momentum framework
-- Document any runtime-calculated variables
+
+1. Identify ALL variables the command will use (injected, environment, runtime, placeholders)
+2. Reference `references/command-writing-guide.md` for:
+   - Variable notation guide (CAPS, $VARS, `{runtime}`, `[placeholders]`)
+   - Complete momentum injected variable reference
+   - Selection guidance based on command purpose
+3. For momentum commands: analyze command purpose and select appropriate injected paths
+4. For generic commands: identify environment variables and runtime/placeholder values
+5. List ALL variables in Key Paths section - this is single source of truth
+6. Use appropriate notation for each variable type
+7. Variables defined once in Key Paths, then referenced in workflow without re-explanation
 
 **Core Instructions:**
 - Convert discovery "what it does" into bullet points

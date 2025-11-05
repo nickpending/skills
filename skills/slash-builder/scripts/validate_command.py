@@ -52,9 +52,8 @@ def check_required_sections(content: str) -> tuple[list[str], list[str]]:
     """Check for required markdown sections."""
     required_sections = [
         (r"^# .+", "Command name (H1 header)"),
-        (r"^## Variables", "Variables section"),
+        (r"\*\*Key Paths\*\*:", "Key Paths section"),
         (r"^## Core Instructions", "Core Instructions section"),
-        (r"^## Workflow", "Workflow section"),
         (r"^## Success Criteria", "Success Criteria section"),
     ]
 
@@ -73,7 +72,7 @@ def check_required_sections(content: str) -> tuple[list[str], list[str]]:
 def check_optional_sections(content: str) -> list[str]:
     """Check for optional sections that are present."""
     optional_sections = [
-        (r"^## Claude Code Patterns", "Claude Code Patterns"),
+        (r"^## Workflow", "Workflow section"),
         (r"^## Output Format", "Output Format"),
         (r"^## Error Handling", "Error Handling"),
         (r"^## Notes", "Notes"),
@@ -87,32 +86,36 @@ def check_optional_sections(content: str) -> list[str]:
     return found
 
 
-def validate_variables_section(content: str) -> list[str]:
-    """Check Variables section structure."""
+def validate_key_paths(content: str) -> list[str]:
+    """Check Key Paths section structure and notation."""
     issues = []
 
-    # Find Variables section
-    var_section_match = re.search(
-        r"^## Variables\s*\n(.+?)(?=^## |\Z)", content, re.MULTILINE | re.DOTALL
-    )
-
-    if not var_section_match:
+    # Find Key Paths section
+    if "**Key Paths**:" not in content:
+        issues.append("Missing **Key Paths**: section")
         return issues
 
-    var_content = var_section_match.group(1)
+    # Extract Key Paths content
+    key_paths_match = re.search(
+        r"\*\*Key Paths\*\*:\s*\n(.+?)(?=^## |\Z)", content, re.MULTILINE | re.DOTALL
+    )
 
-    # Check for subsections
-    expected_subsections = ["From Arguments", "Injected", "Runtime"]
+    if not key_paths_match:
+        return issues
 
-    found_subsections = []
-    for subsection in expected_subsections:
-        if f"### {subsection}" in var_content:
-            found_subsections.append(subsection)
+    paths_content = key_paths_match.group(1)
 
-    if not found_subsections:
-        issues.append(
-            "Variables section should have subsections (From Arguments/Injected/Runtime)"
-        )
+    # Check for at least some variable definitions
+    has_vars = bool(re.search(r"^- ", paths_content, re.MULTILINE))
+
+    if not has_vars:
+        issues.append("Key Paths section should list variables used in command")
+
+    # Optional: Check notation patterns
+    # - CAPS for injected
+    # - $VARS for environment
+    # - `{runtime}` for runtime values
+    # - `[placeholders]` for placeholders
 
     return issues
 
@@ -152,11 +155,13 @@ def validate_command_file(filepath: Path) -> dict:
     frontmatter_valid, frontmatter_issues = validate_yaml_frontmatter(content)
     required_found, required_missing = check_required_sections(content)
     optional_found = check_optional_sections(content)
-    var_issues = validate_variables_section(content)
+    key_paths_issues = validate_key_paths(content)
     criteria_issues = validate_success_criteria(content)
 
     # Compile results
-    all_issues = frontmatter_issues + required_missing + var_issues + criteria_issues
+    all_issues = (
+        frontmatter_issues + required_missing + key_paths_issues + criteria_issues
+    )
 
     return {
         "valid": len(all_issues) == 0,
@@ -186,7 +191,7 @@ def print_results(filepath: Path, results: dict) -> None:
         print("✗ YAML frontmatter issues")
 
     # Required sections
-    print(f"\n📋 Required Sections ({len(results['required_sections'])}/5):")
+    print(f"\n📋 Required Sections ({len(results['required_sections'])}/4):")
     for section in results["required_sections"]:
         print(f"  ✓ {section}")
 
@@ -217,7 +222,7 @@ def main() -> None:
         print("\nValidates slash command structure including:")
         print("  - YAML frontmatter syntax and fields")
         print("  - Required sections presence")
-        print("  - Variables section structure")
+        print("  - Key Paths section structure")
         print("  - Success criteria format")
         sys.exit(1)
 

@@ -129,26 +129,86 @@ IF file missing:
 
 ## Variable Documentation
 
-**List only variables actually used:**
+**Key Paths is the single source of truth** for ALL variables used in the command.
+
+**Standard format:**
 
 ```markdown
-## Variables
+**Variables**: Variables in CAPS are injected by hooks (see HTML comments above), `{vars}` are runtime values (find/calculate them), `[vars]` are template placeholders (substitute them).
 
-### From Arguments
-- TASK_NUM: $ARGUMENTS (task number to process)
-
-### Injected
-- ARTIFACTS_DIR: Location of TASKS.md
-- PROJECT_ROOT: Project directory
-
-### Runtime
-- timestamp: Generated as YYYYMMDD-HHMM
+**Key Paths**:
+- ARTIFACTS_DIR - Workflow artifacts (TASKS.md, ITERATION.md, etc.)
+- STATE_DIR - Saved state files
+- $HOME - User home directory
+- `{timestamp}` - Generated as YYYYMMDD-HHMM
+- `[task_id]` - From $ARGUMENTS
 ```
 
-**Don't include:**
-- Variables not referenced in command
-- Exhaustive lists of all possible injected vars
-- Explanations of how injection works
+**Variable notation guide:**
+- **CAPS** - Injected by momentum hooks (ARTIFACTS_DIR, PROJECT_ROOT)
+- **$VARS** - Environment variables ($HOME, $PWD, $USER)
+- **`{name}`** - Runtime calculated values (timestamps, parsed data)
+- **`[name]`** - Placeholders for user input or template values
+
+**Define ALL variables in Key Paths, then reference them in workflow steps without re-explanation.**
+
+### Momentum Injected Variables Reference
+
+**Core Paths** (most commonly used):
+- `ARTIFACTS_DIR` - Workflow artifacts (TASKS.md, ITERATION.md, PROJECT_SUMMARY.md)
+- `STATE_DIR` - Saved state files
+- `PROJECT_ROOT` - Project root directory
+- `WORKFLOW_DIR` - Workflow directory (resources, archives, templates)
+
+**Obsidian Integration**:
+- `PROJECT_OBSIDIAN_DIR` - Current project's obsidian directory
+- `WORKFLOW_PROJECTS` - Obsidian projects directory
+- `EXPLORATIONS_DIR` - Project explorations directory
+
+**Configuration & State**:
+- `MOMENTUM_CONFIG` - Momentum configuration directory
+- `MOMENTUM_HOME_DIR` - Momentum home directory
+- `MOMENTUM_STATE_DIR` - Runtime state directory
+
+**Session Context**:
+- `PROJECT` - Current project name
+- `MODE` - Current mode (project/assistant)
+- `SESSION_ID` - Current session identifier
+- `MODEFILE` - Temporary mode tracking file
+
+**Paths from Arguments**:
+- `$ARGUMENTS` - What user passed to command (use as base for parsing)
+
+**When to include which paths:**
+
+*Momentum injected:*
+- Task management → ARTIFACTS_DIR
+- State saving/loading → STATE_DIR, MOMENTUM_STATE_DIR
+- Project structure → PROJECT_ROOT, WORKFLOW_DIR
+- Obsidian integration → PROJECT_OBSIDIAN_DIR, WORKFLOW_PROJECTS, EXPLORATIONS_DIR
+- Configuration → MOMENTUM_CONFIG
+- Session tracking → PROJECT, MODE, SESSION_ID
+
+*Environment variables:*
+- User directories → $HOME, $PWD
+- User info → $USER, $SHELL
+- System paths → $PATH (rarely needed)
+
+*Runtime variables (examples):*
+- `{timestamp}` - Generated as YYYYMMDD-HHMM
+- `{computed_value}` - Calculated from inputs
+- `{parsed_data}` - Extracted from file/API
+
+*Placeholders (examples):*
+- `[user_input]` - From AskUserQuestion
+- `[file_path]` - From user arguments
+- `[selected_option]` - From selection process
+
+**Best practices:**
+- Only list variables actually referenced in the command
+- Group related paths (don't list everything)
+- Use descriptive comments after each path
+- Reference variables with @ shortcuts in workflow steps
 
 ## Token Efficiency
 
