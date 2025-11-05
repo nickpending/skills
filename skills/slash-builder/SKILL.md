@@ -72,8 +72,9 @@ Framework: [momentum/generic/other]
 **Plan command structure:**
 
 ### Template Selection
-- **Momentum:** Use `references/momentum-template.md`
-- **Generic:** Use `references/generic-template.md`
+- **Momentum Simple:** Use `references/momentum-simple.md` for linear step-by-step commands
+- **Momentum Complex:** Use `references/momentum-complex.md` for multi-phase commands with validation checkpoints
+- **Generic:** Use `references/generic.md` for non-momentum commands
 
 ### Core Sections (Always Include)
 - YAML frontmatter (allowed-tools, description, argument-hint)
@@ -84,10 +85,11 @@ Framework: [momentum/generic/other]
 - Success Criteria
 
 ### Optional Sections (Based on Need)
-- Claude Code Patterns (if command uses @shortcuts, AskUserQuestion, or Task tool)
 - Output Format (if structured output needed)
 - Error Handling (if complex error scenarios)
 - Notes (if special considerations exist)
+
+**Note:** Don't include educational sections explaining Claude Code features. Use patterns directly in workflow steps (see `references/command-writing-guide.md`).
 
 **Use AskUserQuestion to clarify:**
 
@@ -126,8 +128,9 @@ Special sections: [list if any]
 ### Step 1: Load Template
 
 Read the appropriate template:
-- Momentum: `references/momentum-template.md`
-- Generic: `references/generic-template.md`
+- Momentum Simple: `references/momentum-simple.md` for linear step-by-step execution
+- Momentum Complex: `references/momentum-complex.md` for multi-phase execution with checkpoints
+- Generic: `references/generic.md` for non-momentum commands
 
 ### Step 2: Customize Sections
 
@@ -163,9 +166,11 @@ argument-hint: [if args needed]
 **Optional Sections:**
 - Only include if needed based on planning
 - Remove sections that don't apply
-- Keep Claude Code Patterns if using @shortcuts, AskUserQuestion, or Task tool
 
-**CRITICAL: Apply prompt patterns from `references/prompt-patterns.md` when writing command text.**
+**CRITICAL:**
+- Apply patterns from `references/command-writing-guide.md` when writing commands
+- Use @ shortcuts, AskUserQuestion, Task tool directly in workflow - don't explain them
+- Follow prompt efficiency techniques from `references/prompt-patterns.md`
 
 ### Step 3: Write Command File
 
@@ -235,10 +240,12 @@ Next Steps:
 
 ### Step 2: Identify Framework and Load Template
 
-**Determine framework:**
+**Determine framework and complexity:**
 - Check for momentum-specific injected variables (PROJECT_ROOT, WORKFLOW_DIR, etc.)
-- If present: momentum framework → use `references/momentum-template.md`
-- If absent: generic framework → use `references/generic-template.md`
+- If present: momentum framework
+  - Simple linear execution → use `references/momentum-simple.md`
+  - Multi-phase with validation gates → use `references/momentum-complex.md`
+- If absent: generic framework → use `references/generic.md`
 
 **Load the appropriate template for reference.**
 
@@ -345,15 +352,22 @@ argument-hint: [optional-argument]
 
 ## Templates
 
-This skill includes two command templates:
+This skill includes three command templates:
 
-### momentum-template.md
-For Momentum workflow system commands. Includes:
+### momentum-simple.md
+For linear step-by-step momentum commands. Includes:
+- Step N execution pattern (Step 1, Step 2, etc.)
 - Full set of Momentum injected variables
-- Momentum-specific patterns
-- Workflow integration guidance
+- Simple sequential workflow
 
-### generic-template.md
+### momentum-complex.md
+For multi-phase momentum commands with validation gates. Includes:
+- PHASE N / CHECKPOINT N execution pattern
+- Optional Workflow summary section
+- Explicit validation checkpoints within phases
+- Full set of Momentum injected variables
+
+### generic.md
 For framework-agnostic commands. Includes:
 - Basic injected variable structure
 - Generic Claude Code patterns
@@ -390,8 +404,9 @@ python3 scripts/validate_command.py path/to/command.md
 
 **Only include relevant sections:**
 - Remove sections that don't apply
-- Don't include examples unless helpful
-- Keep output concise
+- Don't include educational content (explaining @ shortcuts, etc.)
+- Use patterns directly in workflow, don't document them
+- Keep commands focused on logic, not teaching
 
 **Variable documentation matters:**
 - List only variables actually used
@@ -401,9 +416,13 @@ python3 scripts/validate_command.py path/to/command.md
 ## Resources
 
 ### references/
+- `command-writing-guide.md` - Patterns, best practices, Claude Code capabilities
 - `prompt-patterns.md` - Language patterns and token efficiency techniques
-- `momentum-template.md` - Complete template with momentum-specific variables
-- `generic-template.md` - Framework-agnostic template
+- `momentum-simple.md` - Linear step-by-step momentum commands
+- `momentum-complex.md` - Multi-phase momentum commands with checkpoints
+- `generic.md` - Framework-agnostic template
 
 ### scripts/
 - `validate_command.py` - Structure validation script
+
+**Key principle:** Templates show structure. Guide shows how to write. Commands use patterns without explaining them.
