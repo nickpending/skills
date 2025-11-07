@@ -1,0 +1,22 @@
+{
+  "name": "voidwire-skills",
+  "version": "1.0.0",
+  "description": "Production-ready Claude Code skills for building workflows, commands, and automation",
+  "author": {
+    "name": "nickpending",
+    "email": "rudy@voidwire.info",
+    "url": "https://github.com/nickpending"
+  },
+  "homepage": "https://github.com/nickpending/skills",
+  "repository": "https://github.com/nickpending/skills",
+  "license": "MIT",
+  "keywords": [
+    "skills",
+    "workflows",
+    "automation",
+    "slash-commands",
+    "network-discovery",
+    "skill-builder",
+    "development-tools"
+  ]
+}

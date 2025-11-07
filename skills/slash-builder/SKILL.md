@@ -5,79 +5,57 @@ description: Build, migrate, and optimize Claude Code slash commands. Use when u
 
 # Slash Builder
 
-Build and improve Claude Code slash commands through conversational workflows.
+Build and improve Claude Code slash commands through focused, conversational workflows.
 
-## Intent Router
+## Workflow
 
-This skill provides three specialized workflows. Determine user intent and load the appropriate workflow.
+Copy and track progress:
+```
+Slash Builder Workflow:
+- [ ] Step 1: Determine user intent
+- [ ] Step 2: Load appropriate workflow
+- [ ] Step 3: Execute workflow steps
+```
 
-### When User Wants to Create New Command
+## Execute ALL steps in sequence
 
-**Trigger phrases:**
-- "Create a new command"
-- "Build a slash command for..."
-- "I need a command that..."
-- "Help me create..."
+### Step 1: Determine User Intent
 
-**Action:** Load `workflows/new.md` and follow its conversational building process.
+Identify which scenario matches user request:
 
-**Approach:** Collaborative command building through discussion, examples, and iteration.
+**Creating new command** - User wants to build from scratch
+- Trigger phrases: "Create a new command", "Build a slash command for...", "I need a command that...", "Help me create..."
+- Workflow: `workflows/new.md` (conversational collaborative building)
 
-### When User Wants to Migrate/Fix Structure
+**Fixing structure** - User has validation issues or old format
+- Trigger phrases: "Update to new format", "Fix the structure", "Migrate command", "Doesn't pass validation", "Convert old format"
+- Workflow: `workflows/migrate.md` (structural migration with conflict detection)
 
-**Trigger phrases:**
-- "Update this command to new format"
-- "Fix the structure of..."
-- "Migrate command to..."
-- "This command doesn't pass validation"
-- "Convert old format to new"
+**Improving existing** - User wants clarity/efficiency improvements
+- Trigger phrases: "Improve this command", "Make this clearer", "Reduce tokens", "Tighten up", "Refactor for clarity"
+- Workflow: `workflows/improve.md` (token optimization using prompt patterns)
 
-**Action:** Load `workflows/migrate.md` and follow its structural migration process.
+**IF user intent unclear:**
+ASK: "Are you looking to create a new command, fix an existing command's structure, or improve an already-working command?"
 
-**Approach:** Fix format issues while preserving all logic. Detect conflicts, offer options, never silently delete.
+### Step 2: Load Appropriate Workflow
 
-### When User Wants to Improve Existing Command
+Based on intent determined in Step 1:
 
-**Trigger phrases:**
-- "Improve this command"
-- "Make this clearer"
-- "Reduce tokens in..."
-- "Tighten up this command"
-- "Refactor for clarity"
+**IF creating new command:**
+READ `workflows/new.md`
 
-**Action:** Load `workflows/improve.md` and follow its optimization process.
+**IF fixing structure:**
+READ `workflows/migrate.md`
 
-**Approach:** Enhance clarity and token efficiency using prompt engineering patterns.
+**IF improving existing:**
+READ `workflows/improve.md`
 
-## Routing Logic
+### Step 3: Execute Workflow Steps
 
-**Step 1: Determine Intent**
+Follow the loaded workflow file exactly as written.
 
-Ask clarifying question if ambiguous:
-- "Are you looking to create a new command, fix an existing command's structure, or improve an already-working command?"
-
-**Step 2: Load Appropriate Workflow**
-
-Based on intent:
-- **New** → Read and execute `workflows/new.md`
-- **Migrate** → Read and execute `workflows/migrate.md`
-- **Improve** → Read and execute `workflows/improve.md`
-
-**Step 3: Follow Workflow Instructions**
-
-Each workflow file contains complete, detailed instructions for that specific scenario. Follow the workflow exactly as written.
-
-## Resources Available
-
-**Templates** (`references/`):
-- `momentum-simple.md` - Linear step-by-step commands
-- `momentum-complex.md` - Multi-phase commands with checkpoints
-- `generic.md` - Framework-agnostic commands
-- `command-writing-guide.md` - Comprehensive patterns and best practices
-- `prompt-patterns.md` - Token efficiency techniques
-
-**Scripts** (`scripts/`):
-- `validate_command.py` - Structure validation
+Each workflow contains complete step-by-step instructions for its specific scenario.
 
 ## Key Principles
 
@@ -99,10 +77,18 @@ Each workflow file contains complete, detailed instructions for that specific sc
 - Follow established patterns
 - Validate structure
 
-## Important Notes
+## Workflow Guidelines
 
-- Each workflow handles its scenario completely - don't mix approaches
-- If command needs migration AND improvement, do migration first
-- Always validate after changes
-- Show work incrementally, get feedback often
-- Reference guides but don't duplicate them in commands
+**Separation of concerns:**
+- Each workflow handles one scenario completely
+- If command needs migration AND improvement, run migration first, then improve
+
+**Quality gates:**
+- Always run validation after structural changes
+- Show work incrementally
+- Get user feedback before major changes
+
+**Collaboration:**
+- Be conversational, not interrogative
+- Show examples and options
+- Iterate based on feedback

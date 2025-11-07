@@ -2,227 +2,307 @@
 
 Enhance command clarity and token efficiency using prompt engineering patterns.
 
-## Approach
+## Execution Requirements
 
-This workflow:
-- Assumes command is structurally compliant
-- Focuses on clarity and token efficiency
-- Uses patterns from `references/prompt-patterns.md`
-- Proposes specific improvements
-- Gets feedback before applying
+**YOU MUST execute these steps sequentially.**
 
-## Prerequisites
+This workflow improves structurally-compliant commands for clarity and token efficiency. Each step analyzes, proposes improvements, gets approval, and applies changes incrementally. Do not skip approval gates or apply changes without user confirmation.
 
-**Command must already:**
+**Prerequisites - Command must already:**
 - Pass validation (use `/migrate` first if needed)
 - Have correct structure (**Key Paths**, required sections)
 - Work functionally
 
 ## Step 1: Read and Understand
 
-READ the existing command thoroughly.
+**REQUIRED ACTIONS:**
 
-Understand:
-- What it accomplishes
-- Current workflow structure
-- Pain points or unclear areas
-- Token usage (verbose vs concise)
+1. READ the existing command file completely
+
+2. ANALYZE and RECORD:
+   - What it accomplishes (core purpose)
+   - Current workflow structure (linear vs phased)
+   - Pain points or unclear areas
+   - Token usage (verbose vs concise sections)
+
+3. CREATE initial assessment:
+   ```
+   Command: [name]
+   Purpose: [what it does]
+   Structure: [linear/phased]
+   Initial observations:
+   - Verbosity level: [terse/moderate/verbose]
+   - Clarity issues: [list if any]
+   - Strong points: [what works well]
+   ```
+
+4. SHOW assessment to user
+
+**VERIFICATION:**
+Complete understanding of command purpose and current state.
+
+**STOP before Step 2.**
 
 ## Step 2: Analyze for Improvements
 
-**REQUIRED:** READ `references/prompt-patterns.md` to load efficiency patterns.
+**REQUIRED ACTIONS:**
 
-### Token Efficiency Opportunities
+1. READ `references/prompt-patterns.md` to load efficiency patterns
 
-Check for:
+2. SCAN command for token efficiency opportunities:
 
-**Redundant phrasing:**
-- "In order to" → just explain the action
-- "Please make sure to" → imperative instead
-- "You should" → directive form
+   **Check for redundant phrasing:**
+   - "In order to" → just explain the action
+   - "Please make sure to" → imperative instead
+   - "You should" → directive form
 
-**Verbose instructions:**
-- Long explanations → bullet points
-- Repeated context → reference earlier sections
-- Over-documented obvious steps
+   **Check for verbose instructions:**
+   - Long explanations → bullet points
+   - Repeated context → reference earlier sections
+   - Over-documented obvious steps
 
-**Example issue:**
-```markdown
-In order to complete the task, you should first make sure to
-read the TASKS.md file and then locate the task that is currently
-marked as in progress.
-```
+   **Example of issue:**
+   ```markdown
+   In order to complete the task, you should first make sure to
+   read the TASKS.md file and then locate the task that is currently
+   marked as in progress.
+   ```
 
-**Improved:**
-```markdown
-Read TASKS.md and find task marked 🔄 In Progress.
-```
+   **Improved version:**
+   ```markdown
+   Read TASKS.md and find task marked 🔄 In Progress.
+   ```
 
-### Clarity Improvements
+3. SCAN command for clarity opportunities:
 
-**Check for:**
+   **Check for ambiguous instructions:**
+   - Unclear success criteria
+   - Vague conditional logic
+   - Missing error handling
 
-**Ambiguous instructions:**
-- Unclear success criteria
-- Vague conditional logic
-- Missing error handling
+   **Check for poor organization:**
+   - Steps in wrong order
+   - Related instructions scattered
+   - Missing phase summaries
 
-**Poor organization:**
-- Steps in wrong order
-- Related instructions scattered
-- Missing phase summaries
+   **Check for weak directives:**
+   - Hedging language ("maybe", "perhaps")
+   - Passive voice
+   - Unclear requirements
 
-**Weak directives:**
-- Hedging language ("maybe", "perhaps")
-- Passive voice
-- Unclear requirements
+4. IDENTIFY pattern application opportunities:
 
-### Pattern Application
+   **Imperative directives:**
+   - REQUIRED / MUST / ALWAYS / NEVER
+   - Strong action verbs
+   - Clear constraints
 
-**Look for opportunities to apply:**
+   **Conditional logic:**
+   - IF/THEN structure
+   - Clear branching
+   - Explicit error handling
 
-**Imperative directives:**
-- REQUIRED / MUST / ALWAYS / NEVER
-- Strong action verbs
-- Clear constraints
+   **Phased execution:**
+   - Named phases
+   - Checkpoint validation
+   - Clear progression
 
-**Conditional logic:**
-- IF/THEN structure
-- Clear branching
-- Explicit error handling
+5. CREATE improvement inventory (list all opportunities found)
 
-**Phased execution:**
-- Named phases
-- Checkpoint validation
-- Clear progression
+**VERIFICATION:**
+Complete analysis with specific examples from command.
+
+**STOP before Step 3.**
 
 ## Step 3: Propose Improvements
 
-**For each improvement opportunity, explain:**
+**REQUIRED ACTIONS:**
 
-1. **Current state:** Show the existing text
-2. **Issue:** Why it could be better
-3. **Proposed improvement:** Show new version
-4. **Rationale:** Why this is clearer/more efficient
+1. For EACH improvement from Step 2 inventory, CREATE structured proposal:
 
-**Example proposal:**
+   **Format:**
+   - **Current state:** Show existing text
+   - **Issue:** Why it could be better
+   - **Proposed improvement:** Show new version
+   - **Rationale:** Why this is clearer/more efficient
 
-"**Current workflow section (45 tokens):**
-```
-First you should read the TASKS.md file to understand what task
-needs to be completed. After reading, verify that the task is
-currently in progress before proceeding with completion.
-```
+   **Example:**
+   ```
+   Current workflow section (45 tokens):
+   First you should read the TASKS.md file to understand what task
+   needs to be completed. After reading, verify that the task is
+   currently in progress before proceeding with completion.
 
-**Issue:** Verbose, hedging language, buried requirement
+   Issue: Verbose, hedging language, buried requirement
 
-**Proposed (18 tokens):**
-```
-READ TASKS.md and locate the task.
+   Proposed (18 tokens):
+   READ TASKS.md and locate the task.
 
-VERIFY: Task is currently 🔄 In Progress
-```
+   VERIFY: Task is currently 🔄 In Progress
 
-**Rationale:** Cuts 27 tokens, clearer directive, explicit verification
+   Rationale: Cuts 27 tokens, clearer directive, explicit verification
 
-Would this work better?"
+   Would this work better?
+   ```
+
+2. SHOW all proposals to user
+
+3. WAIT for feedback on each proposal
+
+4. RECORD user decisions (approve/reject/modify)
+
+**VERIFICATION:**
+All improvements proposed with clear before/after examples.
+
+**STOP before Step 4.**
 
 ## Step 4: Discuss Trade-offs
 
-**Some improvements have trade-offs:**
+**REQUIRED ACTIONS:**
 
-**Conciseness vs. Clarity:**
-- Very terse may lose beginners
-- Very verbose wastes tokens
-- Find balance for audience
+1. IDENTIFY any trade-offs in proposed improvements
 
-**Example:**
-"This instruction could be:
-- Terse: 'Mark complete with notes'
-- Detailed: 'Update task status from In Progress to Complete and document...'
-- Balanced: 'Mark task ✅ Complete with implementation notes'
+2. **FOR each trade-off, EXPLAIN options:**
 
-Which level works for your users?"
+   **Conciseness vs. Clarity:**
+   ```
+   This instruction could be:
+   - Terse: 'Mark complete with notes'
+   - Detailed: 'Update task status from In Progress to Complete and document...'
+   - Balanced: 'Mark task ✅ Complete with implementation notes'
 
-**Structure vs. Flexibility:**
-- Rigid structure ensures consistency
-- Flexible structure adapts to edge cases
-- Consider command's variability
+   Which level works for your users?
+   ```
 
-**Ask about preferences.**
+   **Structure vs. Flexibility:**
+   - Rigid structure ensures consistency
+   - Flexible structure adapts to edge cases
+   - Consider command's variability
+
+3. ASK user about preferences for each trade-off
+
+4. WAIT for decisions
+
+5. RECORD user preferences
+
+**VERIFICATION:**
+All trade-offs discussed and user preferences recorded.
+
+**STOP before Step 5.**
 
 ## Step 5: Build Improvement Plan
 
-**Summarize all proposed changes:**
+**REQUIRED ACTIONS:**
 
-```
-Improvement plan for [command-name]:
+1. COMPILE all approved improvements from Steps 3-4
 
-Token savings:
-- Variables section: -15 tokens (removed repetition)
-- Workflow steps: -32 tokens (bullet points, imperatives)
-- Error handling: -8 tokens (clearer conditionals)
-Total: -55 tokens (~12% reduction)
+2. CALCULATE token impact and clarity gains
 
-Clarity improvements:
-- Added explicit VERIFY checkpoints
-- Clearer IF/THEN logic for errors
-- Stronger directives (REQUIRED/NEVER)
-- Better phase naming
+3. CREATE improvement plan summary:
+   ```
+   Improvement plan for [command-name]:
 
-These changes keep all functionality while making command
-clearer and more efficient.
+   Token savings:
+   - Variables section: -15 tokens (removed repetition)
+   - Workflow steps: -32 tokens (bullet points, imperatives)
+   - Error handling: -8 tokens (clearer conditionals)
+   Total: -55 tokens (~12% reduction)
 
-Proceed with improvements?
-```
+   Clarity improvements:
+   - Added explicit VERIFY checkpoints
+   - Clearer IF/THEN logic for errors
+   - Stronger directives (REQUIRED/NEVER)
+   - Better phase naming
 
-**Wait for confirmation.**
+   These changes keep all functionality while making command
+   clearer and more efficient.
+
+   Proceed with improvements?
+   ```
+
+4. SHOW plan to user
+
+5. ASK for final approval
+
+6. WAIT for confirmation
+
+**STOP if user does not approve.**
+
+**IF approved, proceed to Step 6.**
 
 ## Step 6: Apply Improvements
 
-**Make changes incrementally:**
+**REQUIRED ACTIONS:**
 
-**For each section:**
-1. Show original
-2. Show improved version
-3. Confirm it maintains meaning
+1. FOR each approved improvement, execute incrementally:
 
-**Example:**
+   **Process per section:**
+   - SHOW original
+   - SHOW improved version
+   - CONFIRM it maintains meaning
+   - APPLY edit using Edit tool
+   - VERIFY change applied correctly
 
-"**Updating Critical section:**
+   **Example execution:**
+   ```
+   Updating Critical section:
 
-Before:
-```markdown
-Make sure you don't skip the implementation notes as they
-are important for future reference.
-```
+   Before:
+   Make sure you don't skip the implementation notes as they
+   are important for future reference.
 
-After:
-```markdown
-**NEVER:**
-- Skip implementation notes
-```
+   After:
+   **NEVER:**
+   - Skip implementation notes
 
-Same requirement, 70% fewer tokens. Correct?"
+   Same requirement, 70% fewer tokens. Correct?
+   ```
+
+2. WAIT for confirmation on each section before proceeding to next
+
+3. **NEVER:**
+   - Apply multiple changes without showing each
+   - Skip showing before/after
+   - Change logic without explicit approval
+
+**VERIFICATION:**
+All approved improvements applied and confirmed section by section.
+
+**STOP before Step 7.**
 
 ## Step 7: Validate and Review
 
-VERIFY validation still passes:
-```bash
-python3 scripts/validate_command.py [command-file]
-```
+**REQUIRED ACTIONS:**
 
-Review overall changes:
+1. RUN validation to verify structural compliance:
+   ```bash
+   python3 scripts/validate_command.py [command-file]
+   ```
 
-"Improvements applied:
-- Token reduction: 55 tokens (12%)
-- Clarity: Stronger directives, explicit checkpoints
-- Structure: Maintained all required sections
-- Logic: All workflow steps preserved
+2. SHOW validation results
 
-Command is tighter and clearer while keeping functionality.
+3. **IF validation fails:**
+   - FIX issues
+   - RE-RUN validation
+   - Do not proceed until passing
 
-Test the command to confirm it works as expected."
+4. **IF validation passes:**
+   - CREATE final summary:
+     ```
+     Improvements applied:
+     - Token reduction: 55 tokens (12%)
+     - Clarity: Stronger directives, explicit checkpoints
+     - Structure: Maintained all required sections
+     - Logic: All workflow steps preserved
+
+     Command is tighter and clearer while keeping functionality.
+
+     Test the command to confirm it works as expected.
+     ```
+
+5. SHOW summary to user
+
+**Improvement workflow complete.**
 
 ## Application Examples
 

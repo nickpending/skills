@@ -2,259 +2,373 @@
 
 Convert existing commands to new structural standard while preserving all logic and functionality.
 
-## Approach
+## Execution Requirements
 
-This workflow:
-- Fixes structural issues (old format → new format)
-- Preserves ALL logic, variables, workflow steps, critical warnings
-- Detects conflicts and offers options
-- **NEVER silently deletes anything**
+**YOU MUST execute these steps sequentially.**
 
-## What Gets Preserved
+This workflow fixes structural format issues while preserving all command logic. Each step builds on the previous. Do not skip ahead or produce final output without completing all steps.
 
-**Keep intact:**
-- All variables actually used in workflow
+**Migration preserves:**
+- All variables actually used
 - Complete workflow logic and steps
 - Critical warnings and requirements
 - Error handling patterns
 - Success criteria
-- Command-specific styling (bold, formatting)
+- Command-specific formatting
 
-**Can be removed:**
-- Emojis (unless part of critical warnings)
-- Old subsection structures that don't fit new format
+**Migration removes:**
+- Decorative emojis
+- Old subsection structures (## Variables with ### subheadings)
 
-## What Changes
-
-**Structural updates:**
-- Add YAML frontmatter if missing
-- Convert `## Variables` subsections → `**Key Paths:**` format
-- Ensure required sections present (H1, Core Instructions, Success Criteria)
-- Add optional sections if beneficial (Workflow summary, Error Handling)
+**Migration adds:**
+- YAML frontmatter
+- **Key Paths**: format for variables
+- Required sections (H1, Core Instructions, Success Criteria)
 
 ## Step 1: Read and Analyze
 
-READ the existing command file.
+**REQUIRED ACTIONS:**
 
-Understand what it does:
-- Core purpose and workflow
-- Framework (momentum vs generic)
-- Complexity (simple linear vs multi-phase)
-- All variables used
+1. READ the existing command file completely
+2. IDENTIFY these elements:
+   - Core purpose and workflow
+   - Framework type (momentum vs generic)
+   - Workflow structure (linear Step N vs multi-phase CHECKPOINT pattern)
+   - All variables used (CAPS, $ENV, {runtime}, [placeholders])
+   - Critical sections (## ⚠️ CRITICAL)
+
+3. CREATE analysis summary:
+   ```
+   Command: [name]
+   Framework: [momentum/generic]
+   Structure: [linear/phased]
+   Variables found: [list]
+   Has custom critical section: [yes/no]
+   ```
+
+4. SHOW summary to user
+
+**STOP before Step 2.**
 
 ## Step 2: Run Validation
 
-RUN validation script:
-```bash
-python3 scripts/validate_command.py [existing-command.md]
-```
+**REQUIRED ACTIONS:**
 
-Show results to user:
-"Validation found these issues:
-- Missing YAML frontmatter
-- Using old ## Variables format instead of **Key Paths:**
-- Missing Workflow summary section
+1. RUN validation script:
+   ```bash
+   python3 scripts/validate_command.py [existing-command.md]
+   ```
 
-Let's fix these while preserving all your command logic."
+2. SHOW output to user with explanation:
+   ```
+   Validation found these issues:
+   - [Issue 1]
+   - [Issue 2]
+   - [Issue 3]
+
+   Let's fix these while preserving all command logic.
+   ```
+
+**VERIFICATION:**
+Validation output must be shown to user before proceeding.
+
+**STOP before Step 3.**
 
 ## Step 3: Determine Template
 
-Based on analysis:
+**REQUIRED ACTIONS:**
 
-**IF momentum command** (uses PROJECT_ROOT, ARTIFACTS_DIR, etc.):
-- Simple linear workflow → `references/momentum-simple.md`
-- Multi-phase with checkpoints → `references/momentum-complex.md`
+1. CHECK framework from Step 1 analysis
 
-**IF generic command:**
-- Use `references/generic.md`
+2. SELECT template:
 
-Explain choice:
-"This command uses momentum variables and has checkpoint structure, so we'll align with `momentum-complex.md` template."
+   **IF momentum command** (uses ARTIFACTS_DIR, PROJECT_ROOT, etc):
+   - Linear workflow (Step N pattern) → `references/momentum-simple.md`
+   - Phased workflow (CHECKPOINT pattern) → `references/momentum-complex.md`
 
-**REQUIRED:** READ the selected template file.
+   **IF generic command:**
+   - `references/generic.md`
 
-**REQUIRED:** READ `references/command-writing-guide.md` for Key Paths format and variable notation.
+3. EXPLAIN choice to user:
+   ```
+   This command uses [framework] variables and [structure] structure,
+   so we'll align with [template-name] template.
+   ```
+
+4. READ the selected template file
+
+5. READ `references/command-writing-guide.md` for Key Paths format
+
+**VERIFICATION:**
+Both files (template + guide) must be read before proceeding.
+
+**STOP before Step 4.**
 
 ## Step 4: Detect Conflicts
 
-Check for patterns that don't fit new structure:
+**REQUIRED ACTIONS:**
 
-### Variable Conflicts
+### Check 1: Variable Format
 
-**IF command has variables in old subsection format:**
-```markdown
-## Variables
+1. SEARCH command for `## Variables` heading
+2. CHECK if it has subsections (### Injected, ### Runtime, etc.)
 
-### Injected
-- ARTIFACTS_DIR - ...
+**IF old subsection format found:**
+- SHOW user the current format
+- SHOW proposed Key Paths conversion
+- ASK: "This preserves all your variables in new format. Look correct?"
+- WAIT for confirmation
+- RECORD user's approval
 
-### Runtime
-- {timestamp} - ...
+**IF no subsections (already Key Paths format):**
+- No conflict, proceed to Check 2
+
+### Check 2: Critical Section Format
+
+1. SEARCH command for `## ⚠️ CRITICAL` heading
+2. EXTRACT critical section content
+3. CHECK for emojis (🛑, ⚠️) or non-standard formatting
+
+**IF custom formatting found:**
+
+**STOP - YOU MUST NOT PROCEED WITHOUT USER INPUT**
+
+SHOW user the conflict:
 ```
+Your command has this critical section:
+[show exact current format]
 
-**Explain:** "Old format uses subsections. New format uses single Key Paths list."
-
-**Show conversion:**
-```markdown
-**Key Paths**:
-- ARTIFACTS_DIR - Workflow artifacts
-- `{timestamp}` - Generated as YYYYMMDD-HHMM
-```
-
-**Ask:** "This preserves all your variables in new format. Look correct?"
-
-### Critical Section Conflicts
-
-**If command has custom critical section:**
-```markdown
-## ⚠️ CRITICAL: MARK TASK COMPLETE AND DOCUMENT ⚠️
-
-**🛑 NO REDUNDANT DEMOS**
-**🛑 CAPTURE WHAT HAPPENED**
-```
-
-**Template has placeholder:**
-```markdown
-## ⚠️ CRITICAL: [KEY COMMAND PRINCIPLE]
+Template standard format is:
+## ⚠️ CRITICAL: [PRINCIPLE]
 
 **REQUIRED:**
-- ...
+- [items]
+
+**NEVER:**
+- [items]
 ```
 
-**Explain conflict:** "Your command has specific critical warnings. Template has placeholder structure."
+OFFER options:
+1. Keep exact format (preserve emojis and styling)
+2. Convert to standard REQUIRED/NEVER format
+3. Hybrid approach
 
-**Offer options:**
-1. Keep your exact critical section (including emojis, text)
-2. Adapt your warnings to template's REQUIRED/NEVER format
-3. Hybrid: Use template structure but keep your specific warnings
+ASK: "Which option do you prefer?"
 
-**Ask:** "Which approach do you prefer?"
+WAIT for user response.
 
-**Never silently choose - always ask.**
+RECORD choice before proceeding.
 
-### Workflow Structure Conflicts
+**IF already in standard format:**
+- No conflict, proceed to Check 3
 
-**If command has unique workflow pattern not in template:**
+### Check 3: Workflow Pattern Compatibility
 
-**Explain:** "Your command uses pattern X, but template uses pattern Y."
+1. COMPARE command workflow structure to template structure
+2. CHECK if patterns match (Step N vs PHASE/CHECKPOINT, section order, etc.)
 
-**Show both patterns.**
+**IF patterns differ significantly:**
 
-**Offer options:**
-1. Keep your pattern (may not match template perfectly but works)
-2. Adapt to template pattern (more consistent with other commands)
-3. Custom solution that fits both needs
+**STOP - GET USER DECISION**
 
-**Ask:** "What would work better for your use case?"
+EXPLAIN difference:
+```
+Your command uses [specific pattern].
+Template uses [different pattern].
+```
 
-### Content That Doesn't Fit
+OFFER options:
+1. Keep your pattern (works but differs from template)
+2. Adapt to template pattern (more consistency)
+3. Hybrid approach
 
-**If command has sections/content with no clear home in new structure:**
+ASK: "Which approach works better for this command?"
 
-**Stop and explain:** "This command has [specific content] that doesn't fit standard sections."
+WAIT for user choice.
 
-**Show the content.**
+**IF patterns compatible:**
+- No conflict, proceed to Check 4
 
-**Offer options:**
+### Check 4: Unmapped Content
+
+1. SCAN for sections not in template structure
+2. LIST any unique sections found
+
+**IF unique sections exist:**
+
+**STOP - GET USER DECISION**
+
+SHOW content:
+```
+Found these sections not in template:
+- [Section name]: [brief description]
+```
+
+OFFER placement options:
 1. Move to Notes section
 2. Create custom section
 3. Integrate into Core Instructions
-4. Move to separate reference doc
+4. Move to separate reference file
 
-**Ask:** "Where should this live?"
+ASK: "Where should each section go?"
+
+WAIT for user decisions.
+
+**IF no unique sections:**
+- No conflict, all checks complete
+
+**VERIFICATION:**
+All conflict checks must be complete and user decisions recorded.
+
+**STOP before Step 5.**
 
 ## Step 5: Build Migration Plan
 
-**Summarize all changes:**
+**REQUIRED ACTIONS:**
+
+1. COMPILE all decisions from Step 4 checks
+2. CREATE migration plan listing every change
+3. SHOW plan to user:
 
 ```
 Migration plan for [command-name]:
 
-1. Add YAML frontmatter with tools: [list]
-2. Convert Variables subsections → Key Paths format
-3. [If conflict] Preserve critical section exactly as-is
-4. Add Workflow summary section
-5. Keep all existing workflow steps
-6. Preserve all variables: [list]
+Structural changes:
+1. Add YAML frontmatter with tools: [list from analysis]
+2. Convert Variables → Key Paths format [or "already compliant"]
+3. Critical section: [keep exact / convert to REQUIRED-NEVER / hybrid]
+4. Workflow pattern: [keep current / adapt to template]
+5. Unique sections: [placement decisions from Check 4]
 
-This keeps all your logic while fixing structure.
+Preservation confirmed:
+- All [N] variables maintained
+- Complete workflow logic intact
+- All error handling preserved
+
+This migration fixes structure while preserving all functionality.
 Proceed with these changes?
 ```
 
-**Wait for confirmation.**
+4. ASK user for approval
+5. WAIT for confirmation
+
+**STOP if user does not approve.**
+
+**IF approved, proceed to Step 6.**
 
 ## Step 6: Apply Changes
 
-**Make structural updates using Edit tool:**
+**REQUIRED ACTIONS:**
 
-**For each change:**
-1. Show old structure
-2. Show new structure
-3. Confirm preservation of logic
+Execute migration plan from Step 5 using Edit tool.
 
-**Never delete content without explaining where it moved.**
+**For each structural change:**
 
-### Example: Variable Section Migration
+1. SHOW user the current section
+2. SHOW the migrated version
+3. VERIFY logic preservation
+4. APPLY edit using Edit tool
+5. CONFIRM change with user
 
-**Old:**
-```markdown
+**Example execution:**
+
+```
+Migrating Variables section:
+
+Current format:
 ## Variables
-
 ### Injected
 - ARTIFACTS_DIR - Workflow artifacts
-- PROJECT_ROOT - Project root
+...
 
-### Runtime
-- Current date for timestamp
-```
-
-**New:**
-```markdown
+New format:
 **Key Paths**:
 - ARTIFACTS_DIR - Workflow artifacts
-- PROJECT_ROOT - Project root
-- `{current_date}` - Generated as YYYY-MM-DD for timestamp
+- `{timestamp}` - Generated runtime
+...
+
+All [N] variables preserved with proper notation.
+Applying change now.
 ```
 
-**Confirm:** "All variables preserved, notation clarified. Correct?"
+**VERIFICATION:**
+After each edit, confirm the change preserved all content.
+
+**NEVER:**
+- Delete content without showing where it moved
+- Skip showing before/after
+- Make multiple changes without confirmation
+
+**STOP before Step 7.**
 
 ## Step 7: Validate Changes
 
-RUN validation again:
-```bash
-python3 scripts/validate_command.py [migrated-command.md]
-```
+**REQUIRED ACTIONS:**
 
-Show comparison:
-```
-Before: 4 issues
-After: All checks pass ✓
+1. RUN validation script on migrated file:
+   ```bash
+   python3 scripts/validate_command.py [migrated-command.md]
+   ```
 
-Structure now compliant:
-✓ YAML frontmatter
-✓ Key Paths format
-✓ All required sections
-✓ All logic preserved
-```
+2. SHOW comparison to user:
+   ```
+   Validation Results:
+
+   Before migration: [N] issues
+   After migration: [result]
+
+   Structure compliance:
+   ✓ YAML frontmatter present
+   ✓ Key Paths format correct
+   ✓ Required sections present
+   ✓ Logic preservation verified
+   ```
+
+3. **IF validation fails:**
+   - SHOW specific errors
+   - FIX issues
+   - RE-RUN validation
+   - Do not proceed until passing
+
+4. **IF validation passes:**
+   - Proceed to Step 8
+
+**VERIFICATION:**
+Validation must pass before proceeding.
+
+**STOP before Step 8.**
 
 ## Step 8: Review and Confirm
 
-**IF in git repository:** Show diff:
-```bash
-git diff [command-file]
-```
+**REQUIRED ACTIONS:**
 
-Summarize changes:
-"Changes made:
-- Added frontmatter
-- Converted variable format
-- Preserved all [X] variables
-- Kept complete workflow logic
-- Maintained critical warnings
+1. **IF in git repository:**
+   RUN git diff to show changes:
+   ```bash
+   git diff [command-file]
+   ```
 
-Command now passes validation while keeping all functionality.
+2. CREATE final summary:
+   ```
+   Migration Complete
 
-Ready to save these changes?"
+   Changes applied:
+   - [List each structural change]
+   - [List what was preserved]
+
+   Verification:
+   - All [N] variables intact
+   - Complete workflow logic preserved
+   - Validation passing
+
+   Command structure now compliant while maintaining all functionality.
+   ```
+
+3. SHOW summary to user
+
+4. ASK: "Migration successful. Command ready to use."
+
+**Migration workflow complete.**
 
 ## Conflict Resolution Principles
 
