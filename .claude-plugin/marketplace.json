@@ -1,6 +1,6 @@
 {
   "name": "voidwire-skills",
-  "description": "Marketplace for Voidwire skills library",
+  "description": "Production-ready Claude Code skills for building workflows, commands, and automation",
   "owner": {
     "name": "nickpending",
     "email": "rudy@voidwire.info"
@@ -11,7 +11,7 @@
       "description": "Interactive slash command builder with validation and prompt engineering patterns",
       "version": "1.4.0",
       "source": "./",
-      "strict": false,
+      "strict": true,
       "skills": [
         "./skills/slash-builder"
       ]
@@ -21,7 +21,7 @@
       "description": "Discover and map your home network via nmap, SSH, and DNS with automated topology generation",
       "version": "1.1.0",
       "source": "./",
-      "strict": false,
+      "strict": true,
       "skills": [
         "./skills/homenet-discovery"
       ]
@@ -31,7 +31,7 @@
       "description": "Build and improve Claude Code skills through conversational discovery with type-aware guidance",
       "version": "1.0.0",
       "source": "./",
-      "strict": false,
+      "strict": true,
       "skills": [
         "./skills/skill-builder"
       ]
