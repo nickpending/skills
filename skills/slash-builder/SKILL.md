@@ -1,6 +1,6 @@
 ---
 name: slash-builder
-description: Build, migrate, and optimize Claude Code slash commands. Use when user needs to create new commands from scratch, convert old command formats to current standards, fix structural validation issues, or improve existing commands for clarity and token efficiency. Handles momentum workflow commands and generic slash commands.
+description: Build, migrate, and optimize Claude Code slash commands. Use when user wants to create new command, build slash command, migrate command to new format, convert old command format, update command to new format, fix command structure, fix validation issues, improve command clarity, reduce tokens, tighten command, refactor command for clarity, or optimize slash commands. Handles momentum workflow commands and generic slash commands.
 ---
 
 # Slash Builder

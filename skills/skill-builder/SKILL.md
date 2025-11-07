@@ -1,6 +1,6 @@
 ---
 name: skill-builder
-description: Build and improve skills through conversational discovery. Use when creating new skills or enhancing existing ones. Handles workflow skills, tool integrations, domain knowledge, templates, and reference skills with type-specific guidance.
+description: Build and improve Claude Code skills through conversational discovery. Use when creating skills, improving skills, optimizing skills, understanding skill patterns, or refactoring skills.
 ---
 
 # Skill Builder

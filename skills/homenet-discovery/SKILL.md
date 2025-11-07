@@ -1,6 +1,6 @@
 ---
 name: homenet-discovery
-description: Discovers home network devices via nmap, SSH, and DNS. Creates machine-readable inventory with topology diagrams. Use when user mentions network mapping, homelab discovery, network inventory, device scanning, infrastructure documentation, or asks "what's on my network".
+description: Discovers home network devices via nmap, SSH, and DNS. Creates machine-readable inventory with topology diagrams. Use when mapping networks, discovering devices, creating network inventory, updating inventory, refreshing network data, tracking infrastructure changes, or documenting infrastructure.
 ---
 
 # Homenet Discovery

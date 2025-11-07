@@ -9,7 +9,7 @@
     {
       "name": "slash-builder",
       "description": "Interactive slash command builder with validation and prompt engineering patterns",
-      "version": "1.4.1",
+      "version": "1.4.3",
       "source": "./",
       "strict": true,
       "skills": [
@@ -19,7 +19,7 @@
     {
       "name": "homenet-discovery",
       "description": "Discover and map your home network via nmap, SSH, and DNS with automated topology generation",
-      "version": "1.1.1",
+      "version": "1.1.2",
       "source": "./",
       "strict": true,
       "skills": [
@@ -29,7 +29,7 @@
     {
       "name": "skill-builder",
       "description": "Build and improve Claude Code skills through conversational discovery with type-aware guidance",
-      "version": "1.0.1",
+      "version": "1.0.2",
       "source": "./",
       "strict": true,
       "skills": [

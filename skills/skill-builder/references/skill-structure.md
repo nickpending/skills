@@ -33,28 +33,29 @@ description: What the skill does and when to use it. Use third-person.
 ```
 
 **Description quality matters:**
-- Determines when skill triggers
-- Should include capability AND usage context
-- Third-person voice ("This skill should be used when...")
+- Determines when skill triggers (semantic matching only)
+- Format: What it does + "Use when" + natural scenarios
+- Natural language scenarios (not literal trigger phrases)
+- No implementation details (routing handles that internally)
 - Specific enough to prevent false triggers
 - General enough to catch relevant use cases
 
 **Good descriptions:**
 ```yaml
-description: Build and improve skills through conversational discovery. Use when creating new skills or enhancing existing ones.
+description: Build and improve Claude Code skills through conversational discovery. Use when creating skills, improving skills, optimizing skills, understanding skill patterns, or refactoring skills.
 
-description: Handle PDF operations including rotation, merging, and splitting. Use when user requests PDF file manipulation.
+description: Build, migrate, and optimize Claude Code slash commands. Use when creating new commands, migrating old formats, fixing validation issues, or improving command clarity and efficiency.
 
-description: Query BigQuery datasets using company schemas. Use when user needs to analyze data in company warehouse.
+description: Discovers home network devices via nmap, SSH, and DNS. Creates machine-readable inventory with topology diagrams. Use when mapping networks, discovering devices, creating network inventory, updating inventory, refreshing network data, tracking infrastructure changes, or documenting infrastructure.
 ```
 
 **Bad descriptions:**
 ```yaml
 description: A skill for skills  # Too vague
 
-description: PDF stuff  # Not specific enough
+description: Use when user says "create skill"  # Literal phrases, not natural scenarios
 
-description: Use this to query BigQuery  # Second person, unclear when
+description: Build skills. Handles workflow, tool, domain, template, and reference types with momentum integration.  # Implementation details confuse matching
 ```
 
 **Content structure** depends on skill type:
