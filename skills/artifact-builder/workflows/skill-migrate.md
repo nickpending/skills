@@ -84,16 +84,18 @@ Convert existing skills to structural standard while preserving all functionalit
 
    a. READ `references/tool-selection.md` for execution patterns
 
-   b. IDENTIFY workflow steps that need execution language
+   b. READ `references/writing-fundamentals.md` for language patterns
 
-   c. APPLY CAPS commands:
+   c. IDENTIFY workflow steps that need execution language
+
+   d. APPLY CAPS commands:
       - READ for file loading
       - WRITE for file creation
       - ASK for user questions
       - RUN for script execution
       - STOP for checkpoint gates
 
-   d. ADD STOP checkpoints between major phases
+   e. ADD STOP checkpoints between major phases
 
 2. **IF skill type is NOT workflow:**
    - SKIP execution language changes

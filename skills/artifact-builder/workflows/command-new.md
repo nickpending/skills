@@ -150,7 +150,9 @@ All variables needed for workflow are documented with correct notation.
 
 **REQUIRED ACTIONS:**
 
-1. DRAFT main workflow phases conversationally:
+1. READ `references/writing-fundamentals.md` for language patterns and execution guidance
+
+2. DRAFT main workflow phases conversationally:
    ```
    Let's outline the workflow:
    1. First, we'll load TASKS.md and find the active task

@@ -99,8 +99,10 @@ Validation output must be shown to user before proceeding.
 
 5. READ `references/command-structure.md` for Key Paths format
 
+6. READ `references/writing-fundamentals.md` for language patterns
+
 **VERIFICATION:**
-Both files (template + guide) must be read before proceeding.
+All reference files (template + structure + patterns) must be read before proceeding.
 
 **STOP before Step 4.**
 

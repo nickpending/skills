@@ -258,7 +258,9 @@ Directory structure exists at correct location and matches plan.
 
 1. READ `references/tool-selection.md` for tool selection patterns
 
-2. ANALYZE skill operations from Steps 1-4:
+2. READ `references/writing-fundamentals.md` for language patterns and execution guidance
+
+3. ANALYZE skill operations from Steps 1-4:
    - What files does skill read?
    - Does it create or modify files?
    - Does it run shell commands?
@@ -266,9 +268,9 @@ Directory structure exists at correct location and matches plan.
    - Does it launch subagents (Task)?
    - Does it need user choices (AskUserQuestion)?
 
-3. DETERMINE tools using selection logic from reference
+4. DETERMINE tools using selection logic from reference
 
-4. DRAFT frontmatter:
+5. DRAFT frontmatter:
    ```yaml
    ---
    name: skill-name
@@ -277,23 +279,23 @@ Directory structure exists at correct location and matches plan.
    ---
    ```
 
-5. EXPLAIN tool choices to user with reasoning
+6. EXPLAIN tool choices to user with reasoning
 
-6. SELECT template based on skill type from Step 2:
+7. SELECT template based on skill type from Step 2:
    - Workflow skill → `references/templates/skills/workflow-skill.md`
    - Tool integration → `references/templates/skills/tool-skill.md`
    - Domain knowledge → `references/templates/skills/domain-skill.md`
    - Template skill → `references/templates/skills/template-skill.md`
    - Reference skill → `references/templates/skills/reference-skill.md`
 
-7. EXPLAIN template choice:
+8. EXPLAIN template choice:
    ```
    Using [template] because this is a [type] skill that [reasoning].
    ```
 
-8. READ selected template file
+9. READ selected template file
 
-9. CUSTOMIZE template with elements from Steps 1-5:
+10. CUSTOMIZE template with elements from Steps 1-5:
    - Replace `skill-name` with actual name
    - Update description from Step 1
    - Set allowed-tools from analysis above
@@ -303,11 +305,11 @@ Directory structure exists at correct location and matches plan.
    - Replace all `[placeholders]` with actual values
    - Remove unused sections
 
-10. SHOW customized SKILL.md to user
+11. SHOW customized SKILL.md to user
 
-11. ASK: "Does this capture the skill correctly? What needs adjustment?"
+12. ASK: "Does this capture the skill correctly? What needs adjustment?"
 
-12. WAIT for feedback and iterate
+13. WAIT for feedback and iterate
 
 **VERIFICATION:**
 SKILL.md drafted, reviewed, and approved.
