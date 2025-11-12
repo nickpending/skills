@@ -46,7 +46,7 @@ This workflow builds commands conversationally through discovery and iteration. 
    - READ example command file to show actual pattern
 
 3. **IF generic command:**
-   - READ `references/generic.md`
+   - READ `references/templates/commands/generic.md`
    - EXTRACT applicable patterns
    - SHOW user relevant sections
 
@@ -59,33 +59,56 @@ User has seen relevant examples and confirmed approach direction.
 
 **STOP before Step 3.**
 
-## Step 3: Sketch Core Structure
+## Step 3: Sketch Core Structure and Tools
 
 **REQUIRED ACTIONS:**
 
-1. PROPOSE high-level structure based on Steps 1-2:
+1. READ `references/tool-selection.md` for tool selection patterns
+
+2. ANALYZE command operations from Steps 1-2:
+   - What files does it read?
+   - Does it create or modify files?
+   - Does it run shell commands?
+   - Does it need file finding (Glob) or content search (Grep)?
+   - Does it need code review (Task)?
+   - Does it need user choices (AskUserQuestion)?
+
+3. DETERMINE tools using selection logic:
+   - Core operations → Read/Write/Edit/Bash
+   - File finding → Glob
+   - Content search → Grep
+   - Quality review → Task
+   - User interaction → AskUserQuestion
+
+4. PROPOSE structure with reasoning:
    ```
    I'm thinking:
    - Framework: [momentum/generic] because [reason]
    - Structure: [simple/complex] because [your workflow is linear/needs validation gates]
-   - Tools needed: [Read, Write, Bash] for [specific operations]
+   - Tools needed: [Read, Write, Bash] because:
+     * Read - [loads TASKS.md]
+     * Write - [generates report]
+     * Bash - [runs git commit]
 
    Does this match what you're envisioning?
    ```
 
-2. SHOW reasoning for each choice
+5. SHOW reasoning for each tool choice
 
-3. ASK for confirmation or adjustments
+6. ASK for confirmation or adjustments
 
-4. **IF user disagrees:**
+7. **IF user disagrees:**
    - ASK what needs to change
-   - ADJUST framework/structure
+   - ADJUST framework/structure/tools
    - REPEAT proposal
    - WAIT for approval
 
-5. **IF user approves:**
-   - RECORD structure decisions
+8. **IF user approves:**
+   - RECORD structure and tool decisions
    - Proceed to Step 4
+
+**VERIFICATION:**
+Tool selection matches actual command operations.
 
 **STOP before Step 4.**
 
@@ -93,7 +116,7 @@ User has seen relevant examples and confirmed approach direction.
 
 **REQUIRED ACTIONS:**
 
-1. READ `references/command-writing-guide.md` for:
+1. READ `references/command-structure.md` for:
    - Variable notation guide (CAPS, $VARS, `{runtime}`, `[placeholders]`)
    - Complete momentum injected variable reference
    - Selection guidance based on command purpose
@@ -224,9 +247,9 @@ Success criteria are complete, measurable, and match requirements.
 **REQUIRED ACTIONS:**
 
 1. DETERMINE template based on Steps 1-7:
-   - Simple workflow → `references/momentum-simple.md`
-   - Complex with checkpoints → `references/momentum-complex.md`
-   - Generic command → `references/generic.md`
+   - Simple workflow → `references/templates/commands/momentum-simple.md`
+   - Complex with checkpoints → `references/templates/commands/momentum-complex.md`
+   - Generic command → `references/templates/commands/generic.md`
 
 2. EXPLAIN choice to user:
    ```
@@ -280,7 +303,7 @@ User has seen complete draft and provided feedback.
    - ADJUST sections as requested
    - CLARIFY instructions where needed
    - ADD missing pieces
-   - TIGHTEN language - READ `references/prompt-patterns.md` for efficiency patterns if needed
+   - TIGHTEN language - READ `references/writing-fundamentals.md` for efficiency patterns if needed
    - RE-SHOW updated sections
    - CONTINUE iteration until approved
 

@@ -83,11 +83,11 @@ Validation output must be shown to user before proceeding.
 2. SELECT template:
 
    **IF momentum command** (uses ARTIFACTS_DIR, PROJECT_ROOT, etc):
-   - Linear workflow (Step N pattern) → `references/momentum-simple.md`
-   - Phased workflow (CHECKPOINT pattern) → `references/momentum-complex.md`
+   - Linear workflow (Step N pattern) → `references/templates/commands/momentum-simple.md`
+   - Phased workflow (CHECKPOINT pattern) → `references/templates/commands/momentum-complex.md`
 
    **IF generic command:**
-   - `references/generic.md`
+   - `references/templates/commands/generic.md`
 
 3. EXPLAIN choice to user:
    ```
@@ -97,7 +97,7 @@ Validation output must be shown to user before proceeding.
 
 4. READ the selected template file
 
-5. READ `references/command-writing-guide.md` for Key Paths format
+5. READ `references/command-structure.md` for Key Paths format
 
 **VERIFICATION:**
 Both files (template + guide) must be read before proceeding.

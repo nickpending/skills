@@ -144,39 +144,41 @@ Integration needs determined and relevant guidance loaded.
 
 **REQUIRED ACTIONS:**
 
-1. ANALYZE examples from Step 1 to identify reusable resources
+1. READ `references/skill-structure.md` for structural patterns and organization
 
-2. **FOR workflow skills:**
+2. ANALYZE examples from Step 1 to identify reusable resources
+
+3. **FOR workflow skills:**
    - IDENTIFY distinct workflows needed
    - DETERMINE if execution language required (YES for workflows)
    - PLAN `workflows/` directory structure
    - CONSIDER `references/` for supporting patterns
 
-3. **FOR tool integration skills:**
+4. **FOR tool integration skills:**
    - IDENTIFY repeated operations needing scripts
    - DETERMINE script inputs/outputs
    - PLAN `scripts/` directory with script names
    - CONSIDER `references/` for API docs or specs
 
-4. **FOR domain knowledge skills:**
+5. **FOR domain knowledge skills:**
    - IDENTIFY documentation needed
    - DETERMINE how to organize (by topic, by system)
    - PLAN `references/` directory structure
    - CONSIDER grep patterns for large files
 
-5. **FOR template skills:**
+6. **FOR template skills:**
    - IDENTIFY templates and boilerplate needed
    - DETERMINE asset organization
    - PLAN `assets/` directory structure
    - CONSIDER `references/` for usage guides
 
-6. **FOR reference skills:**
+7. **FOR reference skills:**
    - IDENTIFY documentation to include
    - DETERMINE organization structure
    - PLAN `references/` directory only
    - CONSIDER navigation aids
 
-7. CREATE resource plan:
+8. CREATE resource plan:
    ```
    Skill: [name]
    Type: [type]
@@ -193,11 +195,11 @@ Integration needs determined and relevant guidance loaded.
    - [resource 2]: [purpose]
    ```
 
-8. SHOW plan to user
+9. SHOW plan to user
 
-9. ASK: "Does this resource structure make sense? Anything missing?"
+10. ASK: "Does this resource structure make sense? Anything missing?"
 
-10. WAIT for feedback and adjust if needed
+11. WAIT for feedback and adjust if needed
 
 **VERIFICATION:**
 Resource plan complete and approved by user.
@@ -254,62 +256,58 @@ Directory structure exists at correct location and matches plan.
 
 **REQUIRED ACTIONS:**
 
-1. DRAFT frontmatter:
+1. READ `references/tool-selection.md` for tool selection patterns
+
+2. ANALYZE skill operations from Steps 1-4:
+   - What files does skill read?
+   - Does it create or modify files?
+   - Does it run shell commands?
+   - Does it need file finding (Glob) or content search (Grep)?
+   - Does it launch subagents (Task)?
+   - Does it need user choices (AskUserQuestion)?
+
+3. DETERMINE tools using selection logic from reference
+
+4. DRAFT frontmatter:
    ```yaml
    ---
    name: skill-name
    description: [Concise what + when, from Steps 1-2]
-   allowed-tools: [if momentum: Read, Write, Bash, etc.]
+   allowed-tools: [determined tools from analysis above]
    ---
    ```
 
-2. DRAFT Overview section:
-   ```markdown
-   # Skill Name
+5. EXPLAIN tool choices to user with reasoning
 
-   ## Overview
+6. SELECT template based on skill type from Step 2:
+   - Workflow skill → `references/templates/skills/workflow-skill.md`
+   - Tool integration → `references/templates/skills/tool-skill.md`
+   - Domain knowledge → `references/templates/skills/domain-skill.md`
+   - Template skill → `references/templates/skills/template-skill.md`
+   - Reference skill → `references/templates/skills/reference-skill.md`
 
-   [Brief purpose - 2-3 sentences from Step 1]
-
-   [If momentum: ## Available Paths section]
-   [If momentum + mode-specific: ## Mode Requirement section]
+7. EXPLAIN template choice:
+   ```
+   Using [template] because this is a [type] skill that [reasoning].
    ```
 
-3. **IF workflow skill (router pattern):**
-   - DRAFT workflow checklist
-   - DRAFT router steps with explicit READ commands
-   - KEEP under 200 lines
-   - REFERENCE execution patterns from WORKFLOW-EXECUTION-SPEC
+8. READ selected template file
 
-4. **IF tool skill:**
-   - DRAFT script catalog with usage examples
-   - DRAFT operation guide
-   - KEEP direct and imperative
-   - NO execution language needed
+9. CUSTOMIZE template with elements from Steps 1-5:
+   - Replace `skill-name` with actual name
+   - Update description from Step 1
+   - Set allowed-tools from analysis above
+   - Fill Overview with purpose from Step 1
+   - Add momentum paths if Step 3 determined integration
+   - Customize type-specific sections based on resource plan from Step 4
+   - Replace all `[placeholders]` with actual values
+   - Remove unused sections
 
-5. **IF domain skill:**
-   - DRAFT reference map (what's in which file)
-   - DRAFT when to load which reference
-   - ADD grep patterns if files will be large
-   - KEEP navigation clear
+10. SHOW customized SKILL.md to user
 
-6. **IF template skill:**
-   - DRAFT asset catalog
-   - DRAFT customization guide
-   - EXPLAIN template usage
-   - KEEP practical
+11. ASK: "Does this capture the skill correctly? What needs adjustment?"
 
-7. **IF reference skill:**
-   - DRAFT documentation organization
-   - DRAFT navigation hints
-   - EXPLAIN content structure
-   - KEEP simple
-
-8. SHOW drafted SKILL.md to user
-
-9. ASK: "Does this capture the skill correctly? What needs adjustment?"
-
-10. WAIT for feedback and iterate
+12. WAIT for feedback and iterate
 
 **VERIFICATION:**
 SKILL.md drafted, reviewed, and approved.

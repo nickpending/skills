@@ -25,7 +25,7 @@ Understanding skill types helps determine structure, bundled resources, and whet
 - `references/` - Supporting documentation and patterns
 - Minimal assets (templates if needed)
 
-**Execution language:** **REQUIRED** - Must follow WORKFLOW-EXECUTION-SPEC
+**Execution language:** **REQUIRED** - Must follow execution patterns in `writing-fundamentals.md`
 
 **Examples:**
 - slash-builder (command creation workflows)

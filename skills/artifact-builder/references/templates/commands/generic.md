@@ -11,10 +11,11 @@ Brief 2-3 sentence overview of command purpose, when to use it, and expected out
 **Variables**: Variables in CAPS are injected by hooks (see HTML comments above), `{vars}` are runtime values (find/calculate them), `[vars]` are template placeholders (substitute them).
 
 **Key Paths**:
-- ARTIFACTS_DIR - Workflow artifacts (TASKS.md, ITERATION.md, etc.)
-- STATE_DIR - Saved state files
-- `{timestamp}` - Generated as YYYYMMDD-HHMM
-[Only list variables actually used in this command - injected CAPS, environment $VARS, runtime `{vars}`, placeholders `[vars]`]
+- $HOME - User home directory
+- $PWD - Current working directory
+- `{config_path}` - Computed from args
+- `[selected_option]` - From user input
+[List ALL variables used - injected CAPS (if any), environment $VARS, runtime `{vars}`, placeholders `[vars]`]
 
 ## ⚠️ CRITICAL: [KEY COMMAND PRINCIPLE]
 
@@ -30,33 +31,33 @@ Brief 2-3 sentence overview of command purpose, when to use it, and expected out
 
 ## Core Instructions
 
-### Step 1: Load Context
+### Step 1: Preparation
 
-Read @ARTIFACTS_DIR/TASKS.md and validate structure.
+Read @README.md and @config/settings.toml.
 
-Extract required information and verify completeness.
+Validate inputs and verify prerequisites.
 
-### Step 2: Process Data
+### Step 2: Analysis
 
-Transform data according to requirements.
+Extract relevant information from inputs.
 
-Apply business logic and handle edge cases.
+Process data according to command requirements.
 
-### Step 3: Execute Action
+### Step 3: Execution
 
-Perform main command operation.
+Perform main command action.
 
-Update @STATE_DIR/checkpoint.json if needed.
+Handle edge cases and validate intermediate results.
 
-### Step 4: Generate Output
+### Step 4: Output
 
-Write results to @ARTIFACTS_DIR/output.md.
+Write results to @output/results.md.
 
 Format according to Output Format section below.
 
 ### Step 5: Confirmation
 
-Report completion with key details and next steps.
+Report completion with key results and next steps.
 
 ## Output Format
 
@@ -97,8 +98,7 @@ Command succeeds when:
 
 ## Notes
 
-- Use @ shortcuts with injected variables (@ARTIFACTS_DIR/file.md)
+- Use @ shortcuts for file operations (@README.md, @config/file.toml)
 - Prefer Edit over Write for existing files
 - Keep output concise and structured
 - Remove sections not needed for this command
-- See `references/command-writing-guide.md` for patterns and best practices

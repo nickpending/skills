@@ -168,4 +168,3 @@ Command succeeds when:
 - Each CHECKPOINT must pass before proceeding
 - Keep output concise and structured
 - Remove sections not needed for this command
-- See `references/command-writing-guide.md` for patterns and best practices

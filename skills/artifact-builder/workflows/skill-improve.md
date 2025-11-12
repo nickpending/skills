@@ -73,7 +73,7 @@ Complete understanding of current skill state and structure.
    - SCAN for passive voice or suggestion language
    - CHECK CAPS tool names (READ, WRITE, RUN, etc.)
    - CHECK VERIFICATION sections
-   - REFERENCE WORKFLOW-EXECUTION-SPEC for patterns
+   - REFERENCE `references/writing-fundamentals.md` for execution patterns
 
    **IF tool skill:**
    - CHECK script documentation clarity

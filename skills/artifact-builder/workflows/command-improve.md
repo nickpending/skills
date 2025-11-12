@@ -47,7 +47,7 @@ Complete understanding of command purpose and current state.
 
 **REQUIRED ACTIONS:**
 
-1. READ `references/prompt-patterns.md` to load efficiency patterns
+1. READ `references/writing-fundamentals.md` to load efficiency patterns
 
 2. SCAN command for token efficiency opportunities:
 

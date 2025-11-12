@@ -7,13 +7,13 @@
   },
   "plugins": [
     {
-      "name": "slash-builder",
-      "description": "Interactive slash command builder with validation and prompt engineering patterns",
-      "version": "1.4.3",
+      "name": "artifact-builder",
+      "description": "Build and improve Claude Code slash commands, skills, and agents through conversational workflows",
+      "version": "2.0.0",
       "source": "./",
       "strict": true,
       "skills": [
-        "./skills/slash-builder"
+        "./skills/artifact-builder"
       ]
     },
     {
@@ -24,16 +24,6 @@
       "strict": true,
       "skills": [
         "./skills/homenet-discovery"
-      ]
-    },
-    {
-      "name": "skill-builder",
-      "description": "Build and improve Claude Code skills through conversational discovery with type-aware guidance",
-      "version": "1.0.2",
-      "source": "./",
-      "strict": true,
-      "skills": [
-        "./skills/skill-builder"
       ]
     }
   ]
