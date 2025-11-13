@@ -151,7 +151,7 @@ Convert existing skills to structural standard while preserving all functionalit
 **VERIFICATION:**
 User reviews and approves before writing files.
 
-## Step 6: Write Files
+## Step 6: Write and Validate
 
 **REQUIRED ACTIONS:**
 
@@ -162,7 +162,19 @@ User reviews and approves before writing files.
    - WRITE any new reference files
    - PRESERVE existing scripts/assets
 
-3. CONFIRM completion
+3. RUN validation:
+   ```bash
+   python3 skills/artifact-builder/scripts/validate_skill.py [skill-path]
+   ```
+
+4. **IF validation fails:**
+   - SHOW errors
+   - FIX issues
+   - RETRY validation
+
+5. **IF validation succeeds:**
+   - CONFIRM structure valid
+   - CONFIRM migration complete
 
 **VERIFICATION:**
-Files written only after explicit approval.
+Files written and validated successfully.

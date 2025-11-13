@@ -319,32 +319,45 @@ All approved improvements applied and confirmed incrementally.
 
 **STOP before Step 7.**
 
-## Step 7: Final Review
+## Step 7: Validate and Review
 
 **REQUIRED ACTIONS:**
 
-1. LIST all modified files:
+1. RUN validation:
+   ```bash
+   python3 skills/artifact-builder/scripts/validate_skill.py [skill-path]
+   ```
+
+2. **IF validation fails:**
+   - SHOW errors
+   - FIX issues
+   - RETRY validation
+
+3. **IF validation succeeds:**
+   - CONFIRM structure valid
+
+4. LIST all modified files:
    ```bash
    git diff --name-only [skill-path]
    ```
    (or list files if not in git)
 
-2. CHECK file sizes:
+5. CHECK file sizes:
    ```bash
    wc -l [skill-path]/**/*.md
    ```
 
-3. **IF workflow skill:**
+6. **IF workflow skill:**
    - VERIFY execution language complete
    - CHECK STOP points present
    - CHECK VERIFICATION sections exist
 
-4. **IF momentum skill:**
+7. **IF momentum skill:**
    - VERIFY allowed-tools correct
    - CHECK paths documented
    - CHECK mode requirements if applicable
 
-5. CREATE final summary:
+8. CREATE final summary:
    ```
    Improvements applied to [skill-name]:
 

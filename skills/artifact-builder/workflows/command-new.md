@@ -46,7 +46,7 @@ This workflow builds commands conversationally through discovery and iteration. 
    - READ example command file to show actual pattern
 
 3. **IF generic command:**
-   - READ `references/templates/commands/generic.md`
+   - READ `references/templates/commands/execution-command.md`
    - EXTRACT applicable patterns
    - SHOW user relevant sections
 
@@ -244,30 +244,39 @@ Success criteria are complete, measurable, and match requirements.
 
 **STOP before Step 8.**
 
-## Step 8: Choose Template and Generate
+## Step 8: Choose Pattern and Apply Momentum Integration
 
 **REQUIRED ACTIONS:**
 
-1. DETERMINE template based on Steps 1-7:
-   - Simple workflow → `references/templates/commands/momentum-simple.md`
-   - Complex with checkpoints → `references/templates/commands/momentum-complex.md`
-   - Generic command → `references/templates/commands/generic.md`
+1. READ `references/pattern-selection.md` for pattern guidance
 
-2. EXPLAIN choice to user:
+2. DETERMINE pattern based on complexity from Steps 1-7:
+   - Single simple operation → `references/templates/commands/minimal-command.md`
+   - Multi-operation (3-10) → `references/templates/commands/middle-ground-command.md`
+   - Multi-phase with gates → `references/templates/commands/execution-command.md`
+
+3. EXPLAIN choice to user:
    ```
-   This command fits [template] because [reasoning].
+   This command fits [pattern] pattern because [reasoning based on complexity].
    ```
 
-3. READ the selected template file
+4. READ the selected template file
 
-4. CUSTOMIZE template with all elements from Steps 1-7:
-   - Variables from Step 4
+5. CHECK framework from Step 3:
+   **IF momentum integration needed:**
+   - READ `references/momentum-integration.md`
+   - EXPLAIN: "Adding momentum integration (paths, mode requirements)"
+   - NOTE which momentum elements to add (allowed-tools, paths, mode checks)
+
+6. CUSTOMIZE template with all elements from Steps 1-7:
+   - Variables from Step 4 (+ momentum paths if Step 5)
    - Workflow from Step 5
    - Critical section from Step 6
    - Success criteria from Step 7
+   - Momentum integration elements if needed
 
 **VERIFICATION:**
-Template loaded and all discussed elements ready to integrate.
+Template loaded, pattern selected, momentum integration plan determined.
 
 **STOP before Step 9.**
 

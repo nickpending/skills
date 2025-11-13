@@ -74,35 +74,38 @@ Validation output must be shown to user before proceeding.
 
 **STOP before Step 3.**
 
-## Step 3: Determine Template
+## Step 3: Determine Pattern and Momentum Integration
 
 **REQUIRED ACTIONS:**
 
-1. CHECK framework from Step 1 analysis
+1. CHECK complexity and framework from Step 1 analysis
 
-2. SELECT template:
+2. READ `references/pattern-selection.md` for pattern guidance
 
-   **IF momentum command** (uses ARTIFACTS_DIR, PROJECT_ROOT, etc):
-   - Linear workflow (Step N pattern) → `references/templates/commands/momentum-simple.md`
-   - Phased workflow (CHECKPOINT pattern) → `references/templates/commands/momentum-complex.md`
+3. SELECT pattern based on complexity:
+   - Single simple operation → `references/templates/commands/minimal-command.md`
+   - Multi-operation (3-10) → `references/templates/commands/middle-ground-command.md`
+   - Multi-phase with gates → `references/templates/commands/execution-command.md`
 
-   **IF generic command:**
-   - `references/templates/commands/generic.md`
-
-3. EXPLAIN choice to user:
+4. EXPLAIN choice to user:
    ```
-   This command uses [framework] variables and [structure] structure,
-   so we'll align with [template-name] template.
+   This command uses [pattern] pattern because [complexity reasoning].
    ```
 
-4. READ the selected template file
+5. READ the selected template file
 
-5. READ `references/command-structure.md` for Key Paths format
+6. CHECK if momentum integration from Step 1:
+   **IF uses momentum variables (ARTIFACTS_DIR, PROJECT_ROOT, etc):**
+   - READ `references/momentum-integration.md`
+   - EXPLAIN: "This is a momentum command, will add momentum integration elements"
+   - NOTE which momentum elements to preserve/add
 
-6. READ `references/writing-fundamentals.md` for language patterns
+7. READ `references/command-structure.md` for Key Paths format
+
+8. READ `references/writing-fundamentals.md` for language patterns
 
 **VERIFICATION:**
-All reference files (template + structure + patterns) must be read before proceeding.
+All reference files (template + structure + patterns + momentum if needed) must be read before proceeding.
 
 **STOP before Step 4.**
 

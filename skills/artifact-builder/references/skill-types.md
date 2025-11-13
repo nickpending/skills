@@ -227,14 +227,45 @@ See `references/momentum-integration.md` for patterns.
 
 ---
 
+## Pattern Recommendations by Type
+
+See `pattern-selection.md` for detailed pattern guidance.
+
+**Workflow Skills:**
+- Use **execution pattern** if multi-phase with approval gates
+- Use **middle-ground** if straightforward sequential steps
+- Target: 150-250 lines/workflow (execution) or 50-70 lines (middle)
+
+**Tool Integration Skills:**
+- Use **minimal pattern** if single well-documented tool
+- Use **middle-ground** if multiple related operations
+- Target: 15-30 lines (minimal) or 50-70 lines (middle)
+
+**Domain Knowledge Skills:**
+- Use **middle-ground pattern** with conditional reference loading
+- Inline 80/20 patterns, reference comprehensive docs
+- Target: 50-70 lines SKILL.md + references as needed
+
+**Template Skills:**
+- Use **middle-ground pattern** for template selection logic
+- Keep template catalog and customization guidance inline
+- Target: 50-70 lines
+
+**Reference Skills:**
+- Use **middle-ground pattern** for navigation
+- Pure documentation in references/
+- Target: 40-60 lines SKILL.md
+
+**Default:** Middle-ground pattern unless complexity demands execution language.
+
 ## Summary Table
 
-| Type | Primary Resources | Execution Language | SKILL.md Focus | Example |
-|------|------------------|-------------------|----------------|---------|
-| Workflow | workflows/ | **REQUIRED** | Router to workflows | slash-builder |
-| Tool | scripts/ | No | Script usage | pdf-editor |
-| Domain | references/ | No | When to load refs | bigquery |
-| Template | assets/ | No | Template guide | frontend-webapp |
-| Reference | references/ | No | Doc navigation | company-policies |
+| Type | Primary Resources | Pattern | SKILL.md Focus | Example |
+|------|------------------|---------|----------------|---------|
+| Workflow | workflows/ | Execution or Middle | Router to workflows | slash-builder |
+| Tool | scripts/ | Minimal or Middle | Script usage | pdf-editor |
+| Domain | references/ | Middle | When to load refs | bigquery |
+| Template | assets/ | Middle | Template guide | frontend-webapp |
+| Reference | references/ | Middle | Doc navigation | company-policies |
 
-Choose type based on primary purpose, add secondary resources as needed.
+Choose type based on primary purpose, pattern based on complexity.

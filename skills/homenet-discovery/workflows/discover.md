@@ -209,6 +209,7 @@ Config file created and populated.
    - **IF opnsense-config.xml:**
      ```bash
      cat /tmp/homenet/opnsense-config.xml | python3 parsers/opnsense.py
+     cat /tmp/homenet/opnsense-config.xml | python3 parsers/opnsense.py vlans
      ```
    - **IF unifi-devices.json:**
      ```bash
@@ -318,19 +319,25 @@ Consolidated inventory JSON created.
 
 1. READ `/tmp/homenet/inventory-consolidated.json`
 
-2. GENERATE AI inventory:
+2. PARSE consolidated JSON structure:
+   - EXTRACT `hosts` array for host inventory
+   - EXTRACT `vlans` array for VLAN data (may be empty)
+
+3. GENERATE AI inventory:
    - READ `templates/inventory-format.md` for structure
+   - USE hosts data from consolidated JSON
    - WRITE structured markdown to `~/.local/share/homenet/inventory.md`
 
-3. GENERATE human report:
+4. GENERATE human report:
    - READ `templates/report-format.md` for structure
+   - USE hosts data from consolidated JSON
    - WRITE summary tables to `~/.local/share/homenet/report.md`
 
-4. GENERATE Mermaid topology:
+5. GENERATE Mermaid topology:
    - READ `templates/topology-template.mermaid` for structure
-   - INCLUDE hosts with IPs and services
-   - INCLUDE VLANs if detected
-   - INCLUDE proxy routes if found
+   - INCLUDE all hosts with IPs and services
+   - INCLUDE VLANs if vlans array not empty
+   - INCLUDE proxy routes if found in host data
    - WRITE diagram to `~/.local/share/homenet/topology.mermaid`
 
 **VERIFICATION:**

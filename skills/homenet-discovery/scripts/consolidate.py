@@ -129,12 +129,13 @@ def normalize_host(host: Dict[str, Any], source_file: str) -> Dict[str, Any]:
         }
 
 
-def consolidate(discovery_files: List[Path]) -> List[Dict[str, Any]]:
+def consolidate(discovery_files: List[Path]) -> Dict[str, Any]:
     """Consolidate multiple discovery files into unified inventory"""
 
     # Track by MAC (preferred) and IP (fallback)
     by_mac: Dict[str, Dict[str, Any]] = {}
     by_ip: Dict[str, Dict[str, Any]] = {}
+    vlans: Dict[int, Dict[str, Any]] = {}
 
     for filepath in discovery_files:
         if not filepath.exists():
@@ -146,7 +147,16 @@ def consolidate(discovery_files: List[Path]) -> List[Dict[str, Any]]:
         except json.JSONDecodeError:
             continue
 
-        # Handle both list and dict responses
+        # Check if this is VLAN data
+        if isinstance(data, list) and data and "vlan_id" in data[0]:
+            # VLAN data - deduplicate by VLAN ID
+            for vlan in data:
+                vlan_id = vlan.get("vlan_id")
+                if vlan_id:
+                    vlans[vlan_id] = vlan
+            continue
+
+        # Handle both list and dict responses for host data
         if isinstance(data, dict):
             hosts = data.get("hosts", [])
         else:
@@ -200,7 +210,13 @@ def consolidate(discovery_files: List[Path]) -> List[Dict[str, Any]]:
 
     inventory.sort(key=ip_sort_key)
 
-    return inventory
+    # Sort VLANs by VLAN ID
+    def vlan_sort_key(vlan: Dict[str, Any]) -> int:
+        return vlan.get("vlan_id", 9999)
+
+    vlan_list = sorted(vlans.values(), key=vlan_sort_key)
+
+    return {"hosts": inventory, "vlans": vlan_list}
 
 
 def main() -> None:
@@ -211,9 +227,9 @@ def main() -> None:
 
     discovery_files = [Path(arg) for arg in sys.argv[1:]]
 
-    inventory = consolidate(discovery_files)
+    result = consolidate(discovery_files)
 
-    print(json.dumps(inventory, indent=2))
+    print(json.dumps(result, indent=2))
 
 
 if __name__ == "__main__":
