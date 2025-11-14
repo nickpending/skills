@@ -43,7 +43,50 @@ Complete understanding of command purpose and current state.
 
 **STOP before Step 2.**
 
-## Step 2: Analyze for Improvements
+## Step 2: Check Pattern Alignment
+
+**REQUIRED ACTIONS:**
+
+1. READ `references/pattern-selection.md` for pattern decision logic
+
+2. APPLY Decision Logic to this command:
+   - How many distinct operations?
+   - Is tool well-documented?
+   - User interaction needed?
+   - Domain knowledge required?
+
+3. DETERMINE what pattern this command should use
+
+4. IDENTIFY current pattern from command structure
+
+5. **IF pattern mismatch detected:**
+   - EXPLAIN to user:
+     ```
+     This command has [characteristic] complexity
+     but uses [current-pattern] pattern structure.
+
+     Recommended: [correct-pattern] pattern
+     ```
+   - ASK: "Migrate to correct pattern first (use command-migrate), or continue with improvements only?"
+   - **IF user chooses migrate:** STOP and redirect to command-migrate.md
+   - **IF user chooses continue:** Proceed to Step 3
+
+6. **IF pattern matches:**
+   - READ `references/command-structure.md` for structural requirements
+   - READ appropriate template to verify structure:
+     - Minimal → `references/templates/commands/minimal-command.md`
+     - Middle-ground → `references/templates/commands/middle-ground-command.md`
+     - Execution → `references/templates/commands/execution-command.md`
+   - VERIFY command has required sections from template
+   - NOTE any missing or incorrectly formatted sections
+   - Proceed to Step 3
+
+**VERIFICATION:**
+Pattern alignment checked against pattern-selection.md logic.
+
+**STOP before Step 3.**
+
+## Step 3: Analyze for Improvements
 
 **REQUIRED ACTIONS:**
 
@@ -112,13 +155,13 @@ Complete understanding of command purpose and current state.
 **VERIFICATION:**
 Complete analysis with specific examples from command.
 
-**STOP before Step 3.**
+**STOP before Step 4.**
 
-## Step 3: Propose Improvements
+## Step 4: Propose Improvements
 
 **REQUIRED ACTIONS:**
 
-1. For EACH improvement from Step 2 inventory, CREATE structured proposal:
+1. For EACH improvement from Step 3 inventory, CREATE structured proposal:
 
    **Format:**
    - **Current state:** Show existing text
@@ -154,9 +197,9 @@ Complete analysis with specific examples from command.
 **VERIFICATION:**
 All improvements proposed with clear before/after examples.
 
-**STOP before Step 4.**
+**STOP before Step 5.**
 
-## Step 4: Discuss Trade-offs
+## Step 5: Discuss Trade-offs
 
 **REQUIRED ACTIONS:**
 
@@ -188,13 +231,13 @@ All improvements proposed with clear before/after examples.
 **VERIFICATION:**
 All trade-offs discussed and user preferences recorded.
 
-**STOP before Step 5.**
+**STOP before Step 6.**
 
-## Step 5: Build Improvement Plan
+## Step 6: Build Improvement Plan
 
 **REQUIRED ACTIONS:**
 
-1. COMPILE all approved improvements from Steps 3-4
+1. COMPILE all approved improvements from Steps 4-5
 
 2. CALCULATE token impact and clarity gains
 
@@ -228,9 +271,9 @@ All trade-offs discussed and user preferences recorded.
 
 **STOP if user does not approve.**
 
-**IF approved, proceed to Step 6.**
+**IF approved, proceed to Step 7.**
 
-## Step 6: Apply Improvements
+## Step 7: Apply Improvements
 
 **REQUIRED ACTIONS:**
 
@@ -268,9 +311,9 @@ All trade-offs discussed and user preferences recorded.
 **VERIFICATION:**
 All approved improvements applied and confirmed section by section.
 
-**STOP before Step 7.**
+**STOP before Step 8.**
 
-## Step 7: Validate and Review
+## Step 8: Validate and Review
 
 **REQUIRED ACTIONS:**
 

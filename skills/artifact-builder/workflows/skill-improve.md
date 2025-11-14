@@ -60,7 +60,47 @@ Complete understanding of current skill state and structure.
 
 **STOP before Step 2.**
 
-## Step 2: Identify Improvements
+## Step 2: Check Pattern Alignment
+
+**REQUIRED ACTIONS:**
+
+1. READ `references/pattern-selection.md` for pattern decision logic
+
+2. APPLY Decision Logic to this skill:
+   - How many distinct operations?
+   - Is tool well-documented?
+   - User interaction needed?
+   - Domain knowledge required?
+
+3. DETERMINE what pattern this skill should use
+
+4. IDENTIFY current pattern from skill structure
+
+5. **IF pattern mismatch detected:**
+   - EXPLAIN to user:
+     ```
+     This skill has [characteristic] complexity
+     but uses [current-pattern] pattern structure.
+
+     Recommended: [correct-pattern] pattern
+     ```
+   - ASK: "Migrate to correct pattern first (use skill-migrate), or continue with improvements only?"
+   - **IF user chooses migrate:** STOP and redirect to skill-migrate.md
+   - **IF user chooses continue:** Proceed to Step 3
+
+6. **IF pattern matches:**
+   - READ `references/skill-structure.md` for structural requirements
+   - READ appropriate template to verify structure based on type and pattern
+   - VERIFY skill has required sections from template
+   - NOTE any missing or incorrectly formatted sections
+   - Proceed to Step 3
+
+**VERIFICATION:**
+Pattern alignment checked against pattern-selection.md logic.
+
+**STOP before Step 3.**
+
+## Step 3: Identify Improvements
 
 **REQUIRED ACTIONS:**
 
@@ -149,13 +189,13 @@ Complete understanding of current skill state and structure.
 **VERIFICATION:**
 Complete analysis with specific improvement opportunities identified.
 
-**STOP before Step 3.**
+**STOP before Step 4.**
 
-## Step 3: Propose Improvements
+## Step 4: Propose Improvements
 
 **REQUIRED ACTIONS:**
 
-1. FOR each improvement from Step 2, CREATE structured proposal:
+1. FOR each improvement from Step 3, CREATE structured proposal:
 
    **Format:**
    ```
@@ -189,9 +229,9 @@ Complete analysis with specific improvement opportunities identified.
 **VERIFICATION:**
 All improvements proposed with clear before/after examples and user decisions recorded.
 
-**STOP before Step 4.**
+**STOP before Step 5.**
 
-## Step 4: Discuss Trade-offs
+## Step 5: Discuss Trade-offs
 
 **REQUIRED ACTIONS:**
 
@@ -225,13 +265,13 @@ All improvements proposed with clear before/after examples and user decisions re
 **VERIFICATION:**
 All trade-offs discussed and preferences recorded.
 
-**STOP before Step 5.**
+**STOP before Step 6.**
 
-## Step 5: Build Improvement Plan
+## Step 6: Build Improvement Plan
 
 **REQUIRED ACTIONS:**
 
-1. COMPILE all approved improvements from Steps 3-4
+1. COMPILE all approved improvements from Steps 4-5
 
 2. **IF workflow skill needs execution language:**
    - CALCULATE impact (lines added for REQUIRED ACTIONS, STOP points, etc.)
@@ -275,9 +315,9 @@ All trade-offs discussed and preferences recorded.
 
 **STOP if user does not approve.**
 
-**IF approved, proceed to Step 6.**
+**IF approved, proceed to Step 7.**
 
-## Step 6: Apply Improvements
+## Step 7: Apply Improvements
 
 **REQUIRED ACTIONS:**
 
@@ -317,9 +357,9 @@ All trade-offs discussed and preferences recorded.
 **VERIFICATION:**
 All approved improvements applied and confirmed incrementally.
 
-**STOP before Step 7.**
+**STOP before Step 8.**
 
-## Step 7: Validate and Review
+## Step 8: Validate and Review
 
 **REQUIRED ACTIONS:**
 
