@@ -8,12 +8,24 @@ Sharp patterns for selecting tools based on command purpose and operations.
 - **Read** - View file contents, parse data structures
 - **Write** - Create new files, overwrite existing
 - **Edit** - Modify existing files with exact string replacement
+- **MultiEdit** - Batch edits across multiple files in single operation
+- **NotebookEdit** - Edit Jupyter notebook cells (code/markdown)
 - **Glob** - Find files by pattern (*.ts, **/*.md)
 - **Grep** - Search file contents by regex
 
 ### Execution
 - **Bash** - Run shell commands, git operations, build tools
+- **BashOutput** - Read output from background shell processes
+- **KillShell** - Terminate background shell processes
 - **Task** - Launch specialized subagents (code-reviewer, architecture-analyst)
+
+### Research
+- **WebFetch** - Fetch and analyze web content with AI processing
+- **WebSearch** - Search the web for current information
+
+### Composition
+- **Skill** - Invoke other skills programmatically
+- **SlashCommand** - Invoke slash commands programmatically
 
 ### Interaction
 - **AskUserQuestion** - Structured multiple-choice questions (1-4 at a time)
@@ -68,6 +80,82 @@ allowed-tools: Read, Write, Edit
 ```
 Examples: "Refactor code structure", "Update documentation"
 When workflow creates some files, modifies others
+
+**Batch modify multiple files:**
+```yaml
+allowed-tools: Read, MultiEdit
+```
+Examples: "Update version across package.json files", "Apply pattern to all configs"
+Safer than sequential edits when consistency matters
+
+**Edit Jupyter notebooks:**
+```yaml
+allowed-tools: Read, NotebookEdit
+```
+Examples: "Update notebook cells", "Modify data analysis workflow"
+For data science and analysis notebooks
+
+### Research and Web Operations
+
+**Fetch and analyze web content:**
+```yaml
+allowed-tools: WebFetch
+```
+Examples: "Read documentation from URL", "Analyze blog post"
+Fetches HTML, converts to markdown, processes with AI
+
+**Search for current information:**
+```yaml
+allowed-tools: WebSearch
+```
+Examples: "Find latest framework version", "Search recent discussions"
+For information beyond knowledge cutoff
+
+**Research then document:**
+```yaml
+allowed-tools: WebFetch, WebSearch, Write
+```
+Examples: "Research topic and create summary", "Compile documentation from web"
+Combine web research with file generation
+
+### Background Process Management
+
+**Long-running commands:**
+```yaml
+allowed-tools: Bash, BashOutput
+```
+Examples: "Run server and monitor logs", "Start build and check progress"
+Launch in background, read output later
+
+**Process lifecycle:**
+```yaml
+allowed-tools: Bash, BashOutput, KillShell
+```
+Examples: "Start service, monitor, stop when done", "Manage background processes"
+Full control over background execution
+
+### Skill and Command Composition
+
+**Invoke other skills:**
+```yaml
+allowed-tools: Skill
+```
+Examples: "Use PDF skill for extraction", "Delegate to specialized skill"
+Programmatic skill invocation
+
+**Chain slash commands:**
+```yaml
+allowed-tools: SlashCommand
+```
+Examples: "Run multiple workflow commands", "Orchestrate command sequence"
+Sequential command execution
+
+**Complex orchestration:**
+```yaml
+allowed-tools: Read, Write, Skill, SlashCommand
+```
+Examples: "Coordinate multi-skill workflow", "Build complex automation"
+Combine skills and commands with file operations
 
 ### Complex Workflows
 
@@ -137,9 +225,27 @@ Multi-phase operations with all capabilities
 
 **Refactoring:**
 - Single file → `Read, Edit`
-- Multiple files → `Read, Edit, Glob`
+- Multiple files → `Read, Edit, Glob` or `Read, MultiEdit`
 - With testing → `Read, Edit, Bash`
 - With review → `Read, Edit, Task`
+
+**Web research:**
+- Fetch docs → `WebFetch`
+- Search info → `WebSearch`
+- Research and write → `WebFetch, WebSearch, Write`
+
+**Data science:**
+- Analyze notebook → `Read, NotebookEdit`
+- Update analysis → `Read, NotebookEdit, Bash`
+
+**Process management:**
+- Background task → `Bash, BashOutput`
+- Managed processes → `Bash, BashOutput, KillShell`
+
+**Orchestration:**
+- Use other skills → `Skill`
+- Chain commands → `SlashCommand`
+- Complex workflows → `Read, Write, Skill, SlashCommand`
 
 ### Operation Keywords → Tools
 
@@ -166,6 +272,30 @@ Multi-phase operations with all capabilities
 
 **Keywords requiring AskUserQuestion:**
 - choose, select, configure, setup (with choices), initialize (with options)
+
+**Keywords requiring MultiEdit:**
+- batch update, update all, apply to multiple, consistent changes across files
+
+**Keywords requiring NotebookEdit:**
+- notebook, jupyter, ipynb, data analysis cells, update analysis
+
+**Keywords requiring WebFetch:**
+- fetch from URL, read documentation at, analyze web page, get content from
+
+**Keywords requiring WebSearch:**
+- search for, find online, latest information, current status, recent news
+
+**Keywords requiring BashOutput:**
+- monitor output, check progress, read logs from, background process output
+
+**Keywords requiring KillShell:**
+- stop process, terminate, kill background, end running
+
+**Keywords requiring Skill:**
+- use skill, delegate to, invoke capability, specialized function
+
+**Keywords requiring SlashCommand:**
+- run command, execute workflow, chain commands, sequential operations
 
 ## Common Combinations
 
@@ -294,6 +424,26 @@ Does command need code review or architecture analysis?
 Does command need user choices during execution?
 ├─ Yes → Include AskUserQuestion
 └─ No → Skip AskUserQuestion
+
+Does command modify multiple files with same pattern?
+├─ Yes → Consider MultiEdit instead of Edit
+└─ No → Use Edit for single file changes
+
+Does command work with Jupyter notebooks?
+├─ Yes → Include NotebookEdit
+└─ No → Skip NotebookEdit
+
+Does command need web content or search?
+├─ Yes → Include WebFetch and/or WebSearch
+└─ No → Skip web tools
+
+Does command run background processes?
+├─ Yes → Include BashOutput (and KillShell if managing lifecycle)
+└─ No → Skip process management tools
+
+Does command delegate to other skills or commands?
+├─ Yes → Include Skill and/or SlashCommand
+└─ No → Skip composition tools
 ```
 
 ## Validation Checklist
@@ -362,21 +512,35 @@ Complex multi-phase operation needing all capabilities
 3. **"Search for", "find text", "locate usage"** → Add `Grep`
 4. **"Create", "generate", "new file"** → Add `Write`
 5. **"Update", "modify", "fix", "change"** → Add `Read, Edit`
-6. **"Run", "execute", "test", "build", "commit"** → Add `Bash`
-7. **"Review", "analyze architecture", "check quality"** → Add `Task`
-8. **"Ask", "choose", "select option", "configure"** → Add `AskUserQuestion`
+6. **"Update all", "batch modify", "apply to multiple"** → Add `Read, MultiEdit`
+7. **"Notebook", "jupyter", "ipynb"** → Add `NotebookEdit`
+8. **"Run", "execute", "test", "build", "commit"** → Add `Bash`
+9. **"Monitor", "check progress", "background"** → Add `Bash, BashOutput`
+10. **"Stop", "kill", "terminate process"** → Add `KillShell`
+11. **"Fetch from", "read URL", "web content"** → Add `WebFetch`
+12. **"Search online", "latest", "current info"** → Add `WebSearch`
+13. **"Use skill", "delegate to"** → Add `Skill`
+14. **"Run command", "chain workflow"** → Add `SlashCommand`
+15. **"Review", "analyze architecture", "check quality"** → Add `Task`
+16. **"Ask", "choose", "select option", "configure"** → Add `AskUserQuestion`
 
 **Combine tools based on workflow phases:**
-- Phase 1: Analysis → `Read, Grep/Glob`
-- Phase 2: Modification → `Write/Edit`
-- Phase 3: Execution → `Bash`
+- Phase 1: Analysis → `Read, Grep/Glob` or `WebFetch/WebSearch`
+- Phase 2: Modification → `Write/Edit/MultiEdit/NotebookEdit`
+- Phase 3: Execution → `Bash` (with `BashOutput/KillShell` if background)
 - Phase 4: Review → `Task`
+- Phase 5: Orchestration → `Skill/SlashCommand`
 
 **Start minimal, add incrementally:**
 1. What's the core operation? (Read/Write/Edit/Bash)
-2. Does it need file finding? (Glob)
-3. Does it need content search? (Grep)
-4. Does it need review? (Task)
-5. Does it need user input? (AskUserQuestion)
+2. Does it modify multiple files? (MultiEdit)
+3. Does it work with notebooks? (NotebookEdit)
+4. Does it need file finding? (Glob)
+5. Does it need content search? (Grep)
+6. Does it need web research? (WebFetch/WebSearch)
+7. Does it run in background? (BashOutput/KillShell)
+8. Does it delegate work? (Skill/SlashCommand)
+9. Does it need review? (Task)
+10. Does it need user input? (AskUserQuestion)
 
 This produces sharp, accurate tool selections every time.
