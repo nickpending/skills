@@ -93,10 +93,19 @@ Complete understanding of current skill state and structure.
    - READ appropriate template to verify structure based on type and pattern
    - VERIFY skill has required sections from template
    - NOTE any missing or incorrectly formatted sections
+
+7. CHECK tool alignment:
+   - READ `references/tool-selection.md` for tool selection patterns
+   - EXTRACT allowed-tools from SKILL.md frontmatter
+   - ANALYZE skill operations (reading files, writing, running bash, etc.)
+   - VERIFY tools match operations described in skill
+   - **IF tools missing:** NOTE tools that should be added
+   - **IF unused tools:** NOTE tools that should be removed
+   - RECORD tool alignment findings
    - Proceed to Step 3
 
 **VERIFICATION:**
-Pattern alignment checked against pattern-selection.md logic.
+Pattern alignment and tool selection checked.
 
 **STOP before Step 3.**
 

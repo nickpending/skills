@@ -104,8 +104,13 @@ Validation output must be shown to user before proceeding.
 
 8. READ `references/writing-fundamentals.md` for language patterns
 
+9. READ `references/tool-selection.md` for tool selection guidance
+   - EXTRACT allowed-tools from existing command frontmatter (if present)
+   - ANALYZE command operations to determine required tools
+   - NOTE tools that should be in allowed-tools for migrated version
+
 **VERIFICATION:**
-All reference files (template + structure + patterns + momentum if needed) must be read before proceeding.
+All reference files (template + structure + patterns + tool-selection + momentum if needed) must be read before proceeding.
 
 **STOP before Step 4.**
 
