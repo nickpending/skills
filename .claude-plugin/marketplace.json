@@ -25,6 +25,26 @@
       "skills": [
         "./skills/homenet-discovery"
       ]
+    },
+    {
+      "name": "lore",
+      "description": "Query and manage your indexed personal knowledge base covering projects, commits, books, movies, people, and habits",
+      "version": "1.1.0",
+      "source": "./",
+      "strict": true,
+      "skills": [
+        "./skills/lore"
+      ]
+    },
+    {
+      "name": "prismis",
+      "description": "Query your Prismis content database via prismis-cli for semantic search, priority filtering, and reading statistics",
+      "version": "1.0.0",
+      "source": "./",
+      "strict": true,
+      "skills": [
+        "./skills/prismis"
+      ]
     }
   ]
 }
