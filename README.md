@@ -14,7 +14,7 @@
 
 ---
 
-Production skills for building Claude Code artifacts and automating network discovery.
+Production skills for building Claude Code artifacts, automating network discovery, and querying personal knowledge bases.
 
 ## Installation
 
@@ -25,6 +25,8 @@ Production skills for building Claude Code artifacts and automating network disc
 # Install skills individually:
 /plugin install artifact-builder@voidwire-skills
 /plugin install homenet-discovery@voidwire-skills
+/plugin install lore@voidwire-skills
+/plugin install prismis@voidwire-skills
 ```
 
 ## What's Inside
@@ -41,6 +43,7 @@ Unified builder for creating and improving Claude Code slash commands and skills
 - Action routing (new/improve/migrate)
 - Type-aware skill guidance (workflow/tool/domain/template/reference)
 - Template library (3 command + 5 skill templates)
+- Model selection (haiku for CLI wrappers, sonnet for complex workflows)
 - Built-in validation scripts
 - Momentum integration (optional)
 
@@ -73,6 +76,44 @@ Automated home network discovery via nmap, SSH, and DNS. Creates machine-readabl
 
 **Prerequisites:** nmap, python3, SSH keys (optional), DNS access (optional)
 
+### lore
+
+Query your indexed personal knowledge fabric covering development projects, tasks, events, blogs, commits, and personal data. Simple tool skill for direct CLI command execution.
+
+**Triggers:** "what projects", "find commits", "show tasks", "list books"
+
+**Features:**
+- List operations across all domains (development, tasks, events, blogs, commits, books, movies, etc.)
+- Semantic search within domains
+- Cypher graph queries for exploring relationships
+- Personal data management (people, interests, habits)
+
+**Outputs:**
+- Filtered search results
+- Complete domain listings
+- Graph query results showing technology connections
+
+**Prerequisites:** lore CLI tools installed and indexed
+
+### prismis
+
+Query your Prismis content database for semantic search, priority filtering, and reading statistics. Simple tool skill for direct prismis-cli access.
+
+**Triggers:** "search prismis", "show priority articles", "reading stats"
+
+**Features:**
+- Semantic search across saved articles
+- Priority filtering (high/medium/low)
+- Reading statistics and unread tracking
+- Content retrieval by ID
+
+**Outputs:**
+- Search results with relevance scores
+- Filtered article lists
+- Reading analytics
+
+**Prerequisites:** prismis-cli installed with indexed content
+
 ## Development
 
 ### Project Structure
@@ -87,13 +128,18 @@ skills/
 │   │   ├── commands/        # momentum-simple, momentum-complex, generic
 │   │   └── skills/          # workflow, tool, domain, template, reference
 │   └── scripts/             # Validation and packaging tools
-└── homenet-discovery/       # Network discovery
-    ├── SKILL.md             # Router (129 lines)
-    ├── workflows/           # discover.md (418 lines), update.md (298 lines)
-    ├── references/          # setup-guides.md
-    ├── scripts/             # Discovery and parsing scripts
-    ├── parsers/             # proxmox, opnsense, unifi parsers
-    └── templates/           # Output format templates
+├── homenet-discovery/       # Network discovery
+│   ├── SKILL.md             # Router (129 lines)
+│   ├── workflows/           # discover.md (418 lines), update.md (298 lines)
+│   ├── references/          # setup-guides.md
+│   ├── scripts/             # Discovery and parsing scripts
+│   ├── parsers/             # proxmox, opnsense, unifi parsers
+│   └── templates/           # Output format templates
+├── lore/                    # Personal knowledge fabric queries
+│   ├── SKILL.md             # Tool skill (150 lines)
+│   └── references/          # Graph patterns, command reference
+└── prismis/                 # Content database queries
+    └── SKILL.md             # Tool skill (110 lines)
 ```
 
 ### Validation & Packaging
