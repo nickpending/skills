@@ -72,11 +72,44 @@ Convert existing skills to structural standard while preserving all functionalit
    - DETERMINE if skill should be read-only or limited
    - ADD `allowed-tools: Read, Grep, Glob` if appropriate
 
-4. SHOW proposed frontmatter to user for approval
+4. **IF adding model:**
+   - SELECT model:
+     - `haiku` - Simple CLI tool wrapper (parse intent → execute command → return)
+     - `sonnet` - Everything else (code generation, multi-step workflows, complex logic)
+   - ADD `model: [haiku|sonnet]` to frontmatter
+
+5. SHOW proposed frontmatter to user for approval
 
 **STOP before Step 3.**
 
-## Step 3: Apply Execution Language (Workflow Skills Only)
+## Step 3: Check Momentum Integration
+
+**REQUIRED ACTIONS:**
+
+1. CHECK if skill has momentum integration:
+   - SCAN for "Available Paths" or "Mode Requirement" sections
+   - CHECK frontmatter for momentum-related paths
+
+2. **IF momentum integration exists:**
+   - READ `references/momentum-integration.md` for compliance patterns
+   - VERIFY path variable format: `{VARIABLE}` not `$VARIABLE`
+   - VERIFY Available Paths section lists relevant paths
+   - NOTE any compliance issues
+
+3. **IF no momentum integration:**
+   - ASK: "Does this skill need momentum paths or mode requirements?"
+   - **IF yes:**
+     - READ `references/momentum-integration.md`
+     - DETERMINE which paths needed
+     - PLAN sections to add
+   - **IF no:**
+     - SKIP momentum integration
+
+4. EXPLAIN momentum status and any changes needed
+
+**STOP before Step 4.**
+
+## Step 4: Apply Execution Language (Workflow Skills Only)
 
 **REQUIRED ACTIONS:**
 
@@ -103,9 +136,9 @@ Convert existing skills to structural standard while preserving all functionalit
 
 3. EXPLAIN changes made (or skipped)
 
-**STOP before Step 4.**
+**STOP before Step 5.**
 
-## Step 4: Progressive Disclosure Check
+## Step 5: Progressive Disclosure Check
 
 **REQUIRED ACTIONS:**
 
@@ -128,9 +161,9 @@ Convert existing skills to structural standard while preserving all functionalit
 
 4. EXPLAIN decision
 
-**STOP before Step 5.**
+**STOP before Step 6.**
 
-## Step 5: Produce Migrated Skill
+## Step 6: Produce Migrated Skill
 
 **REQUIRED ACTIONS:**
 
@@ -151,7 +184,7 @@ Convert existing skills to structural standard while preserving all functionalit
 **VERIFICATION:**
 User reviews and approves before writing files.
 
-## Step 6: Write and Validate
+## Step 7: Write and Validate
 
 **REQUIRED ACTIONS:**
 

@@ -2,6 +2,7 @@
 name: prismis
 description: Query your Prismis content database via prismis-cli. Semantic search across saved articles, filter by priority (high/medium/low), view reading statistics, list unread entries, and retrieve specific content. Use when searching prismis articles, showing priority items, displaying reading stats, or accessing saved content.
 allowed-tools: Bash
+model: haiku
 ---
 
 # Prismis

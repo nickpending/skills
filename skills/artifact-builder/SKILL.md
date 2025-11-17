@@ -1,6 +1,7 @@
 ---
 name: artifact-builder
 description: Build and improve Claude Code slash commands, skills, and agents. Use when creating, building, making, improving, updating, migrating, fixing, or optimizing slash commands, skills, or agents. Handles new creation, structural migration, and optimization workflows for all artifact types.
+model: sonnet
 ---
 
 # Artifact Builder

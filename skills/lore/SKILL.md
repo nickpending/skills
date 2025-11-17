@@ -2,6 +2,7 @@
 name: lore
 description: Query personal knowledge fabric indexed across development projects, tasks, events, blogs, commits, and personal data. Use when searching past work, exploring project relationships, logging discoveries, managing personal network data, or investigating commit history and technology usage patterns.
 allowed-tools: Read, Bash
+model: haiku
 ---
 
 # Lore

@@ -197,18 +197,23 @@ Structure exists and matches plan.
 
 3. DETERMINE tools from analysis
 
-4. DRAFT frontmatter:
+4. SELECT model:
+   - `haiku` - Simple CLI tool wrapper (parse intent → execute command → return)
+   - `sonnet` - Everything else (code generation, multi-step workflows, complex logic)
+
+5. DRAFT frontmatter:
    ```yaml
    ---
    name: skill-name
    description: [what + when from Steps 1-2]
    allowed-tools: [tools from analysis]
+   model: [haiku|sonnet]
    ---
    ```
 
-5. EXPLAIN tool choices
+6. EXPLAIN tool and model choices
 
-6. SELECT template based on type AND pattern:
+7. SELECT template based on type AND pattern:
    - Minimal tool: `templates/skills/minimal-tool-skill.md`
    - Middle tool: `templates/skills/middle-ground-tool-skill.md`
    - Middle workflow: `templates/skills/middle-ground-workflow-skill.md`
@@ -218,24 +223,25 @@ Structure exists and matches plan.
    - Execution template: `templates/skills/execution-template-skill.md`
    - Execution reference: `templates/skills/execution-reference-skill.md`
 
-7. EXPLAIN: "Using [template] for [type] skill with [pattern] pattern."
+8. EXPLAIN: "Using [template] for [type] skill with [pattern] pattern."
 
-8. READ template
+9. READ template
 
-9. CUSTOMIZE:
+10. CUSTOMIZE:
    - Replace `skill-name` with actual name
    - Update description
    - Set allowed-tools
+   - Set model
    - Add momentum paths if Step 3
    - Customize sections per resource plan
    - Replace placeholders
    - Remove unused sections
 
-10. SHOW customized SKILL.md
+11. SHOW customized SKILL.md
 
-11. ASK: "Capture the skill correctly? Adjustments?"
+12. ASK: "Capture the skill correctly? Adjustments?"
 
-12. ITERATE on feedback
+13. ITERATE on feedback
 
 **VERIFICATION:**
 SKILL.md approved.

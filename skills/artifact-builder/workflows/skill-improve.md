@@ -94,14 +94,18 @@ Complete understanding of current skill state and structure.
    - VERIFY skill has required sections from template
    - NOTE any missing or incorrectly formatted sections
 
-7. CHECK tool alignment:
+7. CHECK tool and model alignment:
    - READ `references/tool-selection.md` for tool selection patterns
-   - EXTRACT allowed-tools from SKILL.md frontmatter
-   - ANALYZE skill operations (reading files, writing, running bash, etc.)
+   - EXTRACT allowed-tools and model from SKILL.md frontmatter
+   - ANALYZE skill operations (reading files, writing, running bash, code generation, etc.)
    - VERIFY tools match operations described in skill
    - **IF tools missing:** NOTE tools that should be added
    - **IF unused tools:** NOTE tools that should be removed
-   - RECORD tool alignment findings
+   - CHECK model appropriateness:
+     - `haiku` - Simple CLI tool wrapper (parse intent → execute command → return)
+     - `sonnet` - Everything else (code generation, multi-step workflows, complex logic)
+   - **IF model missing or incorrect:** NOTE correct model
+   - RECORD tool and model alignment findings
    - Proceed to Step 3
 
 **VERIFICATION:**
@@ -158,11 +162,17 @@ Pattern alignment and tool selection checked.
    - Passive voice
    - Unclear requirements
 
-3. **CHECK momentum integration (if applicable):**
-   - `allowed-tools` in frontmatter
-   - Available Paths section
-   - Mode Requirement section (if mode-specific)
-   - Path references using `{VARIABLE}` format
+3. **CHECK momentum integration:**
+   - SCAN for "Available Paths" or "Mode Requirement" sections
+   - **IF momentum integration exists:**
+     - READ `references/momentum-integration.md` for compliance patterns
+     - VERIFY path variable format: `{VARIABLE}` not `$VARIABLE`
+     - VERIFY Available Paths section lists relevant paths
+     - NOTE any compliance issues
+   - **IF no momentum integration:**
+     - ASK: "Does this skill need momentum paths or mode requirements?"
+     - **IF yes:** NOTE that momentum integration should be added
+     - **IF no:** SKIP momentum integration
 
 4. **CHECK file sizes:**
    - SKILL.md within 200 lines (router) or 250 (direct)
