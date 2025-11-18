@@ -72,13 +72,7 @@ Convert existing skills to structural standard while preserving all functionalit
    - DETERMINE if skill should be read-only or limited
    - ADD `allowed-tools: Read, Grep, Glob` if appropriate
 
-4. **IF adding model:**
-   - SELECT model:
-     - `haiku` - Simple CLI tool wrapper (parse intent → execute command → return)
-     - `sonnet` - Everything else (code generation, multi-step workflows, complex logic)
-   - ADD `model: [haiku|sonnet]` to frontmatter
-
-5. SHOW proposed frontmatter to user for approval
+4. SHOW proposed frontmatter to user for approval
 
 **STOP before Step 3.**
 

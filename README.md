@@ -43,7 +43,6 @@ Unified builder for creating and improving Claude Code slash commands and skills
 - Action routing (new/improve/migrate)
 - Type-aware skill guidance (workflow/tool/domain/template/reference)
 - Template library (3 command + 5 skill templates)
-- Model selection (haiku for CLI wrappers, sonnet for complex workflows)
 - Built-in validation scripts
 - Momentum integration (optional)
 

@@ -197,23 +197,18 @@ Structure exists and matches plan.
 
 3. DETERMINE tools from analysis
 
-4. SELECT model:
-   - `haiku` - Simple CLI tool wrapper (parse intent → execute command → return)
-   - `sonnet` - Everything else (code generation, multi-step workflows, complex logic)
-
-5. DRAFT frontmatter:
+4. DRAFT frontmatter:
    ```yaml
    ---
    name: skill-name
    description: [what + when from Steps 1-2]
    allowed-tools: [tools from analysis]
-   model: [haiku|sonnet]
    ---
    ```
 
-6. EXPLAIN tool and model choices
+5. EXPLAIN tool choices
 
-7. SELECT template based on type AND pattern:
+6. SELECT template based on type AND pattern:
    - Minimal tool: `templates/skills/minimal-tool-skill.md`
    - Middle tool: `templates/skills/middle-ground-tool-skill.md`
    - Middle workflow: `templates/skills/middle-ground-workflow-skill.md`
