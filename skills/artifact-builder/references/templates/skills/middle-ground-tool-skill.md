@@ -1,6 +1,6 @@
 ---
 name: [skill-name]
-description: [What it does]. Use when [trigger contexts and keywords].
+description: [What it does]. USE WHEN user says "[trigger1]", "[trigger2]", "[trigger3]", or [semantic category].
 allowed-tools: Read, Bash
 ---
 

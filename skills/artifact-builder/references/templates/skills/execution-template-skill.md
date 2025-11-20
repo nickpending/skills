@@ -1,6 +1,6 @@
 ---
 name: skill-name
-description: Brief description of templates provided. Use when [natural scenarios for template generation or boilerplate creation]. Include specific triggers.
+description: Brief description of templates provided. USE WHEN user says "[trigger1]", "[trigger2]", "[trigger3]", or [semantic category].
 allowed-tools: Read, Write, Edit, AskUserQuestion
 ---
 

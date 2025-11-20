@@ -1,6 +1,6 @@
 ---
 name: skill-name
-description: Brief description of skill capability. Use when [natural usage scenarios]. Include specific triggers without literal phrases.
+description: Brief description of skill capability. USE WHEN user says "[trigger1]", "[trigger2]", "[trigger3]", or [semantic usage category].
 allowed-tools: Read, Write, Edit, AskUserQuestion
 ---
 

@@ -1,6 +1,6 @@
 ---
 name: artifact-builder
-description: Build and improve Claude Code slash commands, skills, and agents. Use when creating, building, making, improving, updating, migrating, fixing, or optimizing slash commands, skills, or agents. Handles new creation, structural migration, and optimization workflows for all artifact types.
+description: Build and improve Claude Code slash commands, skills, and agents. USE WHEN user says "create skill", "build skill", "new skill", "make skill", "improve skill", "update skill", "fix skill", "optimize skill", "create command", "build command", "new command", "make command", "improve command", "migrate skill", "migrate command", or any request to create/modify/fix Claude Code artifacts (skills, slash commands, agents).
 ---
 
 # Artifact Builder

@@ -1,6 +1,6 @@
 ---
 name: lore
-description: Query personal knowledge fabric indexed across development projects, tasks, events, blogs, commits, and personal data. Use when searching past work, exploring project relationships, logging discoveries, managing personal network data, or investigating commit history and technology usage patterns.
+description: Query personal knowledge fabric indexed across development projects, tasks, events, blogs, commits, and personal data. USE WHEN user says "use lore", "query lore", "search lore", "lore projects", "lore commits", "lore events", "lore blog posts", or searching past work and project history.
 allowed-tools: Read, Bash
 ---
 

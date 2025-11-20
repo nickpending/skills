@@ -28,20 +28,31 @@ description: What the skill does and when to use it. Use third-person.
 ```
 
 **Description format:**
-- What it does + "Use when" + natural scenarios
-- Natural language (not literal trigger phrases)
+- What it does + semantic scenarios + explicit triggers (70/30 split)
+- Deterministic phrases for common patterns + semantic catch-all
+- Pattern: `{what it does}. USE WHEN user says "{trigger1}", "{trigger2}", "{trigger3}", or {semantic catch-all}`
 - No implementation details
 - Specific enough to prevent false triggers
-- General enough to catch relevant use cases
 
 **Examples:**
 ```yaml
-# Good
-description: Build and improve skills through conversational discovery. Use when creating skills, improving skills, optimizing skills, understanding skill patterns, or refactoring skills.
+# Good - Explicit triggers + semantic
+description: Build and improve Claude Code slash commands, skills, and agents. USE WHEN user says "create skill", "build skill", "new skill", "make skill", "improve skill", "update skill", "fix skill", "optimize skill", "create command", "build command", or any request to create/modify/fix Claude Code artifacts (skills, slash commands, agents).
 
-# Bad
-description: A skill for skills  # Too vague
-description: Use when user says "create skill"  # Literal phrases
+# Good - Tool-namespaced triggers
+description: Query personal knowledge fabric indexed across development projects. USE WHEN user says "use lore", "query lore", "search lore", "lore projects", "lore commits", or searching past work and project history.
+
+# Good - Domain-specific deterministic + semantic
+description: Discovers home network devices via nmap, SSH, and DNS. USE WHEN user says "scan home network", "map home network", "homenet scan", "homenet discovery", or scanning/mapping home network infrastructure.
+
+# Bad - No explicit triggers
+description: Use when user wants to create skills
+
+# Bad - Generic semantic that causes collisions
+description: USE WHEN user says "list projects" or managing projects  # Too generic, collides with other tools
+
+# Bad - Formal language nobody speaks
+description: USE WHEN querying personal knowledge fabric and development history  # Use natural language instead
 ```
 
 ## Content Requirements

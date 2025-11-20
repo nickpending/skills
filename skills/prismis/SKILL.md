@@ -1,6 +1,6 @@
 ---
 name: prismis
-description: Query your Prismis content database via prismis-cli. Semantic search across saved articles, filter by priority (high/medium/low), view reading statistics, list unread entries, and retrieve specific content. Use when searching prismis articles, showing priority items, displaying reading stats, or accessing saved content.
+description: Query your Prismis content database via prismis-cli. Semantic search across saved articles, filter by priority (high/medium/low), view reading statistics, list unread entries, and retrieve specific content. USE WHEN user says "use prismis", "query prismis", "search prismis", "prismis articles", "prismis stats", "prismis unread", or searching saved articles.
 allowed-tools: Bash
 ---
 

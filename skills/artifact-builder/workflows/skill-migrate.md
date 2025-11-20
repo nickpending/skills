@@ -60,13 +60,13 @@ Convert existing skills to structural standard while preserving all functionalit
      ```yaml
      ---
      name: [Gerund form, based on skill purpose]
-     description: [What it does]. Use when [triggers and keywords].
+     description: [What it does]. USE WHEN user says "[trigger1]", "[trigger2]", "[trigger3]", or [semantic category].
      ---
      ```
    - ENSURE description includes:
      - What the skill does (third person)
-     - When to use it (trigger contexts)
-     - Key terms for discovery
+     - 5-8 explicit trigger phrases users would say
+     - Semantic catch-all for related requests
 
 3. **IF adding tool restrictions:**
    - DETERMINE if skill should be read-only or limited

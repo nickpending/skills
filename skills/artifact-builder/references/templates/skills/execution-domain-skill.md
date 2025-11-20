@@ -1,6 +1,6 @@
 ---
 name: skill-name
-description: Brief description of domain knowledge provided. Use when [specific domain questions or contexts]. Include natural scenarios.
+description: Brief description of domain knowledge provided. USE WHEN user says "[trigger1]", "[trigger2]", "[trigger3]", or [semantic category].
 allowed-tools: Read, Grep
 ---
 

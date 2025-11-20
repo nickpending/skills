@@ -1,6 +1,6 @@
 ---
 name: skill-name
-description: Brief description of documentation provided. Use when [specific information lookups or reference needs]. Include natural query patterns.
+description: Brief description of documentation provided. USE WHEN user says "[trigger1]", "[trigger2]", "[trigger3]", or [semantic category].
 ---
 
 # Skill Name

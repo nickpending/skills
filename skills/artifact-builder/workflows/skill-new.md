@@ -19,7 +19,8 @@ Build through discovery and iteration. Each step builds context for the next. Do
 2. RECORD:
    - Core capability
    - Concrete usage examples (2-3 minimum)
-   - Trigger phrases
+   - Common trigger phrases (5-8 exact phrases users would say)
+   - Semantic catch-all (what category of requests)
    - Success outcome
 
 3. **IF vague:**
@@ -197,11 +198,11 @@ Structure exists and matches plan.
 
 3. DETERMINE tools from analysis
 
-4. DRAFT frontmatter:
+4. DRAFT frontmatter using 70/30 pattern:
    ```yaml
    ---
    name: skill-name
-   description: [what + when from Steps 1-2]
+   description: [capability]. USE WHEN user says "[trigger1]", "[trigger2]", "[trigger3]", or [semantic catch-all from Step 1].
    allowed-tools: [tools from analysis]
    ---
    ```

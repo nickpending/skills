@@ -1,6 +1,6 @@
 ---
 name: skill-name
-description: Brief description of tool integration capability. Use when [natural usage scenarios with tool operations]. Include specific triggers.
+description: Brief description of tool integration capability. USE WHEN user says "[trigger1]", "[trigger2]", "[trigger3]", or [semantic category].
 allowed-tools: Read, Write, Bash
 ---
 
