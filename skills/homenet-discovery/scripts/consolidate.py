@@ -5,15 +5,14 @@ consolidate.py - Merge discovery data into unified inventory
 
 import json
 import sys
-from collections import defaultdict
-from typing import Dict, List, Any
 from pathlib import Path
-
+from typing import Any
 
 # Trust hierarchy for conflicting data
 TRUST_ORDER = {
     "ssh": 4,
     "nmap": 3,
+    "ssh-detected": 2,
     "dns": 2,
     "manual-opnsense": 1,
     "manual-proxmox": 1,
@@ -21,12 +20,12 @@ TRUST_ORDER = {
 }
 
 
-def trust_level(discovered_by: List[str]) -> int:
+def trust_level(discovered_by: list[str]) -> int:
     """Calculate trust level based on discovery methods"""
     return max((TRUST_ORDER.get(method, 0) for method in discovered_by), default=0)
 
 
-def merge_host_data(existing: Dict[str, Any], new: Dict[str, Any]) -> Dict[str, Any]:
+def merge_host_data(existing: dict[str, Any], new: dict[str, Any]) -> dict[str, Any]:
     """Merge two host records, preferring higher-trust data"""
 
     existing_trust = trust_level(existing.get("discovered_by", []))
@@ -62,7 +61,7 @@ def merge_host_data(existing: Dict[str, Any], new: Dict[str, Any]) -> Dict[str, 
     return merged
 
 
-def normalize_host(host: Dict[str, Any], source_file: str) -> Dict[str, Any]:
+def normalize_host(host: dict[str, Any], source_file: str) -> dict[str, Any]:
     """Normalize host data to unified format based on source"""
 
     # Detect source type from filename or data structure
@@ -81,7 +80,11 @@ def normalize_host(host: Dict[str, Any], source_file: str) -> Dict[str, Any]:
             "proxy_routes": [],
         }
     elif "discovery-ssh" in source_file:
-        # ssh format: {ip, hostname, os, services, interfaces, containers}
+        # ssh-probe.sh now outputs unified format directly
+        # Just validate it has required fields
+        if "discovered_by" in host and "metadata" in host:
+            return host
+        # Legacy fallback for old format
         return {
             "ip": host.get("ip", ""),
             "mac": "",
@@ -129,13 +132,13 @@ def normalize_host(host: Dict[str, Any], source_file: str) -> Dict[str, Any]:
         }
 
 
-def consolidate(discovery_files: List[Path]) -> Dict[str, Any]:
+def consolidate(discovery_files: list[Path]) -> dict[str, Any]:
     """Consolidate multiple discovery files into unified inventory"""
 
     # Track by MAC (preferred) and IP (fallback)
-    by_mac: Dict[str, Dict[str, Any]] = {}
-    by_ip: Dict[str, Dict[str, Any]] = {}
-    vlans: Dict[int, Dict[str, Any]] = {}
+    by_mac: dict[str, dict[str, Any]] = {}
+    by_ip: dict[str, dict[str, Any]] = {}
+    vlans: dict[int, dict[str, Any]] = {}
 
     for filepath in discovery_files:
         if not filepath.exists():
@@ -183,7 +186,14 @@ def consolidate(discovery_files: List[Path]) -> Dict[str, Any]:
             else:
                 # No MAC, fallback to IP-based deduplication
                 if ip in by_ip:
-                    by_ip[ip] = merge_host_data(by_ip[ip], host)
+                    merged = merge_host_data(by_ip[ip], host)
+                    by_ip[ip] = merged
+
+                    # If this IP was from a MAC-based host, update by_mac too
+                    for existing_mac, existing_host in by_mac.items():
+                        if existing_host.get("ip") == ip:
+                            by_mac[existing_mac] = merged
+                            break
                 else:
                     by_ip[ip] = host
 
@@ -202,7 +212,7 @@ def consolidate(discovery_files: List[Path]) -> Dict[str, Any]:
             inventory.append(host)
 
     # Sort by IP address
-    def ip_sort_key(host: Dict[str, Any]) -> tuple:
+    def ip_sort_key(host: dict[str, Any]) -> tuple:
         try:
             return tuple(map(int, host["ip"].split(".")))
         except (ValueError, AttributeError):
@@ -211,7 +221,7 @@ def consolidate(discovery_files: List[Path]) -> Dict[str, Any]:
     inventory.sort(key=ip_sort_key)
 
     # Sort VLANs by VLAN ID
-    def vlan_sort_key(vlan: Dict[str, Any]) -> int:
+    def vlan_sort_key(vlan: dict[str, Any]) -> int:
         return vlan.get("vlan_id", 9999)
 
     vlan_list = sorted(vlans.values(), key=vlan_sort_key)
@@ -220,16 +230,31 @@ def consolidate(discovery_files: List[Path]) -> Dict[str, Any]:
 
 
 def main() -> None:
-    if len(sys.argv) < 2:
+    if len(sys.argv) < 3:
         print("ERROR: Missing arguments")
-        print("Usage: consolidate.py <discovery-file1.json> [discovery-file2.json ...]")
+        print(
+            "Usage: consolidate.py <output-json> <output-jsonl> <discovery-file1.json> [discovery-file2.json ...]"
+        )
         sys.exit(1)
 
-    discovery_files = [Path(arg) for arg in sys.argv[1:]]
+    output_json = Path(sys.argv[1])
+    output_jsonl = Path(sys.argv[2])
+    discovery_files = [Path(arg) for arg in sys.argv[3:]]
 
     result = consolidate(discovery_files)
 
-    print(json.dumps(result, indent=2))
+    # Write consolidated JSON
+    with open(output_json, "w") as f:
+        json.dump(result, f, indent=2)
+
+    # Write JSONL (one host per line)
+    with open(output_jsonl, "w") as f:
+        for host in result.get("hosts", []):
+            f.write(json.dumps(host) + "\n")
+
+    print(f"Consolidated {len(result.get('hosts', []))} hosts")
+    print(f"JSON: {output_json}")
+    print(f"JSONL: {output_jsonl}")
 
 
 if __name__ == "__main__":

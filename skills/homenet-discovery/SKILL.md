@@ -18,6 +18,7 @@ Combines nmap scanning, SSH probing, DNS enumeration, and manual data drops to c
 - **Manual drops** - User-provided command outputs
 
 **Outputs:**
+- `~/.local/share/homenet/inventory.jsonl` - Machine-readable JSONL (one device per line)
 - `~/.local/share/homenet/inventory.md` - AI-queryable device inventory
 - `~/.local/share/homenet/report.md` - Human-readable summary
 - `~/.local/share/homenet/topology.mermaid` - Network topology diagram
@@ -111,8 +112,9 @@ Each workflow contains complete step-by-step discovery procedures.
 - `~/.config/homenet/templates/` - Custom templates
 
 **Inventory:**
-- `~/.local/share/homenet/inventory.md` - Current inventory
-- `~/.local/share/homenet/report.md` - Human summary
+- `~/.local/share/homenet/inventory.jsonl` - Machine-readable JSONL
+- `~/.local/share/homenet/inventory.md` - AI-queryable inventory
+- `~/.local/share/homenet/report.md` - Human-readable summary
 - `~/.local/share/homenet/topology.mermaid` - Network diagram
 - `~/.local/share/homenet/cache/` - Historical scans
 

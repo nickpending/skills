@@ -1,23 +1,49 @@
 #!/bin/bash
 # ssh-probe.sh - SSH into host and gather system information
+# Outputs JSON array with single host object
 
 set -uo pipefail
 
 HOST="${1:-}"
 
 if [ -z "$HOST" ]; then
-    echo "Usage: $0 <host>" >&2
-    echo "Example: $0 192.168.1.50" >&2
+    echo "Usage: $0 <user@host>" >&2
+    echo "Example: $0 root@192.168.1.50" >&2
     exit 1
 fi
+
+# Extract IP from user@host format
+HOST_IP="${HOST##*@}"
 
 # Test SSH connectivity with short timeout
-if ! ssh -o ConnectTimeout=2 -o BatchMode=yes -o StrictHostKeyChecking=accept-new "$HOST" echo "ok" >/dev/null 2>&1; then
-    echo "ERROR: SSH connection to $HOST failed (no key access or host unreachable)"
-    exit 1
+SSH_TEST_OUTPUT=$(ssh -o ConnectTimeout=2 -o BatchMode=yes -o StrictHostKeyChecking=accept-new "$HOST" echo "ok" 2>&1)
+SSH_EXIT_CODE=$?
+
+if [ $SSH_EXIT_CODE -ne 0 ]; then
+    # Check if it's auth failure (SSH open but no key) vs connection failure
+    if echo "$SSH_TEST_OUTPUT" | grep -q "Permission denied"; then
+        # SSH is available but we can't authenticate - output minimal host data
+        cat << EOF
+[{
+  "ip": "$HOST_IP",
+  "mac": "",
+  "hostname": "",
+  "os": "",
+  "services": ["ssh"],
+  "discovered_by": ["ssh-detected"],
+  "metadata": {"ssh_auth_failed": true},
+  "proxy_routes": []
+}]
+EOF
+        exit 0
+    else
+        # Connection refused/timeout - SSH not available
+        echo "[]"
+        exit 0
+    fi
 fi
 
-# Gather host information
+# Gather host information and convert to JSON
 ssh -o ConnectTimeout=5 -o BatchMode=yes "$HOST" '
 set -e
 
@@ -133,4 +159,108 @@ if command -v docker >/dev/null 2>&1; then
         esac
     done
 fi
-'
+' | python3 -c "
+import sys
+import re
+import json
+
+HOST_IP = '$HOST_IP'
+
+def parse_ssh_output(output):
+    sections = {}
+    current_section = None
+    current_content = []
+
+    for line in output.split('\n'):
+        if line.startswith('=== ') and line.endswith(' ==='):
+            if current_section:
+                sections[current_section] = '\n'.join(current_content).strip()
+            current_section = line[4:-4].strip()
+            current_content = []
+        else:
+            current_content.append(line)
+
+    if current_section:
+        sections[current_section] = '\n'.join(current_content).strip()
+
+    # Parse sections
+    os_info = sections.get('SYSTEM', 'unknown').strip()
+    hostname = sections.get('HOSTNAME', '').strip()
+
+    # Parse interfaces
+    interfaces = {}
+    if 'INTERFACES' in sections:
+        for line in sections['INTERFACES'].split('\n'):
+            if not line.strip():
+                continue
+            parts = line.split()
+            if len(parts) >= 3 and '/' in parts[2]:
+                interfaces[parts[0]] = parts[2].split('/')[0]
+
+    # Parse containers
+    containers = []
+    if 'DOCKER' in sections:
+        docker_content = sections['DOCKER']
+        if docker_content not in ['no-docker', 'no-containers']:
+            for line in docker_content.split('\n'):
+                if line.strip() and line != 'no-containers':
+                    parts = line.split(',')
+                    if len(parts) >= 2:
+                        containers.append({
+                            'name': parts[0],
+                            'image': parts[1],
+                            'status': parts[2] if len(parts) > 2 else 'unknown'
+                        })
+
+    # Parse services
+    services = []
+    if 'SERVICES' in sections:
+        service_content = sections['SERVICES']
+        if service_content not in ['none', 'no-systemd']:
+            for line in service_content.split('\n'):
+                if line.strip() and line not in ['none', 'no-systemd']:
+                    service_name = line.strip()
+                    if service_name.endswith('.service'):
+                        service_name = service_name[:-8]
+                    services.append(service_name)
+
+    # Check for proxy configs
+    if 'PROXY_CONFIGS' in sections:
+        proxy_content = sections['PROXY_CONFIGS']
+        for line in proxy_content.split('\n'):
+            if line.startswith('--- '):
+                match = re.match(r'--- (\w+) \(([^)]+)\) ---', line)
+                if match:
+                    proxy_type = match.group(1).lower()
+                    if proxy_type not in [s.lower() for s in services]:
+                        services.append(proxy_type)
+
+    # Detect services from containers
+    for container in containers:
+        image = container['image'].lower()
+        for svc in ['postgres', 'mysql', 'mariadb', 'redis', 'nginx', 'caddy', 'traefik']:
+            if svc in image and svc not in services:
+                services.append('mysql' if svc == 'mariadb' else svc)
+
+    # Build host object
+    metadata = {'interfaces': interfaces}
+    if containers:
+        metadata['containers'] = containers
+
+    host = {
+        'ip': HOST_IP,
+        'mac': '',
+        'hostname': hostname,
+        'os': os_info,
+        'services': services,
+        'discovered_by': ['ssh'],
+        'metadata': metadata,
+        'proxy_routes': []
+    }
+
+    return [host]
+
+output = sys.stdin.read()
+hosts = parse_ssh_output(output)
+print(json.dumps(hosts, indent=2))
+"
