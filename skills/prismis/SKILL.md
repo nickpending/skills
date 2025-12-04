@@ -28,39 +28,26 @@ Query and access your Prismis content database for research and reference.
 
 ## Common Operations
 
-**Semantic search:**
+**Search** - use `--compact` first, then get articles of interest:
 ```bash
-prismis-cli search "topic or query" --compact --limit 10 --json
+prismis-cli search "topic" --compact --limit 10 --json
+prismis-cli get [entry-id] --raw      # article content
+prismis-cli get [entry-id] --json     # full analysis (insights, patterns, quotes)
 ```
 
-**List recent entries:**
+**List entries:**
 ```bash
 prismis-cli list --limit 25 --json
-```
-
-**Filter by priority:**
-```bash
 prismis-cli list --priority high --json
-prismis-cli list --priority medium --json
-prismis-cli list --priority low --json
-```
-
-**Show unread items:**
-```bash
 prismis-cli list --unread --limit 10 --json
 ```
 
-**Display statistics:**
+**Statistics:**
 ```bash
 prismis-cli statistics --json
 ```
 
-**Get specific entry:**
-```bash
-prismis-cli get [entry-id] --json
-```
-
-**Export data:**
+**Export:**
 ```bash
 prismis-cli export --format json
 ```

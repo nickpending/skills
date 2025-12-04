@@ -39,7 +39,7 @@
     {
       "name": "prismis",
       "description": "Query your Prismis content database via prismis-cli for semantic search, priority filtering, and reading statistics",
-      "version": "1.2.0",
+      "version": "1.3.0",
       "source": "./",
       "strict": true,
       "skills": [
