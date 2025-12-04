@@ -18,6 +18,8 @@ config/secrets.*
 .workflow/
 .claude/
 .claudex/
+.mcp.json
+CLAUDE.md
 
 # Sensitive data
 *.sqlite

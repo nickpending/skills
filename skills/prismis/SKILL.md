@@ -30,12 +30,12 @@ Query and access your Prismis content database for research and reference.
 
 **Semantic search:**
 ```bash
-prismis-cli search "topic or query" --limit 20 --json
+prismis-cli search "topic or query" --compact --limit 10 --json
 ```
 
 **List recent entries:**
 ```bash
-prismis-cli list --limit 50 --json
+prismis-cli list --limit 25 --json
 ```
 
 **Filter by priority:**
@@ -47,7 +47,7 @@ prismis-cli list --priority low --json
 
 **Show unread items:**
 ```bash
-prismis-cli list --unread --limit 20 --json
+prismis-cli list --unread --limit 10 --json
 ```
 
 **Display statistics:**
