@@ -49,8 +49,8 @@ Build Claude Code artifacts (skills and slash commands) through conversational w
 | Workflow | 24 | `references/exemplar-command-workflow.md` |
 | Multi-phase orchestration | 126 | `references/exemplar-command-orchestration.md` |
 
-## Writing & Tool References
+## Writing References
 
-- `references/writing-fundamentals.md` - Imperative language, STOP points, variable notation, token efficiency
-- `references/tool-selection.md` - allowed-tools decision tree for commands
-- `references/command-syntax.md` - Frontmatter, `!` backticks, `@` includes, `$ARGUMENTS`
+For prompt writing patterns, tool selection, and command syntax:
+
+**RUN** `/prime-references prompting`
