@@ -139,13 +139,14 @@ Main workflow points to sub-workflows when needed: "For variable migration detai
 
 ### Current Architecture Check
 
-Our slash-builder structure:
-- SKILL.md: 94 lines ✓ (well under 200)
-- migrate.md: 407 lines ⚠️ (over 400, review for split)
-- new.md: ~200 lines ✓ (estimated)
-- improve.md: ~330 lines ✓ (under 400)
+The artifact-builder structure demonstrates this pattern:
+- SKILL.md: 57 lines ✓ (lean router)
+- create.md: 167 lines ✓ (unified create workflow)
+- improve.md: 89 lines ✓ (focused)
+- migrate.md: 107 lines ✓ (focused)
+- 9 exemplar files: 63-191 lines each ✓ (loaded on-demand)
 
-This follows progressive disclosure: only load what's needed, keep each piece focused.
+This follows progressive disclosure: router → workflow → exemplars as needed.
 
 ## Router Pattern for SKILL.md
 
@@ -542,14 +543,14 @@ Before finalizing a workflow, verify:
 - [ ] Are all tools explicitly named?
 - [ ] Would model know when to stop and ask?
 
-## Integration with slash-builder
+## Integration with artifact-builder
 
-The slash-builder skill uses this spec when creating new skills:
+The artifact-builder skill uses this spec when creating skills and commands:
 
-**Creating new skill:**
+**Creating new:**
 - SKILL.md follows router pattern (this spec)
 - Workflows use execution language (this spec)
-- References skill-creation-spec for overall structure
+- Points to real exemplars, not abstract templates
 
 **Migrating existing:**
 - Check workflow language against anti-patterns
@@ -563,6 +564,6 @@ The slash-builder skill uses this spec when creating new skills:
 
 ---
 
-**Related specifications:**
-- skill-creation-spec.md - Overall skill structure and content rules
-- skill-management-reference.md - Creating, testing, debugging skills
+**Related:**
+- `skills/artifact-builder/` - Skill and command creation
+- `skills/artifact-builder/references/writing-fundamentals.md` - Token efficiency, imperative language

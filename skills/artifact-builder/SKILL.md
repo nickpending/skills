@@ -1,108 +1,56 @@
 ---
 name: artifact-builder
-description: Build and improve Claude Code slash commands, skills, and agents. USE WHEN user says "create skill", "build skill", "new skill", "make skill", "improve skill", "update skill", "fix skill", "optimize skill", "create command", "build command", "new command", "make command", "improve command", "migrate skill", "migrate command", or any request to create/modify/fix Claude Code artifacts (skills, slash commands, agents).
+description: Build and improve Claude Code slash commands, skills, and agents. USE WHEN user says "create skill", "build skill", "new skill", "make skill", "improve skill", "update skill", "fix skill", "optimize skill", "create command", "build command", "new command", "make command", "improve command", "migrate skill", "migrate command", or any request to create/modify/fix Claude Code artifacts.
 ---
 
 # Artifact Builder
 
-## Overview
+Build Claude Code artifacts (skills and slash commands) through conversational workflows.
 
-Build and improve Claude Code artifacts through focused, conversational workflows.
+## Determine Action
 
-## Workflow
+**From user's message, identify:**
 
-Copy to track progress:
-```
-Artifact Builder Workflow:
-- [ ] Step 1: Determine artifact type and action
-- [ ] Step 2: Load appropriate workflow
-- [ ] Step 3: Execute workflow steps
-```
+| Intent | Keywords | Workflow |
+|--------|----------|----------|
+| Create new | "create", "build", "make", "new" | `workflows/create.md` |
+| Improve existing | "improve", "optimize", "refactor", "tighten" | `workflows/improve.md` |
+| Fix structure | "migrate", "fix format", "validation errors" | `workflows/migrate.md` |
 
-## Execute ALL steps in sequence
+## Execute
 
-### Step 1: Determine Artifact Type and Action
-
-**ANALYZE user's initial message for:**
-
-**Artifact type indicators:**
-- **Command**: "slash", "command", "/something", "momentum command", "generic command"
-- **Skill**: "skill", "SKILL.md", "workflow skill", "tool integration", "domain knowledge"
-- **Agent**: "agent", "subagent" (future)
-
-**Action indicators:**
-- **New**: "create", "build", "make", "new", "from scratch"
-- **Improve**: "improve", "optimize", "reduce tokens", "make clearer", "refactor", "tighten"
-- **Migrate**: "migrate", "fix structure", "update format", "convert", "validation issues", "old format"
-
-**IF artifact type AND action clear from message:**
-→ Proceed directly to Step 2 with determined workflow
-
-**IF artifact type unclear:**
-ASK: "What are you building? A slash command or a skill?"
-RECORD response
-
-**IF action unclear (after knowing type):**
-ASK based on artifact type:
-- For commands: "Are you creating a new command, fixing an existing command's structure, or improving an already-working command?"
-- For skills: "Are you creating a new skill or improving an existing one?"
-RECORD response
-
-### Step 2: Load Appropriate Workflow
-
-Based on Step 1 determination:
-
-**Commands:**
-- Create new command → READ `workflows/command-new.md`
-- Fix structure/migrate → READ `workflows/command-migrate.md`
-- Improve existing → READ `workflows/command-improve.md`
-
-**Skills:**
-- Create new skill → READ `workflows/skill-new.md`
-- Fix structure/migrate → READ `workflows/skill-migrate.md`
-- Improve existing → READ `workflows/skill-improve.md`
-
-**Agents:** (future)
-- Create new agent → READ `workflows/agent-new.md`
-
-### Step 3: Execute Workflow Steps
-
-Follow the loaded workflow file exactly as written.
-
-Each workflow contains complete step-by-step instructions for its specific scenario.
+1. **Determine action** from user's request
+2. **READ** the appropriate workflow file
+3. **Follow** workflow instructions exactly
 
 ## Key Principles
 
-**Be conversational:**
-- Discuss, don't interrogate
-- Show examples
-- Iterate based on feedback
-- Build collaboratively
+- **Conversational**: Discuss, don't interrogate. Show examples, iterate on feedback.
+- **Exemplar-driven**: Point to working artifacts as references, not abstract templates.
+- **Quality-focused**: Token efficiency, clarity, established patterns.
+- **Teaching another AI**: You're writing instructions for AI consumption - be specific and unambiguous.
 
-**Preserve functionality:**
-- Never silently delete content
-- Offer options on conflicts
-- Explain all changes
-- Get confirmation before major edits
+## Skill Exemplars
 
-**Focus on quality:**
-- Token efficiency matters
-- Clarity over cleverness
-- Follow established patterns
-- Validate structure
+| Pattern | Lines | Reference |
+|---------|-------|-----------|
+| CLI wrapper | 54 | `references/exemplar-skill-cli-wrapper.md` |
+| Multi-command CLI | 154 | `references/exemplar-skill-multi-command.md` |
+| Workflow router | 132 | `references/exemplar-skill-workflow-router.md` |
+| Procedural | 638 | `references/exemplar-skill-procedural.md` |
+| Knowledge injection | 42 | `references/exemplar-skill-knowledge-injection.md` |
 
-## Workflow Guidelines
+## Command Exemplars
 
-**Separation of concerns:**
-- Each workflow handles one scenario completely
-- If artifact needs migration AND improvement, run migration first, then improve
+| Pattern | Lines | Reference |
+|---------|-------|-----------|
+| Minimal procedural | 18 | `references/exemplar-command-minimal.md` |
+| Priming | 53 | `references/exemplar-command-priming.md` |
+| Workflow | 24 | `references/exemplar-command-workflow.md` |
+| Multi-phase orchestration | 126 | `references/exemplar-command-orchestration.md` |
 
-**Quality gates:**
-- Always run validation after structural changes
-- Show work incrementally
-- Get user feedback before major changes
+## Writing & Tool References
 
-**Collaboration:**
-- Be conversational, not interrogative
-- Show examples and options
-- Iterate based on feedback
+- `references/writing-fundamentals.md` - Imperative language, STOP points, variable notation, token efficiency
+- `references/tool-selection.md` - allowed-tools decision tree for commands
+- `references/command-syntax.md` - Frontmatter, `!` backticks, `@` includes, `$ARGUMENTS`
