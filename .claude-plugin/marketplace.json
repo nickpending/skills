@@ -11,36 +11,41 @@
       "name": "skill-builder",
       "description": "Build and improve Claude Code skills with archetype-based guidance",
       "version": "1.0.0",
-      "source": "./skills/skill-builder",
-      "category": "development"
+      "source": "./",
+      "category": "development",
+      "skills": ["./skills/skill-builder"]
     },
     {
       "name": "command-builder",
       "description": "Build and improve Claude Code slash commands with archetype-based guidance",
       "version": "1.0.0",
-      "source": "./skills/command-builder",
-      "category": "development"
+      "source": "./",
+      "category": "development",
+      "skills": ["./skills/command-builder"]
     },
     {
       "name": "homenet-discovery",
       "description": "Discover and map your home network via nmap, SSH, and DNS with automated topology generation",
       "version": "1.3.0",
-      "source": "./skills/homenet-discovery",
-      "category": "infrastructure"
+      "source": "./",
+      "category": "infrastructure",
+      "skills": ["./skills/homenet-discovery"]
     },
     {
       "name": "lore",
       "description": "Query and manage your indexed personal knowledge base covering projects, commits, books, movies, people, and habits",
       "version": "1.2.0",
-      "source": "./skills/lore",
-      "category": "productivity"
+      "source": "./",
+      "category": "productivity",
+      "skills": ["./skills/lore"]
     },
     {
       "name": "prismis",
       "description": "Query your Prismis content database via prismis-cli for semantic search, priority filtering, and reading statistics",
       "version": "1.3.0",
-      "source": "./skills/prismis",
-      "category": "productivity"
+      "source": "./",
+      "category": "productivity",
+      "skills": ["./skills/prismis"]
     }
   ]
 }
