@@ -1,51 +1,32 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "voidwire-skills",
-  "description": "Production-ready Claude Code skills for building workflows, commands, and automation",
+  "description": "Production-ready Claude Code plugins for artifact authoring, network discovery, and personal data tools",
   "owner": {
     "name": "nickpending",
     "email": "rudy@voidwire.info"
   },
   "plugins": [
     {
-      "name": "skill-builder",
-      "description": "Build and improve Claude Code skills with archetype-based guidance",
+      "name": "artifact-builder",
+      "description": "Build and improve Claude Code skills and commands with archetype-based guidance",
       "version": "1.0.0",
-      "source": "./",
-      "category": "development",
-      "skills": ["./skills/skill-builder"]
+      "source": "./plugins/artifact-builder",
+      "category": "development"
     },
     {
-      "name": "command-builder",
-      "description": "Build and improve Claude Code slash commands with archetype-based guidance",
-      "version": "1.0.0",
-      "source": "./",
-      "category": "development",
-      "skills": ["./skills/command-builder"]
-    },
-    {
-      "name": "homenet-discovery",
+      "name": "homenet-tools",
       "description": "Discover and map your home network via nmap, SSH, and DNS with automated topology generation",
-      "version": "1.3.0",
-      "source": "./",
-      "category": "infrastructure",
-      "skills": ["./skills/homenet-discovery"]
+      "version": "1.0.0",
+      "source": "./plugins/homenet-tools",
+      "category": "infrastructure"
     },
     {
-      "name": "lore",
-      "description": "Query and manage your indexed personal knowledge base covering projects, commits, books, movies, people, and habits",
-      "version": "1.2.0",
-      "source": "./",
-      "category": "productivity",
-      "skills": ["./skills/lore"]
-    },
-    {
-      "name": "prismis",
-      "description": "Query your Prismis content database via prismis-cli for semantic search, priority filtering, and reading statistics",
-      "version": "1.3.0",
-      "source": "./",
-      "category": "productivity",
-      "skills": ["./skills/prismis"]
+      "name": "knowledge-tools",
+      "description": "Query personal knowledge bases including Lore (projects, commits, books) and Prismis (articles, reading stats)",
+      "version": "1.0.0",
+      "source": "./plugins/knowledge-tools",
+      "category": "productivity"
     }
   ]
 }
