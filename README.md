@@ -23,7 +23,8 @@ Production skills for building Claude Code artifacts, automating network discove
 /plugin marketplace add nickpending/skills
 
 # Install skills individually:
-/plugin install artifact-builder@voidwire-skills
+/plugin install skill-builder@voidwire-skills
+/plugin install command-builder@voidwire-skills
 /plugin install homenet-discovery@voidwire-skills
 /plugin install lore@voidwire-skills
 /plugin install prismis@voidwire-skills
@@ -31,30 +32,37 @@ Production skills for building Claude Code artifacts, automating network discove
 
 ## What's Inside
 
-### artifact-builder
+### skill-builder
 
-Unified builder for creating and improving Claude Code slash commands and skills through conversational workflows. Handles both artifact types with type-aware guidance.
+Build and improve Claude Code skills with archetype-based guidance. Uses foundations pattern for consistent structure.
 
-**Triggers:** "create command", "build skill", "improve command", "migrate skill"
+**Triggers:** "create skill", "build skill", "new skill", "improve skill"
 
 **Features:**
-- Conversational building with template selection
-- Artifact type detection (command vs skill)
-- Action routing (new/improve/migrate)
-- Type-aware skill guidance (workflow/tool/domain/template/reference)
-- Template library (3 command + 5 skill templates)
-- Built-in validation scripts
-- Momentum integration (optional)
+- Archetype selection (CLI Wrapper, Workflow Router, Knowledge Injection, Foundations)
+- Structure validation against skill-foundations
+- Conversational workflows for create/validate/improve
+- Prompt-foundations integration for writing patterns
 
 **Outputs:**
-- Commands: Validated markdown files with template structure
-- Skills: Complete directories with SKILL.md + bundled resources
-- Follows execution language patterns and progressive disclosure
+- Complete skill directories with SKILL.md + workflows/references as needed
+- Follows progressive disclosure and execution language patterns
 
-**Tools:**
-- `scripts/validate_command.py` - Command syntax validation
-- `scripts/validate_skill.py` - Skill structure validation
-- `scripts/package_skill.py` - Zip packaging for distribution
+### command-builder
+
+Build and improve Claude Code slash commands with archetype-based guidance.
+
+**Triggers:** "create command", "build command", "new command", "improve command"
+
+**Features:**
+- Archetype selection (Minimal, Priming, Workflow, Orchestration)
+- Structure validation against command-foundations
+- Preprocessing syntax guidance
+- Prompt-foundations integration
+
+**Outputs:**
+- Validated markdown command files
+- Proper frontmatter (description, allowed-tools, argument-hint)
 
 ### homenet-discovery
 
@@ -119,58 +127,51 @@ Query your Prismis content database for semantic search, priority filtering, and
 
 ```
 skills/
-├── artifact-builder/         # Unified command and skill builder
-│   ├── SKILL.md             # Router (107 lines)
-│   ├── workflows/           # {command,skill}-{new,migrate,improve}.md
-│   ├── references/          # Structure docs, patterns, tool selection
-│   ├── templates/
-│   │   ├── commands/        # momentum-simple, momentum-complex, generic
-│   │   └── skills/          # workflow, tool, domain, template, reference
-│   └── scripts/             # Validation and packaging tools
+├── skill-builder/           # Skill creation with archetypes
+│   ├── SKILL.md             # Router with INVOKE pattern
+│   └── workflows/           # create.md, validate.md
+├── command-builder/         # Command creation with archetypes
+│   ├── SKILL.md             # Router with INVOKE pattern
+│   └── workflows/           # create.md, validate.md
 ├── homenet-discovery/       # Network discovery
-│   ├── SKILL.md             # Router (129 lines)
-│   ├── workflows/           # discover.md (418 lines), update.md (298 lines)
+│   ├── SKILL.md             # Router
+│   ├── workflows/           # discover.md, update.md
 │   ├── references/          # setup-guides.md
 │   ├── scripts/             # Discovery and parsing scripts
 │   ├── parsers/             # proxmox, opnsense, unifi parsers
 │   └── templates/           # Output format templates
 ├── lore/                    # Personal knowledge fabric queries
-│   ├── SKILL.md             # Tool skill (150 lines)
+│   ├── SKILL.md             # Tool skill
 │   └── references/          # Graph patterns, command reference
 └── prismis/                 # Content database queries
-    └── SKILL.md             # Tool skill (110 lines)
-```
-
-### Validation & Packaging
-
-```bash
-# Validate skill structure
-python3 skills/artifact-builder/scripts/validate_skill.py <skill-dir>
-
-# Package skill as distributable zip (outputs to /tmp)
-python3 skills/artifact-builder/scripts/package_skill.py <skill-dir>
-
-# Validate slash command
-python3 skills/artifact-builder/scripts/validate_command.py <command.md>
+    └── SKILL.md             # Tool skill
 ```
 
 ### Key Patterns
 
-- Router pattern: SKILL.md <200 lines, delegates to focused workflows
-- Progressive disclosure: metadata → SKILL.md → workflows/references loaded on-demand
-- Execution language: CAPS tool names, STOP points, VERIFICATION sections
-- File size targets: workflows 200-400 lines, references 200-300 lines
-- Template-based: 8 templates for consistent structure
+- **Router pattern:** SKILL.md <200 lines, delegates to focused workflows
+- **INVOKE pattern:** SKILL.md invokes foundations, workflows reference loaded content
+- **Progressive disclosure:** metadata → SKILL.md → workflows/references loaded on-demand
+- **Execution language:** CAPS tool names, STOP points, VERIFICATION sections
+- **Foundations:** skill-builder and command-builder use `*-foundations` skills for reference content
+
+## Related Foundations
+
+These skills work with foundations skills (installed separately):
+
+- `skill-foundations` - Structure rules, archetypes, exemplars
+- `command-foundations` - Command structure, archetypes, preprocessing
+- `prompt-foundations` - Prompt engineering principles, patterns
 
 ## Usage
 
-Skills trigger automatically based on natural language matching their descriptions. Artifact-builder uses conversational workflows to guide creation through discovery, planning, and implementation phases.
+Skills trigger automatically based on natural language matching their descriptions. Builders use conversational workflows to guide creation through discovery, archetype selection, and implementation phases.
 
 Each skill follows progressive disclosure patterns and produces model-friendly output with clear execution language.
 
 ## Contributing
 
-Skills follow established patterns documented in references. Use artifact-builder to create new skills with consistent structure and quality.
+Skills follow established patterns documented in foundations. Use skill-builder to create new skills with consistent structure and quality.
 
 ## License
 

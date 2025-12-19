@@ -1,44 +1,36 @@
-# Migrate Artifact
+# Migrate Skill
 
-Fix structural issues and bring artifacts into compliance with current patterns.
+Fix structural issues and bring skills into compliance with current patterns.
 
 ## When to Use
 
 - Validation errors (missing frontmatter, wrong structure)
 - Old format that needs updating
 - Non-compliant patterns that should be standardized
-- Broken artifacts that won't trigger or execute
+- Broken skills that won't trigger
 
 ## Step 1: Load and Assess
 
-1. **READ the artifact** - full content
+1. **READ the skill** - SKILL.md and directory contents
 2. **Identify issues:**
 
-### Skill Issues
 | Issue | Symptom | Fix |
 |-------|---------|-----|
 | Missing frontmatter | No `---` block | Add name + description |
 | Bad description | Doesn't trigger | Add USE WHEN keywords |
 | Wrong structure | Files in wrong places | Reorganize to standard layout |
 | Broken references | Links to missing files | Fix or remove references |
-
-### Command Issues
-| Issue | Symptom | Fix |
-|-------|---------|-----|
-| Missing frontmatter | No description | Add `---` block with description |
-| Invalid model | Full version string | Use haiku/sonnet/opus/inherit |
-| Broken preprocessing | `!` or `@` not working | Fix syntax |
-| Wrong location | Not in commands/ | Move to correct path |
+| No Examples | Missing usage patterns | Add 2-3 concrete examples |
 
 ## Step 2: Report Issues
 
 **Present findings clearly:**
 ```
 Migration Assessment:
-- ❌ Missing description in frontmatter
-- ❌ No trigger keywords
-- ⚠️ Overly complex structure for functionality
-- ✅ Core logic is sound
+- [x] Missing description in frontmatter
+- [x] No trigger keywords
+- [ ] Overly complex structure for functionality
+- [x] Core logic is sound
 ```
 
 ## Step 3: Plan Migration
@@ -54,8 +46,9 @@ Migration Assessment:
 **Fix in order:**
 1. Structure first (directory layout, file locations)
 2. Frontmatter second (required fields)
-3. Content third (internal references, syntax)
-4. Validation last
+3. Content third (internal references)
+4. Examples section
+5. Validation last
 
 **For each fix:**
 - Make the change
@@ -64,37 +57,23 @@ Migration Assessment:
 
 ## Step 5: Validate
 
-### Skill Validation
 ```
 Required:
 - [ ] SKILL.md exists at root
-- [ ] Frontmatter has `name` field
+- [ ] Frontmatter has `name` field (kebab-case)
 - [ ] Frontmatter has `description` field
-- [ ] Description includes trigger keywords
+- [ ] Description includes USE WHEN with intent-based triggers
+- [ ] Examples section with 2-3 patterns
 
 Optional but recommended:
 - [ ] workflows/ contains valid .md files (if used)
-- [ ] references/ contains valid .md files (if used)
+- [ ] tools/ directory exists (even if empty)
 - [ ] No orphaned files
-```
-
-### Command Validation
-```
-Required:
-- [ ] Frontmatter has `description` field
-- [ ] File is in correct commands/ location
-
-If using optional fields:
-- [ ] `model` is haiku|sonnet|opus|inherit
-- [ ] `allowed-tools` uses valid tool syntax
-- [ ] `argument-hint` format is clear
 ```
 
 ## Step 6: Test
 
-**For skills:** Verify trigger scenario works.
-
-**For commands:** Invoke and verify execution.
+Verify trigger scenario works - describe a situation that should invoke the skill.
 
 ## Migration Checklist
 
@@ -102,5 +81,5 @@ If using optional fields:
 - [ ] User approved migration plan
 - [ ] Changes made incrementally
 - [ ] Validation passes
-- [ ] Artifact triggers/executes correctly
+- [ ] Skill triggers correctly
 - [ ] No functionality lost

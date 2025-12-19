@@ -1,4 +1,5 @@
 {
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "voidwire-skills",
   "description": "Production-ready Claude Code skills for building workflows, commands, and automation",
   "owner": {
@@ -7,44 +8,39 @@
   },
   "plugins": [
     {
-      "name": "artifact-builder",
-      "description": "Build and improve Claude Code slash commands, skills, and agents through conversational workflows",
-      "version": "3.1.0",
-      "source": "./",
-      "strict": true,
-      "skills": [
-        "./skills/artifact-builder"
-      ]
+      "name": "skill-builder",
+      "description": "Build and improve Claude Code skills with archetype-based guidance",
+      "version": "1.0.0",
+      "source": "./skills/skill-builder",
+      "category": "development"
+    },
+    {
+      "name": "command-builder",
+      "description": "Build and improve Claude Code slash commands with archetype-based guidance",
+      "version": "1.0.0",
+      "source": "./skills/command-builder",
+      "category": "development"
     },
     {
       "name": "homenet-discovery",
       "description": "Discover and map your home network via nmap, SSH, and DNS with automated topology generation",
       "version": "1.3.0",
-      "source": "./",
-      "strict": true,
-      "skills": [
-        "./skills/homenet-discovery"
-      ]
+      "source": "./skills/homenet-discovery",
+      "category": "infrastructure"
     },
     {
       "name": "lore",
       "description": "Query and manage your indexed personal knowledge base covering projects, commits, books, movies, people, and habits",
       "version": "1.2.0",
-      "source": "./",
-      "strict": true,
-      "skills": [
-        "./skills/lore"
-      ]
+      "source": "./skills/lore",
+      "category": "productivity"
     },
     {
       "name": "prismis",
       "description": "Query your Prismis content database via prismis-cli for semantic search, priority filtering, and reading statistics",
       "version": "1.3.0",
-      "source": "./",
-      "strict": true,
-      "skills": [
-        "./skills/prismis"
-      ]
+      "source": "./skills/prismis",
+      "category": "productivity"
     }
   ]
 }

@@ -1,17 +1,16 @@
-# Improve Artifact
+# Improve Skill
 
-Enhance an existing skill or command that already works.
+Enhance an existing skill that already works.
 
 ## Prerequisites
 
-- Artifact exists and functions correctly
+- Skill exists and functions correctly
 - User wants enhancement, not structural fixes (use migrate.md for that)
 
 ## Step 1: Load Current State
 
-1. **READ the artifact** - full content
-2. **Identify type:** Skill (SKILL.md + directory) or Command (single .md)
-3. **Note current size** - lines, token estimate
+1. **READ the skill** - SKILL.md and any workflows/references
+2. **Note current size** - lines, token estimate
 
 ## Step 2: Understand Goals
 
@@ -34,7 +33,7 @@ Enhance an existing skill or command that already works.
 - Overly verbose sections
 - Missing trigger keywords in description
 - Unused or vestigial content
-- Opportunities to use preprocessing (`!`, `@`, `$ARGUMENTS`)
+- Missing Examples section
 
 **Present findings** before making changes.
 
@@ -61,16 +60,11 @@ Enhance an existing skill or command that already works.
 
 ## Step 6: Validate
 
-### For Skills
 - Description still has trigger keywords
 - Frontmatter intact
 - Referenced files still exist
 - No broken internal links
-
-### For Commands
-- Frontmatter valid
-- Preprocessing syntax correct
-- Tool restrictions still appropriate
+- Examples section present
 
 ## Step 7: Compare
 
