@@ -57,19 +57,7 @@ Migration Assessment:
 
 ## Step 5: Validate
 
-```
-Required:
-- [ ] SKILL.md exists at root
-- [ ] Frontmatter has `name` field (kebab-case)
-- [ ] Frontmatter has `description` field
-- [ ] Description includes USE WHEN with intent-based triggers
-- [ ] Examples section with 2-3 patterns
-
-Optional but recommended:
-- [ ] workflows/ contains valid .md files (if used)
-- [ ] tools/ directory exists (even if empty)
-- [ ] No orphaned files
-```
+Follow `workflows/validate.md` to check the migrated skill.
 
 ## Step 6: Test
 

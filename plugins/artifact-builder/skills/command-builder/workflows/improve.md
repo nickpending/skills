@@ -59,9 +59,7 @@ Enhance an existing command that already works.
 
 ## Step 6: Validate
 
-- Frontmatter valid
-- Preprocessing syntax correct
-- Tool restrictions still appropriate
+Follow `workflows/validate.md` to check the improved command.
 
 ## Step 7: Compare
 

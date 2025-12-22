@@ -39,11 +39,7 @@ Let the user pick from: Minimal, Priming, Workflow, Orchestration.
 
 ## Step 4: Validate
 
-Use command-foundations structure requirements to validate:
-- [ ] Frontmatter has `description`
-- [ ] Preprocessing syntax is correct
-- [ ] Has clear task/workflow section
-- [ ] Tool restrictions appropriate (if using `allowed-tools`)
+Follow `workflows/validate.md` to check the command.
 
 ## Step 5: Test
 

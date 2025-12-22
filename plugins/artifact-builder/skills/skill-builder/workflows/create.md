@@ -49,12 +49,7 @@ Let the user pick from: CLI wrapper, Workflow router, Knowledge injection, Found
 
 ## Step 5: Validate
 
-Use skill-foundations structure requirements to validate:
-- [ ] Frontmatter has `name` (kebab-case) and `description`
-- [ ] Description includes `USE WHEN` clause with intent-based triggers
-- [ ] Body matches chosen archetype pattern
-- [ ] Examples section exists with 2-3 patterns
-- [ ] Any referenced files exist
+Follow `workflows/validate.md` to check the skill.
 
 ## Step 6: Test
 

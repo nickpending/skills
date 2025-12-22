@@ -2,40 +2,27 @@
 
 Check if a command follows the canonical structure.
 
-## Step 1: Load Structure Requirements
-
-Use command-foundations structure requirements.
-
-## Step 2: Read Target Command
+## Step 1: Read Target Command
 
 READ the command file.
 
-## Step 3: Validate Frontmatter
+## Step 2: Check Structure
 
-CHECK:
-- [ ] Has `description` field
-- [ ] If `model` used: is haiku|sonnet|opus
-- [ ] If `allowed-tools` used: valid tool syntax
-- [ ] If `argument-hint` used: clear format
+Validate against command-foundations structure requirements.
 
-## Step 4: Validate Body
+## Step 3: Check Body Pattern
 
-Use command-foundations archetype patterns.
+Validate against command-foundations archetype patterns.
 
-IDENTIFY which archetype the command matches, then CHECK body follows that pattern.
+## Step 4: Check Prompt Quality
 
-## Step 5: Validate Preprocessing
+Apply prompt-foundations principles checklist.
 
-CHECK any preprocessing syntax:
-- [ ] `!`\`command\` syntax correct
-- [ ] `@path` references exist
-- [ ] `$ARGUMENTS` / `$1` used appropriately
-
-## Step 6: Report
+## Step 5: Report
 
 **COMPLIANT** if all checks pass.
 
 **NON-COMPLIANT** if any check fails:
-- LIST specific failures
+- LIST specific failures with location
 - SUGGEST fixes
 - ASK if user wants automated fixes

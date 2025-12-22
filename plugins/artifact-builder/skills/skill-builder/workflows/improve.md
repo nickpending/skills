@@ -60,11 +60,7 @@ Enhance an existing skill that already works.
 
 ## Step 6: Validate
 
-- Description still has trigger keywords
-- Frontmatter intact
-- Referenced files still exist
-- No broken internal links
-- Examples section present
+Follow `workflows/validate.md` to check the improved skill.
 
 ## Step 7: Compare
 

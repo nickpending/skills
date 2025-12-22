@@ -54,17 +54,7 @@ Migration Assessment:
 
 ## Step 5: Validate
 
-```
-Required:
-- [ ] Frontmatter has `description` field
-- [ ] File is in correct commands/ location
-
-If using optional fields:
-- [ ] `model` is haiku|sonnet|opus
-- [ ] `allowed-tools` uses valid tool syntax
-- [ ] `argument-hint` format is clear
-- [ ] Preprocessing syntax (`!`, `@`, `$`) correct
-```
+Follow `workflows/validate.md` to check the migrated command.
 
 ## Step 6: Test
 

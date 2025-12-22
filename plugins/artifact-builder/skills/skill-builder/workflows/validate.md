@@ -2,41 +2,27 @@
 
 Check if a skill follows the canonical structure.
 
-## Step 1: Load Structure Requirements
+## Step 1: Read Target Skill
 
-Use skill-foundations structure requirements.
+READ the skill's SKILL.md and directory contents.
 
-## Step 2: Read Target Skill
+## Step 2: Check Structure
 
-READ the skill's SKILL.md file.
+Validate against skill-foundations structure requirements.
 
-## Step 3: Validate Frontmatter
+## Step 3: Check Body Pattern
 
-CHECK:
-- [ ] Has `name` field (kebab-case)
-- [ ] Has `description` field (single line)
-- [ ] Description includes `USE WHEN` clause
-- [ ] Description under 1024 characters
+Validate against skill-foundations archetype patterns.
 
-## Step 4: Validate Body
+## Step 4: Check Prompt Quality
 
-Use skill-foundations archetype patterns.
+Apply prompt-foundations principles checklist.
 
-IDENTIFY which archetype the skill matches, then CHECK body follows that pattern.
-
-## Step 5: Validate Structure
-
-CHECK:
-- [ ] SKILL.md exists
-- [ ] Examples section with 2-3 usage patterns
-- [ ] Any referenced workflows/ files exist
-- [ ] Any referenced tools/ files exist
-
-## Step 6: Report
+## Step 5: Report
 
 **COMPLIANT** if all checks pass.
 
 **NON-COMPLIANT** if any check fails:
-- LIST specific failures
+- LIST specific failures with location
 - SUGGEST fixes
 - ASK if user wants automated fixes
