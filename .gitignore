@@ -77,3 +77,20 @@ pip-delete-this-directory.txt
 .mypy_cache/
 .ruff_cache/
 *.egg-info/
+
+# Base compliance patterns (auto-added by gitignore-check)
+.playwright-mcp
+__MACOSX/
+.AppleDouble
+.LSOverride
+Icon[]
+.DocumentRevisions-V100
+.fseventsd
+.TemporaryItems
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
