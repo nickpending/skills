@@ -16,7 +16,7 @@ Validate against skill-foundations archetype patterns.
 
 ## Step 4: Check Prompt Quality
 
-Apply prompt-foundations principles checklist with skill-specific context:
+Validate against prompt-foundations principles checklist with skill-specific context:
 - Roles are rarely needed — skills inject procedures/knowledge, not identity
 - Skills load into existing context with established identity
 
