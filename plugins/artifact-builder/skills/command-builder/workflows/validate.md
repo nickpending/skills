@@ -16,7 +16,9 @@ Validate against command-foundations archetype patterns.
 
 ## Step 4: Check Prompt Quality
 
-Apply prompt-foundations principles checklist.
+Apply prompt-foundations principles checklist with command-specific context:
+- Roles only for complex orchestration commands
+- Simple commands don't establish identity
 
 ## Step 5: Report
 
