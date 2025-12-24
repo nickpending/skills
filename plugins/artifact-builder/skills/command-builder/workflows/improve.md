@@ -11,6 +11,7 @@ Enhance an existing command that already works.
 
 1. **READ the command** - full content
 2. **Note current size** - lines, token estimate
+3. **Identify archetype** - minimal, priming, workflow, or orchestration
 
 ## Step 2: Understand Goals
 
@@ -26,14 +27,26 @@ Enhance an existing command that already works.
 
 **Get specific.** "Make it better" isn't actionable.
 
-## Step 3: Analyze Current State
+## Step 3: Analyze Against Foundations
 
-**Review for:**
-- Redundant instructions (same thing said multiple ways)
-- Overly verbose sections
-- Missing context injection opportunities
-- Unused or vestigial content
-- Opportunities to use preprocessing (`!`, `@`, `$ARGUMENTS`)
+Use foundations to ground analysis, not generic intuition.
+
+**From command-foundations:**
+
+1. Check against structure.md:
+   - Length within guidelines?
+   - Frontmatter fields appropriate?
+   - Preprocessing opportunities (`!`, `@`, `$ARGUMENTS`)?
+
+2. Check against archetypes.md:
+   - Matches expected characteristics for identified archetype?
+   - Body follows archetype pattern?
+
+**From prompt-foundations:**
+
+3. Apply token efficiency patterns from writing-patterns.md
+
+4. Check for anti-patterns from principles.md
 
 **Present findings** before making changes.
 

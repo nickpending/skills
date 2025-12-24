@@ -11,6 +11,7 @@ Enhance an existing skill that already works.
 
 1. **READ the skill** - SKILL.md and any workflows/references
 2. **Note current size** - lines, token estimate
+3. **Identify archetype** - CLI wrapper, workflow router, knowledge injection, or foundations
 
 ## Step 2: Understand Goals
 
@@ -26,14 +27,26 @@ Enhance an existing skill that already works.
 
 **Get specific.** "Make it better" isn't actionable.
 
-## Step 3: Analyze Current State
+## Step 3: Analyze Against Foundations
 
-**Review for:**
-- Redundant instructions (same thing said multiple ways)
-- Overly verbose sections
-- Missing trigger keywords in description
-- Unused or vestigial content
-- Missing Examples section
+Use foundations to ground analysis, not generic intuition.
+
+**From skill-foundations:**
+
+1. Check against structure.md:
+   - Length within guidelines?
+   - Description follows USE WHEN or Third-Person pattern?
+   - Examples section present with concrete patterns?
+
+2. Check against archetypes.md:
+   - Matches expected characteristics for identified archetype?
+   - Body follows archetype pattern?
+
+**From prompt-foundations:**
+
+3. Apply token efficiency patterns from writing-patterns.md
+
+4. Check for anti-patterns from principles.md
 
 **Present findings** before making changes.
 
