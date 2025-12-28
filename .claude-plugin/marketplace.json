@@ -24,7 +24,7 @@
     {
       "name": "knowledge-tools",
       "description": "Query personal knowledge bases including Lore (projects, commits, books) and Prismis (articles, reading stats)",
-      "version": "1.0.1",
+      "version": "1.0.2",
       "source": "./plugins/knowledge-tools",
       "category": "productivity"
     }

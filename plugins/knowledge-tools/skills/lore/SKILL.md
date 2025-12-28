@@ -1,75 +1,57 @@
 ---
 name: lore
-description: Query personal knowledge fabric across projects, commits, tasks, blogs, and captures. USE WHEN user says "use lore", "search lore", "what projects", "what did I work on", "find commits", "search my knowledge", "list my tasks", "what have I written", or searching past work and project history.
-allowed-tools: Read, Bash
+description: Query personal knowledge fabric indexed across development projects, tasks, events, blogs, commits, and personal data. USE WHEN user says "use lore", "query lore", "search lore", "lore projects", "lore commits", "lore events", "lore blog posts", or searching past work and project history.
+allowed-tools: Bash
 ---
 
 # Lore
 
-Query and capture indexed knowledge across development, commits, tasks, events, and personal data.
+Query and capture indexed knowledge across your development history.
 
-**IMPORTANT:** If uncertain about syntax, run `lore --help`.
+## Instructions
 
-## Commands
+**IMPORTANT:** Run `lore --help` or `lore [command] --help` if uncertain about syntax.
 
-```bash
-lore search [source] <query>    # Search knowledge
-lore list <domain>              # List entries
-lore capture <type>             # Capture knowledge
-lore-graph schema|query         # Graph queries
-```
+- Default output is JSON — use `jq` for filtering
+- Search sources and list domains differ — check `--sources` vs `--domains`
+- `lore-graph` is separate for Cypher queries
 
-## Intent Routing
+## Workflow
 
-| User wants | Command |
-|------------|---------|
-| Search across everything | `lore search "query"` |
-| Search specific source | `lore search <source> "query"` |
-| List domain entries | `lore list <domain>` |
-| See what sources exist | `lore search --sources` |
-| See what domains exist | `lore list --domains` |
-| Graph schema | `lore-graph schema` |
-| Cypher query | `lore-graph query "<cypher>"` |
-| Capture insight | `lore capture knowledge --context=X --text="Y" --type=learning` |
-| Capture task | `lore capture task --project=X --name="Y" --problem="Z" --solution="W"` |
-| Quick note | `lore capture note --text="X"` |
+1. Determine operation (search / list / capture / graph)
+2. RUN appropriate command
+3. Parse JSON output and present results
 
-## Sources & Domains
-
-**Search sources:** commits, tasks, obsidian, personal, captures, explorations, blogs, readmes, development, events
-
-**List domains:** development, tasks, events, blogs, commits, explorations, readmes, obsidian, captures, books, movies, podcasts, interests, people, habits
-
-## Common Patterns
-
-```bash
-# Find projects using a technology
-lore search development "python"
-
-# Recent commits about a topic
-lore search commits "authentication"
-
-# List all blog posts
-lore list blogs
-
-# What technologies have I used?
-lore-graph query "MATCH (p:Project)-[:USES]->(t:Tech) RETURN DISTINCT t.name"
-
-# Projects related by shared tech
-lore-graph query "MATCH (p1:Project {name:'X'})-[:USES]->(t:Tech)<-[:USES]-(p2:Project) RETURN p2.name, count(t) AS shared ORDER BY shared DESC"
-```
-
-## Options
+## Common Operations
 
 **Search:**
-- `--limit <n>` — Max results (default: 20)
-- `--since <date>` — Filter by date (today, yesterday, this-week, YYYY-MM-DD)
+```bash
+lore search "query"                    # all sources
+lore search commits "authentication"   # specific source
+lore search --sources                  # list available sources
+```
 
 **List:**
-- `--limit <n>` — Max entries
-- `--format <fmt>` — json (default), jsonl, human
+```bash
+lore list development                  # domain entries
+lore list blogs --format human         # human-readable
+lore list --domains                    # list available domains
+```
+
+**Capture:**
+```bash
+lore capture knowledge --context=X --text="Y" --type=learning
+lore capture task --project=X --name="Y" --problem="Z" --solution="W"
+lore capture note --text="X"
+```
+
+**Graph queries:**
+```bash
+lore-graph schema                      # show schema
+lore-graph query "MATCH (t:Tech) RETURN t.name"
+```
 
 ## References
 
-- `references/commands.md` — Full command reference
+- `references/commands.md` — Full command reference with options
 - `references/graph-patterns.md` — Cypher query patterns
