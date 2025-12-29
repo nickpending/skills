@@ -23,6 +23,7 @@
 # Install plugins
 /plugin install artifact-foundations@voidwire-skills
 /plugin install artifact-builder@voidwire-skills
+/plugin install prompt-tools@voidwire-skills
 /plugin install homenet-tools@voidwire-skills
 /plugin install knowledge-tools@voidwire-skills
 ```
@@ -49,6 +50,16 @@ Build and improve Claude Code skills and commands with archetype-based guidance.
 - **command-builder** — Create commands with archetype selection (Minimal, Priming, Workflow, Orchestration)
 
 **Triggers:** "create skill", "build command", "improve skill", "validate command"
+
+### prompt-tools
+
+Create and improve prompts using prompt engineering best practices.
+
+**Commands included:**
+- `/create-prompt` — Build a well-structured prompt from scratch
+- `/improve-prompt` — Analyze and improve an existing prompt
+
+**Note:** Uses prompt-foundations from artifact-foundations plugin.
 
 ### homenet-tools
 
@@ -86,6 +97,10 @@ plugins/
 │   └── skills/
 │       ├── skill-builder/
 │       └── command-builder/
+├── prompt-tools/
+│   └── commands/
+│       ├── create-prompt.md
+│       └── improve-prompt.md
 ├── homenet-tools/
 │   └── skills/
 │       └── homenet-discovery/
