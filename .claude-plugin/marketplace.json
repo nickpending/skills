@@ -8,6 +8,13 @@
   },
   "plugins": [
     {
+      "name": "artifact-foundations",
+      "description": "Reference patterns for building Claude Code skills, commands, and prompts — archetypes, structure rules, and exemplars",
+      "version": "1.0.0",
+      "source": "./plugins/artifact-foundations",
+      "category": "development"
+    },
+    {
       "name": "artifact-builder",
       "description": "Build and improve Claude Code skills and commands with archetype-based guidance",
       "version": "1.0.5",

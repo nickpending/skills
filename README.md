@@ -21,12 +21,24 @@
 /plugin marketplace add nickpending/skills
 
 # Install plugins
+/plugin install artifact-foundations@voidwire-skills
 /plugin install artifact-builder@voidwire-skills
 /plugin install homenet-tools@voidwire-skills
 /plugin install knowledge-tools@voidwire-skills
 ```
 
 ## Plugins
+
+### artifact-foundations
+
+Reference patterns for building Claude Code skills, commands, and prompts.
+
+**Skills included:**
+- **skill-foundations** — Structure rules, archetypes, exemplars for skills
+- **command-foundations** — Structure rules, archetypes, exemplars for commands
+- **prompt-foundations** — Prompt engineering patterns and principles
+
+**Triggers:** "create skill", "how do I structure", "prompt best practices"
 
 ### artifact-builder
 
@@ -65,6 +77,11 @@ Query personal knowledge bases and content databases.
 
 ```
 plugins/
+├── artifact-foundations/
+│   └── skills/
+│       ├── skill-foundations/
+│       ├── command-foundations/
+│       └── prompt-foundations/
 ├── artifact-builder/
 │   └── skills/
 │       ├── skill-builder/
@@ -77,13 +94,6 @@ plugins/
         ├── lore/
         └── prismis/
 ```
-
-## Dependencies
-
-artifact-builder skills use foundations from `~/.claude/skills/`:
-- skill-foundations
-- command-foundations
-- prompt-foundations
 
 ## License
 
