@@ -1,57 +1,52 @@
 ---
 name: lore
-description: Query personal knowledge fabric indexed across development projects, tasks, events, blogs, commits, and personal data. USE WHEN user says "use lore", "query lore", "search lore", "lore projects", "lore commits", "lore events", "lore blog posts", or searching past work and project history.
+description: Query personal knowledge fabric with semantic and text search across development projects, tasks, events, blogs, commits, and personal data. USE WHEN user says "use lore", "query lore", "search lore", "lore projects", "lore commits", "lore events", "lore blog posts", or searching past work and project history.
 allowed-tools: Bash
 ---
 
 # Lore
 
-Query and capture indexed knowledge across your development history.
+Query indexed knowledge across development history. Two search modes with different purposes.
 
-## Instructions
+## Choosing Search Mode
 
-**IMPORTANT:** Run `lore --help` or `lore [command] --help` if uncertain about syntax.
+**Semantic (default)** — meaning-based retrieval:
+- Exploratory questions: "what have I done with kubernetes?"
+- Conceptual queries: "authentication patterns", "error handling approaches"
+- Finding related work when you don't know exact terms
+- Understanding context and background
 
-- Default output is JSON — use `jq` for filtering
-- Search sources and list domains differ — check `--sources` vs `--domains`
-- `lore-graph` is separate for Cypher queries
+**FTS5 (`--exact`)** — literal text matching:
+- Specific code: function names, class names, variable names
+- Exact phrases the user quotes
+- Error messages, log patterns
+- When semantic returns noise because term is common
 
-## Workflow
+**Decision rule:** Is the query about *meaning* or about *literal text*? Meaning → semantic. Literal → `--exact`.
 
-1. Determine operation (search / list / capture / graph)
-2. RUN appropriate command
-3. Parse JSON output and present results
+## Search
 
-## Common Operations
-
-**Search:**
 ```bash
-lore search "query"                    # all sources
-lore search commits "authentication"   # specific source
-lore search --sources                  # list available sources
+lore search "authentication patterns"      # semantic
+lore search --exact "def process_data"     # FTS5 literal
+lore search commits "refactor auth"        # semantic, specific source
+lore search --sources                      # list sources with counts
 ```
 
-**List:**
+**Passthrough sources** (external systems):
 ```bash
-lore list development                  # domain entries
-lore list blogs --format human         # human-readable
-lore list --domains                    # list available domains
+lore search prismis "security patterns"    # prismis daemon
+lore search atuin "docker build"           # shell history
 ```
 
-**Capture:**
+## Other Operations
+
 ```bash
+lore list development                      # domain entries
+lore list --domains                        # available domains
 lore capture knowledge --context=X --text="Y" --type=learning
-lore capture task --project=X --name="Y" --problem="Z" --solution="W"
-lore capture note --text="X"
+lore capture teaching --domain=X --confidence=Y --text="Z"
+lore-graph ask "what technologies does lore use?"
+lore-graph related-to <project>            # projects sharing tech
 ```
 
-**Graph queries:**
-```bash
-lore-graph schema                      # show schema
-lore-graph query "MATCH (t:Tech) RETURN t.name"
-```
-
-## References
-
-- `references/commands.md` — Full command reference with options
-- `references/graph-patterns.md` — Cypher query patterns
