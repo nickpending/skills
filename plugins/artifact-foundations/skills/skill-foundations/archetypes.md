@@ -21,6 +21,15 @@ What does the skill primarily do?
 
 Wraps CLI tool(s) with intent mapping.
 
+```yaml
+---
+name: skill-name
+description: [What CLI it wraps]. USE WHEN [triggers].
+argument-hint: <command> [options]
+allowed-tools: Bash(tool-name *)
+---
+```
+
 ```markdown
 # skill-name
 
@@ -31,7 +40,7 @@ Wraps CLI tool(s) with intent mapping.
 [IMPORTANT warnings, tool quirks]
 
 ## Workflow
-1. Determine operation
+1. Determine operation from $ARGUMENTS
 2. RUN command with appropriate flags
 3. Parse and present output
 
@@ -41,12 +50,18 @@ Wraps CLI tool(s) with intent mapping.
 
 **Characteristics:**
 - ~40-80 lines
-- Frontmatter with USE WHEN triggers
+- `allowed-tools` scopes to the wrapped CLI
+- `argument-hint` shows expected syntax
 - IMPORTANT warnings at top
 - Numbered workflow steps
 - Code blocks with actual commands
 
-**Multi-tool variant:** For skills that orchestrate multiple CLI tools in a pipeline (e.g., nmap → httpx → nuclei), use the same structure but chain commands in the workflow. Add error handling for partial failures.
+**Recommended features:**
+- `allowed-tools: Bash(tool *)` — prevents the skill from running unrelated commands
+- `argument-hint` — guides user on expected input format
+- Skill-scoped hooks with `once: true` — one-time setup (check tool installed, verify config)
+
+**Multi-tool variant:** For skills that orchestrate multiple CLI tools in a pipeline (e.g., nmap → httpx → nuclei), use the same structure but chain commands in the workflow. Add error handling for partial failures. Use `allowed-tools: Bash(nmap *), Bash(httpx *), Bash(nuclei *)`.
 
 **Exemplar:** `exemplar-cli-wrapper.md`
 
@@ -56,13 +71,23 @@ Wraps CLI tool(s) with intent mapping.
 
 Routes to different procedures based on state or intent.
 
+```yaml
+---
+name: skill-name
+description: [What this manages]. USE WHEN [triggers].
+argument-hint: bootstrap|sync|report [options]
+---
+```
+
 ```markdown
 # skill-name
 
 ## Overview
 [What this does, what it outputs]
 
-## Workflow
+## Determine Action
+
+Parse $ARGUMENTS (or $0) for the action keyword.
 
 | Scenario | Condition | Workflow |
 |----------|-----------|----------|
@@ -82,6 +107,13 @@ Routes to different procedures based on state or intent.
 - Workflows are self-contained procedures
 - May have reference/ for supporting docs
 - Scripts directory common
+- `$ARGUMENTS` or `$0` for dispatch
+
+**Recommended features:**
+- `argument-hint` — shows valid action keywords
+- `$ARGUMENTS` / `$0` — argument-based dispatch
+- `context: fork` — when workflows need isolation (validation, analysis)
+- Dynamic injection (`` !`command` ``) — when routing depends on live state
 
 **Exemplar:** `exemplar-workflow-router.md`
 
@@ -89,7 +121,16 @@ Routes to different procedures based on state or intent.
 
 ## Knowledge Injection
 
-Injects domain expertise - HOW to approach a task.
+Injects domain expertise — HOW to approach a task.
+
+```yaml
+---
+name: skill-name
+description: [Domain] guidance. USE WHEN [triggers].
+allowed-tools: Read, Grep, Glob
+user-invocable: false
+---
+```
 
 ```markdown
 # skill-name
@@ -106,10 +147,15 @@ Injects domain expertise - HOW to approach a task.
 
 **Characteristics:**
 - ~40-60 lines
-- No workflows - pure expertise
+- No workflows — pure expertise
 - Design Thinking section (questions)
 - Guidelines by aspect
 - CRITICAL/NEVER inline warnings
+
+**Recommended features:**
+- `allowed-tools: Read, Grep, Glob` — read-only when the skill should never modify anything
+- `user-invocable: false` — when this is an internal skill invoked by other skills or orchestrators
+- `ultrathink` — when the injected expertise drives complex analysis
 
 **Exemplar:** `exemplar-knowledge-injection.md`
 
@@ -117,7 +163,15 @@ Injects domain expertise - HOW to approach a task.
 
 ## Foundations
 
-Provides reference content - WHAT to use.
+Provides reference content — WHAT to use.
+
+```yaml
+---
+name: skill-name
+description: [Domain] reference - [content types]. USE WHEN [triggers] OR another skill needs [domain] context.
+disable-model-invocation: true
+---
+```
 
 ```markdown
 # skill-name
@@ -141,5 +195,10 @@ Provides reference content - WHAT to use.
 - No workflows
 - Content routing table
 - Defaults section
+
+**Recommended features:**
+- `disable-model-invocation: true` — when foundations should only load on explicit request, not auto-trigger
+- Dynamic injection (`` !`command` ``) — when reference content comes from live sources (API schemas, config files)
+- `${CLAUDE_SKILL_DIR}` — portable references to sibling content files
 
 **Exemplar:** `exemplar-foundations.md` (see also: `visual-foundations`)

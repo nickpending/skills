@@ -12,7 +12,8 @@ Reference content for building Claude Code skills.
 | intent | load |
 |--------|------|
 | structure, frontmatter, naming, format | `structure.md` |
-| archetype, pattern, which type, decision | `archetypes.md` |
+| archetype, pattern, which type | `archetypes.md` |
+| when to use a feature, trade-offs, fork vs inline | `decisions.md` |
 | cli wrapper example | `exemplar-cli-wrapper.md` |
 | workflow router example | `exemplar-workflow-router.md` |
 | foundations example | `exemplar-foundations.md` |
