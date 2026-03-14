@@ -11,7 +11,7 @@ Enhance an existing skill that already works.
 
 1. **READ the skill** - SKILL.md and any workflows/references
 2. **Note current size** - lines, token estimate
-3. **Identify archetype** - CLI wrapper, workflow router, knowledge injection, or foundations
+3. **Identify archetype** - CLI Wrapper, Workflow Router, Forked Workflow, Forked Validator, Knowledge Injection, or Foundations
 
 ## Step 2: Understand Goals
 
@@ -24,6 +24,7 @@ Enhance an existing skill that already works.
 | Improve clarity | Restructure, better examples |
 | Better triggers | Refine description keywords |
 | Fix edge cases | Add handling without over-engineering |
+| Optimize features | Apply archetype recipe from foundations |
 
 **Get specific.** "Make it better" isn't actionable.
 
@@ -42,11 +43,20 @@ Use foundations to ground analysis, not generic intuition.
    - Matches expected characteristics for identified archetype?
    - Body follows archetype pattern?
 
+3. Check against decisions.md feature recipes:
+   - Does the skill use recommended features for its archetype?
+   - Missing `allowed-tools` restriction? (CLI wrappers, forked skills especially)
+   - Missing `argument-hint`? (user-invocable skills with expected input)
+   - Could benefit from `ultrathink`? (analysis/exploration skills)
+   - Using `$ARGUMENTS` parsing where `$0` dispatch would be cleaner?
+   - Supporting files referenced without `${CLAUDE_SKILL_DIR}`?
+   - Forked skill missing `user-invocable: false`?
+
 **From prompt-foundations:**
 
-3. Apply token efficiency patterns from writing-patterns.md
+4. Apply token efficiency patterns from writing-patterns.md
 
-4. Check for anti-patterns from principles.md
+5. Check for anti-patterns from principles.md
 
 **Present findings** before making changes.
 
@@ -88,4 +98,5 @@ Follow `workflows/validate.md` to check the improved skill.
 - [ ] No silent deletions
 - [ ] Token count reduced (if that was the goal)
 - [ ] Clarity improved
+- [ ] Feature recipe conformance checked
 - [ ] User approved changes

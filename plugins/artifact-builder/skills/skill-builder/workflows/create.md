@@ -18,7 +18,7 @@ Use skill-foundations to get:
 - Decision tree for picking pattern
 - Relevant exemplar for chosen archetype
 
-Let the user pick from: CLI wrapper, Workflow router, Knowledge injection, Foundations.
+Let the user pick from: CLI Wrapper, Workflow Router, Forked Workflow, Forked Validator, Knowledge Injection, Foundations.
 
 ## Step 3: Check Foundation Skills
 
@@ -41,6 +41,13 @@ Let the user pick from: CLI wrapper, Workflow router, Knowledge injection, Found
 
 3. **Write SKILL.md** following structure from skill-foundations:
    - Frontmatter: `name`, `description` with `USE WHEN`
+   - Apply archetype recipe from skill-foundations decisions.md Feature Combinations:
+     - CLI Wrapper → add `allowed-tools: Bash(tool *)`, `argument-hint`
+     - Workflow Router → add `argument-hint` with action keywords
+     - Forked Workflow → add `context: fork`, `model: haiku`, `allowed-tools`, `user-invocable: false`
+     - Forked Validator → add `context: fork`, `model: haiku`, `allowed-tools: Read, Glob, Grep`, `user-invocable: false`
+     - Knowledge Injection → add `allowed-tools: Read, Grep, Glob`, consider `ultrathink`
+     - Foundations → add `disable-model-invocation: true`
    - Body: per archetype pattern
 
 4. **Add workflows/, tools/** as needed for the archetype
@@ -58,6 +65,8 @@ Ask user to describe a scenario that should trigger it. Verify the skill activat
 ## Quality Checklist
 
 - [ ] Description is specific with intent-based triggers
+- [ ] Frontmatter matches archetype recipe from foundations
+- [ ] Feature opportunities evaluated (allowed-tools, argument-hint, hooks, ultrathink)
 - [ ] Minimal tokens for the job (not over-engineered)
 - [ ] Follows established patterns from exemplars
 - [ ] Clear structure and flow

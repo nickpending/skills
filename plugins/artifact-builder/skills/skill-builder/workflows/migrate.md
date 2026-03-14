@@ -21,6 +21,10 @@ Fix structural issues and bring skills into compliance with current patterns.
 | Wrong structure | Files in wrong places | Reorganize to standard layout |
 | Broken references | Links to missing files | Fix or remove references |
 | No Examples | Missing usage patterns | Add 2-3 concrete examples |
+| Missing allowed-tools | Skill can run any command | Add archetype-appropriate restriction |
+| Missing argument-hint | No autocomplete guidance | Add hint per archetype |
+| Stale archetype | Follows outdated pattern | Migrate to current archetype from foundations |
+| Missing feature recipe | Doesn't use recommended features | Apply recipe from decisions.md |
 
 ## Step 2: Report Issues
 
@@ -46,9 +50,10 @@ Migration Assessment:
 **Fix in order:**
 1. Structure first (directory layout, file locations)
 2. Frontmatter second (required fields)
-3. Content third (internal references)
-4. Examples section
-5. Validation last
+3. Features third (allowed-tools, argument-hint, hooks per archetype recipe)
+4. Content fourth (internal references, ${CLAUDE_SKILL_DIR} paths)
+5. Examples section
+6. Validation last
 
 **For each fix:**
 - Make the change
@@ -65,9 +70,10 @@ Verify trigger scenario works - describe a situation that should invoke the skil
 
 ## Migration Checklist
 
-- [ ] All structural issues identified
+- [ ] All structural and feature issues identified
 - [ ] User approved migration plan
 - [ ] Changes made incrementally
+- [ ] Feature recipe applied per archetype
 - [ ] Validation passes
 - [ ] Skill triggers correctly
 - [ ] No functionality lost
