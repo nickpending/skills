@@ -94,3 +94,6 @@ Icon[]
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# Base compliance patterns (auto-added by gitignore-check)
+.sable/
