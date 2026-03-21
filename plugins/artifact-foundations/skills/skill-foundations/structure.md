@@ -36,8 +36,21 @@ hooks:
 | `allowed-tools` | string | all | Comma-separated tool list. Restricts which tools the skill can use. Supports prefix matching: `Bash(npm *)`. |
 | `model` | string | caller's model | Run skill with a specific model. e.g., `haiku` for fast/cheap tasks. |
 | `context` | string | — | Set to `fork` for isolated subagent execution. Omit for main thread. |
-| `agent` | string | — | Subagent type when `context: fork`. Values: `Explore`, `Plan`, `general-purpose`. |
+| `agent` | string | — | Subagent type when `context: fork`. Values: `Explore`, `Plan`, `general-purpose`, `worker`. |
 | `hooks` | object | — | Skill-scoped hooks. Same syntax as settings.json hooks. Only active during skill execution. |
+
+### Argument Hints
+
+Use angle brackets for required, square brackets for optional:
+
+```yaml
+argument-hint: <command> [options]              # CLI wrapper
+argument-hint: bootstrap|sync|report [project]  # Workflow router with actions
+argument-hint: <search|capture> [query]          # Action + freeform
+argument-hint: [idea description]                # Pure freeform
+```
+
+Good hints show the **shape** of expected input. Bad hints restate the description.
 
 ### Invocation Control
 
@@ -58,6 +71,45 @@ allowed-tools: Read, Bash(git *)         # Mixed
 
 When `allowed-tools` is set, the skill can only use listed tools. All others are denied. Useful for read-only skills, CLI wrappers targeting specific commands, or sandboxed execution.
 
+**Pipe behavior:** Prefix matching applies to the full command string. `Bash(prismis-cli *)` matches `prismis-cli list --json | jq '...'` because the command starts with `prismis-cli`. Verify pipe behavior with your specific tool if critical — this is expected behavior but not explicitly guaranteed.
+
+**Common restriction patterns:**
+
+| Pattern | Use Case |
+|---------|----------|
+| `Bash(flux *)` | CLI wrapper for flux |
+| `Read, Glob, Grep` | Read-only validator |
+| `Read, Glob, Grep, Bash` | Validator that runs verification commands |
+| `Read, Glob, Grep, Edit` | Validator that annotates files |
+| `Read, Glob, Grep, Bash(lore *), Skill` | Processor that captures to lore and invokes skills |
+
+### Model Selection
+
+| Scenario | Model | Why |
+|----------|-------|-----|
+| Forked validator/checker | `haiku` | Procedural, structured I/O, speed matters |
+| Forked processor | `haiku` | Multi-step but deterministic logic |
+| Complex analysis | default (omit) | Needs reasoning depth |
+| Creative/exploratory | default (omit) | Benefits from nuance |
+| User-facing skill | default (omit) | Quality of output matters |
+
+Don't set `model` to force a specific powerful model — let the caller decide. The skill should work across model tiers.
+
+**Note:** `ultrathink` on haiku is wasted — extended thinking only benefits models with enough capacity to use the extra reasoning budget.
+
+### Agent Type Selection
+
+When using `context: fork`, the `agent` field controls subagent behavior:
+
+| Agent | When | Characteristics |
+|-------|------|-----------------|
+| (omitted) | Most forked skills | Default subagent, general tool access |
+| `worker` | Needs broad tool access + structured output | General-purpose execution |
+| `Explore` | Codebase search and analysis | Optimized for Read/Grep/Glob patterns |
+| `Plan` | Planning and decomposition | Structured planning output |
+
+Most forked skills omit `agent` — the default is sufficient. Use `worker` when the skill needs general-purpose execution. Use `Explore` or `Plan` only when the skill's primary purpose aligns with that agent's specialization.
+
 ## Content Substitutions
 
 Variables available in skill body text, replaced before the model sees content.
@@ -73,17 +125,58 @@ Variables available in skill body text, replaced before the model sees content.
 
 Arguments are split by whitespace. Quoted strings are preserved as single arguments.
 
+**Freeform arguments** — user types natural language, skill parses intent:
+```markdown
+## Workflow
+1. Parse $ARGUMENTS for intent
+2. Match against known operations
+3. Execute appropriate flow
+```
+
+**Structured arguments** — orchestrator injects formatted blocks with labeled fields:
+```markdown
+## $ARGUMENTS
+\```
+TASK_NUMBER: {task number}
+REPORT_PATH: {path to report}
+BUILD_FLAGS: {"status": "complete", "verified": true}
+\```
+```
+
+**Positional dispatch** — first argument is an action keyword:
+```markdown
+## Determine Action
+Parse `$0` for the action keyword:
+| `$0` | Flow |
+|------|------|
+| bootstrap | → Setup flow |
+| sync | → Update flow |
+| report | → Status flow |
+```
+
 ### Environment Variables
 
-| Variable | Description |
-|----------|-------------|
-| `${CLAUDE_SESSION_ID}` | Current session identifier |
-| `${CLAUDE_SKILL_DIR}` | Absolute path to the skill's directory |
+| Variable | Description | Use Case |
+|----------|-------------|----------|
+| `${CLAUDE_SESSION_ID}` | Current session identifier | Correlation IDs for logging, agent tracking |
+| `${CLAUDE_SKILL_DIR}` | Absolute path to the skill's directory | Portable references to supporting files |
 
-Use `${CLAUDE_SKILL_DIR}` to reference supporting files portably:
+**`${CLAUDE_SKILL_DIR}` — when to use:**
+
+Use when the skill body contains tool calls (Read, Bash) that reference files inside the skill directory:
 ```markdown
-Read the template at ${CLAUDE_SKILL_DIR}/templates/default.md
+# Good — tool call needs the path
+READ ${CLAUDE_SKILL_DIR}/references/idea_template.md
+RUN ${CLAUDE_SKILL_DIR}/scripts/generate_id.py
 ```
+
+Skip when supporting files are only mentioned descriptively:
+```markdown
+# Unnecessary — descriptive reference, model can resolve it
+See the examples in references/ for inspiration.
+```
+
+**Rule of thumb:** If a tool call needs to find a file in the skill directory, use `${CLAUDE_SKILL_DIR}`. If you're just telling the model about the file, you don't need it.
 
 ## Dynamic Command Injection
 
@@ -96,14 +189,19 @@ Run shell commands and inject output into skill content before the model sees it
 
 - Branch: !`git branch --show-current`
 - Recent changes: !`git log --oneline -5`
-- PR diff: !`gh pr diff`
+- PR context: !`gh pr view --json title,body`
 ```
 
 The commands execute immediately when the skill loads. Output replaces the `` !`command` `` placeholder. If a command fails, the placeholder is replaced with the error.
 
 **When to use:** When the skill needs live data (git state, API responses, file listings) as context before reasoning. Saves a tool call round-trip.
 
-**Trade-off:** Adds shell execution latency to skill load time.
+**When NOT to use:**
+- Command output is large or unpredictable in size
+- Command has side effects (mutations, network calls to non-idempotent endpoints)
+- Data might not be available (command might fail)
+
+**Trade-off:** Adds shell execution latency to skill load time. A skill that always runs `flux list` on load pays that cost even when the task count doesn't matter.
 
 ## Extended Thinking
 
@@ -117,7 +215,7 @@ ultrathink
 Analyze the following code for potential issues...
 ```
 
-Useful for complex analysis, multi-factor decisions, or deep reasoning tasks.
+Useful for complex analysis, multi-factor decisions, or deep reasoning tasks. Don't use with `model: haiku` — extended thinking needs model capacity to be effective.
 
 ## Skill-Scoped Hooks
 
@@ -143,12 +241,24 @@ hooks:
 
 ### Supported Hook Types
 
-| Type | Description |
-|------|-------------|
-| `command` | Run a shell command |
-| `http` | Make an HTTP request |
-| `prompt` | Use Claude to evaluate (LLM-based) |
-| `agent` | Spawn an agent to evaluate |
+| Type | Syntax | Description |
+|------|--------|-------------|
+| `command` | `command: "./script.sh"` | Run a shell command |
+| `http` | `url: "https://..."` | Make an HTTP request |
+| `prompt` | `prompt: "Evaluate: {{tool_input}}"` | Use Claude to evaluate (LLM-based) |
+| `agent` | `prompt: "Review..." agent: code-reviewer` | Spawn an agent to evaluate |
+
+**Command hook** (most common):
+```yaml
+- type: command
+  command: "./scripts/validate.sh"
+```
+
+**Prompt hook** (LLM evaluates):
+```yaml
+- type: prompt
+  prompt: "Is this Bash command safe to run? Evaluate: {{tool_input.command}}"
+```
 
 ### The `once` Flag (Skills Only)
 
@@ -193,10 +303,40 @@ agent: Explore
 - Focused execution without context pollution
 - Good for: validation, analysis, deterministic tasks, parallel execution
 
-The `agent` field controls the subagent type:
-- `Explore` — codebase search and analysis
-- `Plan` — planning and decomposition
-- `general-purpose` — default, no specialization
+### Forked Complexity Spectrum
+
+Forked skills range from simple to complex:
+
+- **Simple** (50-150 lines): Validators, checkers — structured input, JSON output, `model: haiku`
+- **Complex** (200-400 lines): Processors, configurators — multi-step procedures, disk reads, conditional branching, `model: haiku` for procedural work
+
+Both are valid. Forked skills don't compete for context budget (they load in isolation), so body length guidelines for main-thread skills don't apply. A 400-line forked skill is fine if the content is necessary.
+
+## Return Formats
+
+| Pattern | When | Example |
+|---------|------|---------|
+| Structured JSON | Forked validators, status checks | `{"valid": true, "issues": [...]}` |
+| Markdown | Reports, summaries, findings | Formatted sections with headers |
+| CLI output | CLI wrappers | Pass through tool output directly |
+| Plain text | Simple responses | One-line confirmations |
+
+Forked skills called by orchestrators should return structured output (JSON or markdown with predictable sections) so the caller can parse results programmatically.
+
+Main-thread skills return naturally — the output is part of the conversation.
+
+## Error Handling
+
+When a forked skill fails:
+- Shell command errors in dynamic injection replace the placeholder with error text
+- Tool call failures surface to the skill as error responses
+- Skill timeout terminates the subagent; the caller sees a timeout error
+
+Design for graceful degradation:
+- Check preconditions early (file exists, tool installed, required args present)
+- Return structured error responses the caller can parse
+- Use `once: true` hooks for setup validation rather than failing mid-execution
+- For CLI wrappers: run `command --help` when unsure about syntax rather than guessing
 
 ## Discovery & Loading
 
@@ -224,13 +364,15 @@ Higher priority wins on name collision.
 
 If skills exceed the context budget, Claude warns "Excluded skills from context."
 
+**Note:** This budget applies to main-thread skill descriptions. Forked skill bodies load in isolation and don't count against the context budget.
+
 ### Nested Directory Discovery
 
 When editing files in a subdirectory that contains `.claude/skills/`, those skills are automatically discovered. Skills in directories added via `--add-dir` get live change detection.
 
 ### Preloading Into Subagents
 
-Skills can be preloaded into subagent context via the `skills` field on agent spawn. The subagent starts with those skills already available.
+Skills can be preloaded into subagent context via the `skills` field on agent spawn. The subagent starts with those skills already available. Use this when an agent needs access to specific skills without the user explicitly invoking them.
 
 ## Length Guidelines
 
@@ -239,6 +381,8 @@ Skills can be preloaded into subagent context via the `skills` field on agent sp
 | Description | 1,024 chars | 200-500 chars |
 | Body (SKILL.md) | ~5,000 words | 1,500-2,000 words |
 | References | As needed | 2,000-5,000 words |
+
+**Forked skills exception:** Body length guidelines apply to main-thread skills competing for context budget. Forked skills load in isolation and can be longer (300-400 lines) without penalty.
 
 ## Description Patterns
 

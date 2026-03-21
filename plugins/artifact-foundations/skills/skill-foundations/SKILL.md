@@ -14,6 +14,9 @@ Reference content for building Claude Code skills.
 | structure, frontmatter, naming, format | `structure.md` |
 | archetype, pattern, which type | `archetypes.md` |
 | when to use a feature, trade-offs, fork vs inline | `decisions.md` |
+| feature combinations, recipes | `decisions.md` |
+| forked workflow pattern | `archetypes.md` — Forked Workflow section |
+| forked validator pattern | `archetypes.md` — Forked Validator section |
 | cli wrapper example | `exemplar-cli-wrapper.md` |
 | workflow router example | `exemplar-workflow-router.md` |
 | foundations example | `exemplar-foundations.md` |
