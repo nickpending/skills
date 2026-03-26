@@ -92,13 +92,13 @@ Each workflow contains complete step-by-step discovery procedures.
 ## Available Scripts
 
 **Discovery:**
-- `scripts/setup.sh` - Validate environment and create directories
-- `scripts/nmap-scan.sh` - Network scanning (discover|enumerate)
-- `scripts/ssh-probe.sh` - SSH-based host inspection
-- `scripts/dns-enum.sh` - DNS enumeration and zone transfers
+- `tools/setup.sh` - Validate environment and create directories
+- `tools/nmap-scan.sh` - Network scanning (discover|enumerate)
+- `tools/ssh-probe.sh` - SSH-based host inspection
+- `tools/dns-enum.sh` - DNS enumeration and zone transfers
 
 **Processing:**
-- `scripts/consolidate.py` - Merge multi-source discovery data
+- `tools/consolidate.py` - Merge multi-source discovery data
 - `parsers/proxmox.py` - Parse Proxmox API outputs
 - `parsers/opnsense.py` - Parse OPNsense config XML
 - `parsers/unifi.py` - Parse UniFi controller JSON

@@ -188,11 +188,11 @@ When using `context: fork`, the `agent` field controls subagent behavior:
 - Content is conditionally loaded (not needed every invocation)
 - Skill exceeds guidelines and has naturally separable sections
 
-**Split candidates:**
-- Workflow steps → `workflows/setup.md`, `workflows/update.md`
+**Split candidates** (see `structure.md` Directory section for naming conventions):
+- Workflow procedures → `workflows/create.md`, `workflows/sync.md` (name matches dispatch keyword)
 - Templates → `templates/default.md`
-- Reference data → `reference/patterns.md`
-- JSON schemas → `schemas/response.md`
+- Reference data → `references/patterns.md`
+- Executable utilities → `tools/validate.py`, `tools/generate.sh`
 
 **Reference with `${CLAUDE_SKILL_DIR}`:**
 ```markdown

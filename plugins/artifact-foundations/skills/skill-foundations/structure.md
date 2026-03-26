@@ -20,7 +20,7 @@ hooks:
     - matcher: "Bash"
       hooks:
         - type: command
-          command: "./scripts/check.sh"
+          command: "./tools/check.sh"
 ---
 ```
 
@@ -167,7 +167,7 @@ Use when the skill body contains tool calls (Read, Bash) that reference files in
 ```markdown
 # Good — tool call needs the path
 READ ${CLAUDE_SKILL_DIR}/references/idea_template.md
-RUN ${CLAUDE_SKILL_DIR}/scripts/generate_id.py
+RUN ${CLAUDE_SKILL_DIR}/tools/generate_id.py
 ```
 
 Skip when supporting files are only mentioned descriptively:
@@ -229,13 +229,13 @@ hooks:
     - matcher: "Bash"
       hooks:
         - type: command
-          command: "./scripts/security-check.sh"
+          command: "./tools/security-check.sh"
           once: true
   PostToolUse:
     - matcher: "Bash"
       hooks:
         - type: command
-          command: "./scripts/audit-log.sh"
+          command: "./tools/audit-log.sh"
 ---
 ```
 
@@ -251,7 +251,7 @@ hooks:
 **Command hook** (most common):
 ```yaml
 - type: command
-  command: "./scripts/validate.sh"
+  command: "./tools/validate.sh"
 ```
 
 **Prompt hook** (LLM evaluates):
@@ -417,9 +417,42 @@ skill-name/
 ├── SKILL.md           # Required — main instructions
 ├── reference.md       # Optional — supporting content
 ├── templates/         # Optional — file templates
-├── scripts/           # Optional — helper scripts
+├── tools/             # Optional — executable scripts and utilities
 └── workflows/         # Optional — workflow procedures
 ```
+
+### Workflow Files
+
+Workflow files contain step-by-step procedures the SKILL.md dispatches to.
+
+**Naming:** Match the action keyword or scenario that routes to the file. If `$0` dispatches `create`, the file is `workflows/create.md`. If routing is scenario-based, name matches the scenario: `workflows/discover.md`, `workflows/update.md`.
+
+The dispatch table in SKILL.md and the workflow filenames must correspond:
+
+```markdown
+## Determine Action
+
+| `$0` | Workflow |
+|------|----------|
+| create | `workflows/create.md` |
+| improve | `workflows/improve.md` |
+| sync | `workflows/sync.md` |
+```
+
+**Rules:**
+- One file per dispatchable action — don't split an action across multiple files
+- Use phases/headings within a workflow file for multi-step procedures
+- Shared content referenced by multiple workflows → `references/` directory
+- Workflow files are not independently invocable — they're loaded by SKILL.md
+
+### Supporting Directories
+
+| Directory | Contents | When to use |
+|-----------|----------|-------------|
+| `workflows/` | Step-by-step procedures dispatched by SKILL.md | Skill has multiple distinct actions or scenarios |
+| `references/` | Supporting knowledge shared across workflows | Multiple workflows need the same context |
+| `templates/` | File templates the skill creates from | Skill generates files with consistent structure |
+| `tools/` | Executable scripts and utilities (Python, Bash) | Deterministic operations better handled by code than LLM |
 
 ## Foundations Loading Pattern
 

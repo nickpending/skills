@@ -14,7 +14,7 @@ This workflow loads existing configuration and re-runs discovery to update inven
 
 1. RUN setup script:
    ```bash
-   bash scripts/setup.sh
+   bash tools/setup.sh
    ```
 
 2. PARSE output for status indicators
@@ -111,7 +111,7 @@ Execute enabled discovery methods (2a-2d).
 2. **FOR each subnet:**
    - RUN discovery scan:
      ```bash
-     ./scripts/nmap-scan.sh discover {subnet}
+     ./tools/nmap-scan.sh discover {subnet}
      ```
    - COLLECT live host IPs, MACs, vendors
 
@@ -119,7 +119,7 @@ Execute enabled discovery methods (2a-2d).
 
 4. RUN service enumeration:
    ```bash
-   ./scripts/nmap-scan.sh enumerate {comma-separated-ips}
+   ./tools/nmap-scan.sh enumerate {comma-separated-ips}
    ```
 
 5. COLLECT services per host (ports, banners)
@@ -135,7 +135,7 @@ Execute enabled discovery methods (2a-2d).
 3. **FOR each host IP:**
    - RUN SSH probe and write JSON:
      ```bash
-     ./scripts/ssh-probe.sh {default_user}@{host-ip} > /tmp/homenet/discovery-ssh-{host-ip}.json
+     ./tools/ssh-probe.sh {default_user}@{host-ip} > /tmp/homenet/discovery-ssh-{host-ip}.json
      ```
    - SILENTLY skip connection failures (script outputs empty array on failure)
 
@@ -152,7 +152,7 @@ Execute enabled discovery methods (2a-2d).
 3. **IF dns.domains not empty:**
    - **FOR each server + domain combination:**
      ```bash
-     ./scripts/dns-enum.sh {dns-server} {domain}
+     ./tools/dns-enum.sh {dns-server} {domain}
      ```
    - COLLECT DNS A records (hostname, IP)
 
@@ -167,7 +167,7 @@ All enabled discovery methods completed.
 
 1. RUN consolidation script:
    ```bash
-   python3 scripts/consolidate.py \
+   python3 tools/consolidate.py \
      /tmp/homenet/inventory-consolidated.json \
      ~/.local/share/homenet/inventory.jsonl \
      /tmp/homenet/discovery-*.json
