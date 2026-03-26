@@ -200,20 +200,20 @@ Config file created and populated.
    - CHECK filename pattern
    - **IF proxmox-nodes.json:**
      ```bash
-     cat /tmp/homenet/proxmox-nodes.json | python3 parsers/proxmox.py nodes
+     cat /tmp/homenet/proxmox-nodes.json | python3 tools/proxmox.py nodes
      ```
    - **IF proxmox-resources.json:**
      ```bash
-     cat /tmp/homenet/proxmox-resources.json | python3 parsers/proxmox.py resources
+     cat /tmp/homenet/proxmox-resources.json | python3 tools/proxmox.py resources
      ```
    - **IF opnsense-config.xml:**
      ```bash
-     cat /tmp/homenet/opnsense-config.xml | python3 parsers/opnsense.py
-     cat /tmp/homenet/opnsense-config.xml | python3 parsers/opnsense.py vlans
+     cat /tmp/homenet/opnsense-config.xml | python3 tools/opnsense.py
+     cat /tmp/homenet/opnsense-config.xml | python3 tools/opnsense.py vlans
      ```
    - **IF unifi-devices.json:**
      ```bash
-     cat /tmp/homenet/unifi-devices.json | python3 parsers/unifi.py
+     cat /tmp/homenet/unifi-devices.json | python3 tools/unifi.py
      ```
 
 3. EXTRACT IPs from parser outputs

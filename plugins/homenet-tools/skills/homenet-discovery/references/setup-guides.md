@@ -219,11 +219,11 @@ homenet detects parsers by filename pattern:
 
 | Filename | Parser | Platform |
 |----------|--------|----------|
-| `proxmox-*.json` | `parsers/proxmox.py` | Proxmox VE |
-| `opnsense-config.xml` | `parsers/opnsense.py` | OPNsense/pfSense |
-| `unifi-*.json` | `parsers/unifi.py` | UniFi Controller |
-| `truenas-*.json` | `parsers/truenas.py` | TrueNAS |
-| `docker-*.json` | `parsers/docker.py` | Docker |
+| `proxmox-*.json` | `tools/proxmox.py` | Proxmox VE |
+| `opnsense-config.xml` | `tools/opnsense.py` | OPNsense/pfSense |
+| `unifi-*.json` | `tools/unifi.py` | UniFi Controller |
+| `truenas-*.json` | `tools/truenas.py` | TrueNAS |
+| `docker-*.json` | `tools/docker.py` | Docker |
 
 **Naming tips:**
 - Use descriptive prefixes: `proxmox-nodes.json`, `proxmox-resources.json`

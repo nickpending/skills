@@ -99,9 +99,9 @@ Each workflow contains complete step-by-step discovery procedures.
 
 **Processing:**
 - `tools/consolidate.py` - Merge multi-source discovery data
-- `parsers/proxmox.py` - Parse Proxmox API outputs
-- `parsers/opnsense.py` - Parse OPNsense config XML
-- `parsers/unifi.py` - Parse UniFi controller JSON
+- `tools/proxmox.py` - Parse Proxmox API outputs
+- `tools/opnsense.py` - Parse OPNsense config XML
+- `tools/unifi.py` - Parse UniFi controller JSON
 
 **Output:**
 - `templates/inventory-format.md` - AI inventory template
