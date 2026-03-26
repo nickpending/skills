@@ -454,6 +454,20 @@ The dispatch table in SKILL.md and the workflow filenames must correspond:
 | `templates/` | File templates the skill creates from | Skill generates files with consistent structure |
 | `tools/` | Executable scripts and utilities (Python, Bash) | Deterministic operations better handled by code than LLM |
 
+### Template Naming
+
+Name templates after what they produce: `{what}.{ext}`. When multiple variants exist, qualify with a suffix: `{what}-{variant}.{ext}`.
+
+```
+templates/
+├── inventory.md                # Only one inventory format
+├── report-summary.md           # One of several report variants
+├── report-detailed.md
+└── topology.mermaid
+```
+
+Templates contain scaffolding for files the skill generates. Command references, data extraction guides, and other supporting knowledge belong in `references/`, not `templates/`.
+
 ## Foundations Loading Pattern
 
 When a skill uses foundations (skill-foundations, prompt-foundations, etc.):
