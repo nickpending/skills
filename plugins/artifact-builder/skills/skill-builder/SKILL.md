@@ -1,6 +1,7 @@
 ---
 name: skill-builder
 description: Build and improve Claude Code skills. USE WHEN user says "create skill", "build skill", "new skill", "make skill", "improve skill", "update skill", "fix skill", "optimize skill", "migrate skill", or any request to create/modify/fix skills.
+argument-hint: create|improve|validate|migrate [skill-path]
 ---
 
 # Skill Builder
@@ -9,20 +10,19 @@ Build Claude Code skills through conversational workflows.
 
 ## Determine Action
 
-**From user's message, identify:**
+Parse `$0` for the action keyword.
 
-| Intent | Keywords | Workflow |
-|--------|----------|----------|
-| Create new | "create", "build", "make", "new" | `workflows/create.md` |
-| Improve existing | "improve", "optimize", "refactor", "tighten" | `workflows/improve.md` |
-| Validate structure | "validate", "check", "verify" | `workflows/validate.md` |
-| Fix structure | "migrate", "fix format", "validation errors" | `workflows/migrate.md` |
+| `$0` | Workflow |
+|------|----------|
+| create | `workflows/create.md` |
+| improve | `workflows/improve.md` |
+| validate | `workflows/validate.md` |
+| migrate | `workflows/migrate.md` |
 
 ## Execute
 
-1. **Determine action** from user's request
-2. **READ** the appropriate workflow file
-3. **Follow** workflow instructions exactly
+1. **READ** the workflow file matched by `$0`
+2. **Follow** workflow instructions exactly
 
 ## Key Principles
 
@@ -45,21 +45,19 @@ Build Claude Code skills through conversational workflows.
 
 ## Examples
 
-**Example 1: Create a CLI wrapper skill**
+**Create a CLI wrapper skill:**
 ```
-User: "Create a skill to wrap the lore CLI"
-→ Invokes create workflow
-→ Selects CLI wrapper archetype
-→ Creates ~/.claude/skills/lore/
-→ Sets up command routing table
+/skill-builder create
+> "I want a skill to wrap the lore CLI"
+> Selects CLI Wrapper archetype from skill-foundations
+> Creates ~/.claude/skills/lore/SKILL.md with allowed-tools, argument-hint
 ```
 
-**Example 2: Validate a broken skill**
+**Validate a broken skill:**
 ```
-User: "The visual skill won't trigger, check it"
-→ Invokes validate workflow
-→ Checks frontmatter and USE WHEN clause
-→ Reports missing intent triggers
-→ Offers automated fix
+/skill-builder validate ~/.claude/skills/visual/SKILL.md
+> Checks frontmatter against skill-foundations structure.md
+> Reports: missing argument-hint, no Examples section
+> Offers automated fixes
 ```
 

@@ -1,6 +1,7 @@
 ---
 name: command-builder
 description: Build and improve Claude Code slash commands. USE WHEN user says "create command", "build command", "new command", "make command", "improve command", "fix command", "migrate command", or any request to create/modify/fix slash commands.
+argument-hint: create|improve|validate|migrate [command-path]
 ---
 
 # Command Builder
@@ -9,20 +10,19 @@ Build Claude Code slash commands through conversational workflows.
 
 ## Determine Action
 
-**From user's message, identify:**
+Parse `$0` for the action keyword.
 
-| Intent | Keywords | Workflow |
-|--------|----------|----------|
-| Create new | "create", "build", "make", "new" | `workflows/create.md` |
-| Improve existing | "improve", "optimize", "refactor", "tighten" | `workflows/improve.md` |
-| Validate structure | "validate", "check", "verify" | `workflows/validate.md` |
-| Fix structure | "migrate", "fix format", "validation errors" | `workflows/migrate.md` |
+| `$0` | Workflow |
+|------|----------|
+| create | `workflows/create.md` |
+| improve | `workflows/improve.md` |
+| validate | `workflows/validate.md` |
+| migrate | `workflows/migrate.md` |
 
 ## Execute
 
-1. **Determine action** from user's request
-2. **READ** the appropriate workflow file
-3. **Follow** workflow instructions exactly
+1. **READ** the workflow file matched by `$0`
+2. **Follow** workflow instructions exactly
 
 ## Key Principles
 
@@ -45,20 +45,18 @@ Build Claude Code slash commands through conversational workflows.
 
 ## Examples
 
-**Example 1: Create a simple commit command**
+**Create a commit command:**
 ```
-User: "Create a command to commit my changes"
--> Invokes create workflow
--> Selects minimal archetype
--> Creates ~/.claude/commands/commit.md
--> Uses !`git status` for context injection
+/command-builder create
+> "I want a command to commit my changes with conventional format"
+> Selects minimal archetype from command-foundations
+> Creates ~/.claude/commands/commit.md with !`git status` injection
 ```
 
-**Example 2: Improve an existing command**
+**Improve a verbose command:**
 ```
-User: "This deploy command is too verbose, tighten it up"
--> Invokes improve workflow
--> Analyzes current token usage
--> Proposes reductions
--> Gets user approval before changes
+/command-builder improve ~/.claude/commands/deploy.md
+> Analyzes against command-foundations and prompt-foundations
+> Reports: 40% token reduction possible, redundant sections
+> Proposes changes, waits for approval
 ```

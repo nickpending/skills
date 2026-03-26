@@ -2,6 +2,11 @@
 
 Enhance an existing command that already works.
 
+Create a task for each step before starting:
+1. TaskCreate for each Step below
+2. Mark each complete as you finish it
+3. Do not skip steps
+
 ## Prerequisites
 
 - Command exists and functions correctly
