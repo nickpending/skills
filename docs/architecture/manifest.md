@@ -3,7 +3,7 @@ type: manifest
 project: skills
 generated: 2026-06-12
 source: /Users/rudy/development/projects/skills/docs/architecture
-reconciled_at: 6dd67cada57f9eb35581d739363d388982993d9d
+reconciled_at: e3d23b3ac99b154caf4638fd0b7f8cf328f9a728
 ---
 
 # skills — Architecture Manifest
