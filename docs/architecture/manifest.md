@@ -20,6 +20,5 @@ reconciled_at: e3d23b3ac99b154caf4638fd0b7f8cf328f9a728
 - Overview: /Users/rudy/development/projects/skills/docs/architecture/architecture.md
 - Decisions: /Users/rudy/development/projects/skills/docs/architecture/decisions.md
 - Contracts: /Users/rudy/development/projects/skills/docs/architecture/boundaries.md
-- Briefing: /Users/rudy/development/projects/skills/docs/architecture/briefing.md
 - Marketplace: /Users/rudy/development/projects/skills/.claude-plugin/marketplace.json
 - README: /Users/rudy/development/projects/skills/README.md
