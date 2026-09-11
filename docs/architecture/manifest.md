@@ -3,7 +3,7 @@ type: manifest
 project: skills
 generated: 2026-06-12
 source: /Users/rudy/development/projects/skills/docs/architecture
-reconciled_at: ea653a76d5fddd7e5632fcfb711042146bdfa915
+reconciled_at: 26bc708127c716cc6b7fa90aff1c55bfcb413f9b
 ---
 
 # skills — Architecture Manifest
@@ -22,3 +22,4 @@ reconciled_at: ea653a76d5fddd7e5632fcfb711042146bdfa915
 - Contracts: /Users/rudy/development/projects/skills/docs/architecture/boundaries.md
 - Marketplace: /Users/rudy/development/projects/skills/.claude-plugin/marketplace.json
 - README: /Users/rudy/development/projects/skills/README.md
+- Vision: /Users/rudy/development/projects/skills/docs/IDEA.md
